@@ -1,0 +1,19 @@
+{% set link = entry.button %}
+{% set buttonVariant = variant is defined and variant is not null ?  variant : 'default' %}
+
+{% switch buttonVariant %}
+{% case "navy" %}
+    {% set classes = 'bg-navy hover:bg-mint text-white inline-block py-4 px-6 font-bold rounded-lg mr-4' %}
+
+{% default %}
+    {% set classes = 'bg-pink hover:bg-mint text-white inline-block py-4 px-6 font-bold rounded-lg mr-4' %}
+
+{% endswitch %}
+
+{{ tag('a', {
+    href: link.value ?? null,
+    target: link.target ?? null,
+    rel: link.target is defined and link.target == '_blank' ? 'noopener noreferrer' : null,
+    text: link.label ?? null,
+    class: classes
+}) }}

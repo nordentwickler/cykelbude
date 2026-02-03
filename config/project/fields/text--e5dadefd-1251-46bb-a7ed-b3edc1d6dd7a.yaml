@@ -1,0 +1,42 @@
+columnSuffix: null
+handle: text
+instructions: null
+name: Text
+searchable: false
+settings:
+  availableTransforms: ''
+  availableVolumes: ''
+  characterLimit: null
+  ckeConfig: 6df34811-c0ff-4ed6-beb8-32fc07d0329a # Standard
+  createButtonLabel: null
+  defaultTransform: null
+  entryTypes:
+    -
+      __assoc__:
+        -
+          - uid
+          - 9d49f708-57e6-4582-acab-f2fdbfc5ddad # Bild
+    -
+      __assoc__:
+        -
+          - uid
+          - 23d1a135-c065-4b14-8379-a83af7d8d792 # Button
+    -
+      __assoc__:
+        -
+          - uid
+          - 3dc3c4c7-3051-4967-b325-11eee11821a5 # Liefergebiet
+  expandEntryButtons: false
+  fullGraphqlData: false
+  parseEmbeds: false
+  purifierConfig: null
+  purifyHtml: true
+  showUnpermittedFiles: false
+  showUnpermittedVolumes: false
+  showWordCount: false
+  sourceEditingGroups:
+    - __ADMINS__
+  wordLimit: null
+translationKeyFormat: null
+translationMethod: none
+type: craft\ckeditor\Field

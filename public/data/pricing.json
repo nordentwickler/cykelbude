@@ -1,0 +1,60 @@
+{
+  "basePrice": 450,
+  "vat": 19,
+  "delivery": {
+    "nextDay": {
+      "label": "Next Day",
+      "surcharge": 0
+    },
+    "sameDay": {
+      "label": "Same Day",
+      "surcharge": 100
+    }
+  },
+  "areas": {
+    "standard": {
+      "label": "Standard",
+      "surcharge": 0
+    },
+    "stadtrand": {
+      "label": "Stadtrand",
+      "surcharge": 725
+    },
+    "umland": {
+      "label": "Umland",
+      "surcharge": 1450
+    }
+  },
+  "weightClasses": [
+    {
+      "key": "standard",
+      "label": "Standard",
+      "min": 0,
+      "max": 5,
+      "surcharges": {
+        "nextDay": 0,
+        "sameDay": 100
+      }
+    },
+    {
+      "key": "last",
+      "label": "Last",
+      "min": 5,
+      "max": 25,
+      "surcharges": {
+        "nextDay": 100,
+        "sameDay": 130
+      }
+    },
+    {
+      "key": "xxl",
+      "label": "XXL",
+      "min": 25,
+      "max": 100,
+      "surcharges": {
+        "nextDay": 200,
+        "sameDay": 370
+      }
+    }
+  ]
+}

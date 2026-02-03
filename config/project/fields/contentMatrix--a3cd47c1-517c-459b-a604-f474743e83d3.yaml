@@ -1,0 +1,85 @@
+columnSuffix: null
+handle: contentMatrix
+instructions: null
+name: Inhalt
+searchable: false
+settings:
+  createButtonLabel: 'Neuer Block'
+  defaultIndexViewMode: cards
+  enableVersioning: false
+  entryTypes:
+    -
+      __assoc__:
+        -
+          - uid
+          - 3d01e2e5-75a3-4117-a026-c9e2144ed97e # Überschrift
+        -
+          - group
+          - Allgemein
+    -
+      __assoc__:
+        -
+          - uid
+          - 45fd3dd7-2f99-4dd8-878a-8cd6e7e02125 # Text + Bild
+        -
+          - group
+          - Allgemein
+    -
+      __assoc__:
+        -
+          - uid
+          - 5fd09dab-aaa5-4f04-85c7-4e2fd38fe3b6 # Text
+        -
+          - group
+          - Allgemein
+    -
+      __assoc__:
+        -
+          - uid
+          - af9de71a-96d1-4be1-ab34-3dc6e954edec # Accordion
+        -
+          - group
+          - Allgemein
+    -
+      __assoc__:
+        -
+          - uid
+          - 4720702d-8a8e-4801-9fcd-35c71353a2f6 # Grid
+        -
+          - group
+          - Allgemein
+    -
+      __assoc__:
+        -
+          - uid
+          - 5ccb0af0-c1fc-408d-951d-9282310c502f # Logos
+        -
+          - group
+          - Medien
+    -
+      __assoc__:
+        -
+          - uid
+          - 7a32e306-10bc-40fd-a760-ebb972201edb # Bilder
+        -
+          - group
+          - Medien
+    -
+      __assoc__:
+        -
+          - uid
+          - c2450464-e6c0-4703-b4bb-d00469e3b84f # Preisrechner
+        -
+          - group
+          - Specials
+  includeTableView: false
+  maxEntries: null
+  minEntries: null
+  pageSize: null
+  propagationKeyFormat: null
+  propagationMethod: all
+  showCardsInGrid: false
+  viewMode: blocks
+translationKeyFormat: null
+translationMethod: site
+type: craft\fields\Matrix

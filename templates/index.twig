@@ -1,0 +1,15 @@
+{### Extends #}
+{% extends '_layouts/main.twig' %}
+
+{### Permissions #}
+
+{### Macros #}
+
+{### Data logic #}
+
+{### Blocks #}
+{% block content %}
+    {% for block in entry.contentMatrix.eagerly().all()  %}
+        {{ block.render() }}
+    {% endfor %}
+{% endblock %}

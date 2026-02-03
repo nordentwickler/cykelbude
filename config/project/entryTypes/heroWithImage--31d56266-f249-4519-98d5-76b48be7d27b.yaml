@@ -1,0 +1,68 @@
+color: null
+description: null
+fieldLayouts:
+  16f8f5a8-5586-4316-9cd4-7a29ed7df7d2:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-11-13T12:34:35+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: ff163dd2-2671-4a9c-bead-517148786a6d # Überschrift 
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: f3e1d430-ff4c-44e5-b1f9-d9df67b4fb74
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-13T12:34:35+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 30e962cd-8f19-4011-a569-2e6cb25791e8 # Bild
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 6551360c-5e47-4b84-bd29-fe3ac115e17f
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-13T12:42:53+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 5e9f085e-8657-460a-82a3-5a053dfac7c7 # Buttons
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: dd3f67cc-78f0-4f9c-a782-723da91fd271
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: e289aeb0-7c7e-4514-b504-9aa26813e8bc
+        userCondition: null
+handle: heroWithImage
+hasTitleField: false
+icon: null
+name: 'Hero mit Bild'
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

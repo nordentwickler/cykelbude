@@ -1,0 +1,21 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  -
+    uid: 5016465b-d4be-4ffa-8cfc-7086ff6d6501 # Startseite
+handle: homepage
+maxAuthors: 1
+name: Startseite
+previewTargets:
+  -
+    label: 'Primäre Eintrag Seite'
+    refresh: '1'
+    urlFormat: '{url}'
+propagationMethod: all
+siteSettings:
+  ca499a8e-a51d-4bc8-9ddb-26d3ef6a018f: # cykelbude
+    enabledByDefault: true
+    hasUrls: true
+    template: index.twig
+    uriFormat: __home__
+type: single

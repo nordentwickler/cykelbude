@@ -1,0 +1,83 @@
+color: null
+description: null
+fieldLayouts:
+  1ca4c6a6-1def-4b8a-a2f1-e74a4ae815a4:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-11-13T12:35:31+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: ff163dd2-2671-4a9c-bead-517148786a6d # Überschrift 
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 4848ece0-ca37-4198-9c6f-e03465a51708
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-13T12:38:49+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 78f8041d-6436-46c7-b344-6b411bf8e249 # Video
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: c8d4e4c0-b7bc-4625-8236-d2c1f22fa15a
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-13T12:38:49+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 7f38d71f-d230-47e4-969f-53b1d05752db # Text
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 551823f8-762e-4d0d-84be-3b786704953e
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-13T12:43:01+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 5e9f085e-8657-460a-82a3-5a053dfac7c7 # Buttons
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 98193466-2018-4986-a293-f0ff937f2e7b
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: fd50b38f-8f4b-4b3c-8011-e2de5a5ed9d1
+        userCondition: null
+handle: heroWithVideo
+hasTitleField: false
+icon: null
+name: 'Hero mit Video '
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

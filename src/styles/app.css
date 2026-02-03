@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@import "./generic/_fonts.css";
+
+@source "../../templates/**/*.twig";
+
+@theme {
+    --color-navy: #1d2133;
+    --color-mint: #68c3cd;
+    --color-pink: #ea4d65;
+
+    --font-display: "Bebas Neue", sans-serif;
+    --font-sans: "Open Sans", sans-serif;
+
+}
+
+@utility container {
+    margin-inline: auto;
+}
+
+@layer base {
+    body{
+        @apply font-sans text-xl lg:text-3xl ;
+    }
+    h1,h2{
+        @apply font-display;
+    }
+
+    p, ul, ol {
+        @apply leading-normal;
+    }
+
+    table{
+        @apply text-lg border-2 border-collapse border-pink rounded-lg my-6 lg:my-10;
+        thead{
+            @apply text-left bg-pink text-white;
+            tr {
+                th {
+                    @apply px-2 py-1.5 align-top;
+                }
+            }
+        }
+
+        tr td{
+            @apply px-2 py-2.5 border-b-2 border-pink align-top;
+        }
+    }
+
+    h2{
+        @apply text-4xl md:text-7xl xl:text-8xl;
+    }
+
+    h3{
+        @apply text-2xl md:text-3xl lg:text-4xl font-bold;
+    }
+
+}
+[v-cloak] {
+    display: none;
+}

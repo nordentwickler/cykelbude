@@ -1,0 +1,39 @@
+columnSuffix: null
+handle: logos
+instructions: null
+name: Logos
+searchable: false
+settings:
+  allowSelfRelations: false
+  allowSubfolders: false
+  allowUploads: true
+  allowedKinds:
+    - image
+    - vector
+  branchLimit: null
+  defaultPlacement: end
+  defaultUploadLocationSource: 'volume:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  defaultUploadLocationSubpath: null
+  maintainHierarchy: false
+  maxRelations: null
+  minRelations: null
+  previewMode: full
+  restrictFiles: true
+  restrictLocation: true
+  restrictedDefaultUploadSubpath: null
+  restrictedLocationSource: 'volume:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  restrictedLocationSubpath: null
+  selectionLabel: null
+  showCardsInGrid: false
+  showSearchInput: true
+  showSiteMenu: true
+  showUnpermittedFiles: false
+  showUnpermittedVolumes: false
+  sources:
+    - 'volume:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  targetSiteId: null
+  validateRelatedElements: false
+  viewMode: list
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Assets

@@ -1,0 +1,24 @@
+
+<div class="space-y-6 md:space-y-8 lg:space-y-12">
+    {% for chunk in entry.text %}
+
+        {% if chunk.type== 'markup' %}
+            <div class="chunk {{ chunk.type == 'markup' }} space-y-6">
+                {{ chunk }}
+            </div>
+
+        {% else %}
+
+            {% switch chunk.entry.type.handle %}
+            {% case 'button' %}
+                {{ chunk }}
+            {% case 'image' %}
+                {{ chunk }}
+            {% default %}
+                {{ chunk.entry.render() }}
+            {% endswitch %}
+
+        {% endif %}
+
+    {% endfor %}
+</div>

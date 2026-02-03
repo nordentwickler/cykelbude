@@ -1,0 +1,11 @@
+{% set asset = entry.image.eagerly().one() %}
+{% if asset %}
+    {{ tag('img', {
+        src: asset.url,
+        width: asset.width,
+        height: asset.height,
+        srcset: asset.getSrcset(['1.5x', '2x', '3x']),
+        alt: asset.alt,
+        class: 'rounded-lg'
+    }) }}
+{% endif %}

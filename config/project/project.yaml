@@ -1,0 +1,111 @@
+dateModified: 1770106130
+email:
+  fromEmail: brosch@webhub.de
+  fromName: cykelbude
+  transportType: craft\mail\transportadapters\Sendmail
+fs:
+  media:
+    hasUrls: true
+    name: Medien
+    settings:
+      path: media
+    type: craft\fs\Local
+    url: /media/
+  transforms:
+    hasUrls: true
+    name: Transformationen
+    settings:
+      path: '@webroot/transforms'
+    type: craft\fs\Local
+    url: /transforms/
+meta:
+  __names__:
+    0a7f3093-d14e-4af0-9a47-782474c30438: Videos # Videos
+    0f79b4a7-5345-4ad8-8f42-17d39cb44c73: cykelbude # cykelbude
+    2a11f8b8-5f66-4305-a071-44e33b8b5d72: Bilder # Bilder
+    3d01e2e5-75a3-4117-a026-c9e2144ed97e: Überschrift # Überschrift
+    3dc3c4c7-3051-4967-b325-11eee11821a5: Liefergebiet # Liefergebiet
+    5ccb0af0-c1fc-408d-951d-9282310c502f: Logos # Logos
+    5e9f085e-8657-460a-82a3-5a053dfac7c7: Buttons # Buttons
+    5fd09dab-aaa5-4f04-85c7-4e2fd38fe3b6: Text # Text
+    6df34811-c0ff-4ed6-beb8-32fc07d0329a: Standard # Standard
+    7a32e306-10bc-40fd-a760-ebb972201edb: Bilder # Bilder
+    7f38d71f-d230-47e4-969f-53b1d05752db: Text # Text
+    8f031085-703a-44a8-83d8-84ad75f80aba: Grid # Grid
+    9d49f708-57e6-4582-acab-f2fdbfc5ddad: Bild # Bild
+    23d1a135-c065-4b14-8379-a83af7d8d792: Button # Button
+    30e962cd-8f19-4011-a569-2e6cb25791e8: Bild # Bild
+    31d56266-f249-4519-98d5-76b48be7d27b: 'Hero mit Bild' # Hero mit Bild
+    45fd3dd7-2f99-4dd8-878a-8cd6e7e02125: 'Text + Bild' # Text + Bild
+    58be0d43-ef58-4085-a273-a5443ffb046a: Footernavigation # Footernavigation
+    70d41bcd-5646-4430-8ca6-7a02d7904f3e: Button # Button
+    78f8041d-6436-46c7-b344-6b411bf8e249: Video # Video
+    79bbe8ce-2d7d-4097-9c21-fda54e467f4a: Ausrichtung # Ausrichtung
+    539b26ae-51b9-4d0c-afa5-5443d9c6bf22: Startseite # Startseite
+    662c794f-dd22-459b-919e-8ac67bb6b931: Seiten # Seiten
+    913c178a-5f50-4f50-be32-254eab017b45: Bilder # Bilder
+    3910bf66-3647-4955-a88b-b18e769eb939: Logos # Logos
+    50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd: Seiten # Seiten
+    062428a9-947a-4c57-8af0-3ac3998f31f7: Element # Element
+    882551fe-18c6-445b-a5fb-2cd314b590fb: Icon # Icon
+    4720702d-8a8e-4801-9fcd-35c71353a2f6: Grid # Grid
+    5016465b-d4be-4ffa-8cfc-7086ff6d6501: Startseite # Startseite
+    a3cd47c1-517c-459b-a604-f474743e83d3: Inhalt # Inhalt
+    a53b236f-6e17-423b-ba8e-e1ce4d616ed3: Accordion # Accordion
+    af9de71a-96d1-4be1-ab34-3dc6e954edec: Accordion # Accordion
+    b40d6014-72f1-4f94-83cf-db9fe21e557d: 'Hero mit Video ' # Hero mit Video 
+    b83fd678-578b-4d0e-a82f-8f46959d3721: Logos # Logos
+    b264a3f5-9d66-4e78-8a0a-3de539c0408a: Einstellungen # Einstellungen
+    c2f0251d-6440-4d2e-bca0-622a302bb5c2: Simple # Simple
+    c2450464-e6c0-4703-b4bb-d00469e3b84f: Preisrechner # Preisrechner
+    c8293756-f337-4ae6-9b12-5b9861acc0ed: Element # Element
+    ca499a8e-a51d-4bc8-9ddb-26d3ef6a018f: cykelbude # cykelbude
+    d1ae8a5b-575a-47db-b394-72405b542fef: Hauptnavigation # Hauptnavigation
+    d5aa30a2-0ab9-4cdc-add4-c2be28babceb: SEO # SEO
+    d771bc7c-2840-499a-9faa-58fab8bfc523: Hero # Hero
+    df04f28c-0bcc-4705-b47c-47290748c72f: Einstellungen # Einstellungen
+    e5dadefd-1251-46bb-a7ed-b3edc1d6dd7a: Text # Text
+    eaad13fa-ab0b-4a45-af4a-faf401a49a2b: Downloads # Downloads
+    ff163dd2-2671-4a9c-bead-517148786a6d: 'Überschrift ' # Überschrift 
+plugins:
+  _craft-panoptikum-cell:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  ckeditor:
+    edition: standard
+    enabled: true
+    schemaVersion: 3.0.0.0
+  craft-ray:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  elements-panel:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  mcp:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  seo:
+    edition: standard
+    enabled: true
+    schemaVersion: 3.2.0
+  vite:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+system:
+  edition: solo
+  live: true
+  name: cykelbude
+  schemaVersion: 5.9.0.8
+  timeZone: America/Los_Angeles
+users:
+  allowPublicRegistration: false
+  defaultGroup: null
+  photoSubpath: null
+  photoVolumeUid: null
+  require2fa: false
+  requireEmailVerification: true

@@ -1,0 +1,55 @@
+color: null
+description: null
+fieldLayouts:
+  a47b3ebd-d31a-4da6-a36f-e2aa033450f6:
+    cardThumbAlignment: end
+    cardView:
+      - 'layoutElement:25f570bc-1114-411d-b898-c275a8276ff6'
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-11-13T12:14:25+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 30e962cd-8f19-4011-a569-2e6cb25791e8 # Bild
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 25f570bc-1114-411d-b898-c275a8276ff6
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-13T12:23:22+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 79bbe8ce-2d7d-4097-9c21-fda54e467f4a # Ausrichtung
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: e989f521-d1ec-4f04-8868-0cc3267439b8
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: ed239ffe-48a9-42c2-8526-ab4ced0e53c1
+        userCondition: null
+handle: image
+hasTitleField: false
+icon: image
+name: Bild
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

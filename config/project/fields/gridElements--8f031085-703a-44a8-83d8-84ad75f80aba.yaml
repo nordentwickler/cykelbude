@@ -1,0 +1,37 @@
+columnSuffix: null
+handle: gridElements
+instructions: null
+name: Grid
+searchable: false
+settings:
+  createButtonLabel: null
+  defaultIndexViewMode: cards
+  enableVersioning: false
+  entryTypes:
+    -
+      __assoc__:
+        -
+          - uid
+          - c8293756-f337-4ae6-9b12-5b9861acc0ed # Element
+        -
+          - group
+          - Allgemein
+    -
+      __assoc__:
+        -
+          - uid
+          - 23d1a135-c065-4b14-8379-a83af7d8d792 # Button
+        -
+          - group
+          - Allgemein
+  includeTableView: false
+  maxEntries: null
+  minEntries: null
+  pageSize: 50
+  propagationKeyFormat: null
+  propagationMethod: all
+  showCardsInGrid: false
+  viewMode: cards
+translationKeyFormat: null
+translationMethod: site
+type: craft\fields\Matrix

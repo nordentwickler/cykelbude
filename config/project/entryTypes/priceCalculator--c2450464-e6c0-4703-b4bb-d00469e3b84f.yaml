@@ -1,0 +1,32 @@
+color: null
+description: null
+fieldLayouts:
+  ab80f4f4-6b70-42ff-a01f-62c163cae238:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-12-20T09:21:11+00:00'
+            dismissible: false
+            elementCondition: null
+            style: tip
+            tip: 'Zeigt den Preisrechner.'
+            type: craft\fieldlayoutelements\Tip
+            uid: 2672eb6e-0e57-4713-945a-d23ab2220e31
+            userCondition: null
+        name: Inhalt
+        uid: f2bb2f75-135a-4176-8deb-eefa1b64c2d0
+        userCondition: null
+handle: priceCalculator
+hasTitleField: false
+icon: null
+name: Preisrechner
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

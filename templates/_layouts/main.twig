@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+webhub.de
+-->
+<html lang="{{ craft.app.language }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes">
+    <link rel="home" href="{{ siteUrl }}"/>
+    {# Preload fonts #}
+    {# <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Switzer-Variable.woff2"/> #}
+    {% hook 'seo' %}
+    {{ craft.vite.script('src/scripts/app.js', false) }}
+    {% set settings = craft.entries.section('settings').with(['footerNavigation', 'mainNavigation']).one() %}
+</head>
+
+<body {{ craft.app.config.general.devMode ? 'data-dev-mode="true"' }}>
+
+    <div id="app" class="bg-navy text-white p-4 lg:p-8">
+
+        {% include '_layouts/partials/header.twig' ignore missing %}
+
+        <main>
+            {% block content %}
+                <p class="text-center">If you see this, no block named content was provided.</p>
+            {% endblock %}
+
+        </main>
+
+        {% include '_layouts/partials/footer.twig' ignore missing %}
+
+    </div>
+
+    {# Craft CSRF token #}
+    {% include '_inline-scripts/_craft-csrf-token' %}
+
+</body>
+</html>

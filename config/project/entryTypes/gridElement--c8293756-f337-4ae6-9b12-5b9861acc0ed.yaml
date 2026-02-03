@@ -1,0 +1,70 @@
+color: null
+description: null
+fieldLayouts:
+  9d94f965-b042-4f5b-9ae1-bcbc9fae0e8c:
+    cardThumbAlignment: start
+    cardView:
+      - 'layoutElement:e8d977ef-68bc-4e97-9aaf-b192665c21d1'
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-11-13T12:30:20+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 882551fe-18c6-445b-a5fb-2cd314b590fb # Icon
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: b7932452-a144-41df-b6f6-0f6a8d21d640
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-13T12:30:20+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: ff163dd2-2671-4a9c-bead-517148786a6d # Überschrift 
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: e8d977ef-68bc-4e97-9aaf-b192665c21d1
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-13T12:30:20+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: e5dadefd-1251-46bb-a7ed-b3edc1d6dd7a # Text
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: dff7df7a-998f-4805-8ab9-01af702f3367
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: 96bf22fc-b100-48d4-ace0-35f16e152caa
+        userCondition: null
+handle: gridElement
+hasTitleField: false
+icon: null
+name: Element
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

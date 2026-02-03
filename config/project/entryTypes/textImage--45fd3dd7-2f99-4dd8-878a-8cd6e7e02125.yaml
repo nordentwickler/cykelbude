@@ -1,0 +1,85 @@
+color: null
+description: null
+fieldLayouts:
+  1a310ab7-8616-4e94-8d95-f24b833cdeae:
+    cardThumbAlignment: end
+    cardView:
+      - 'layoutElement:8e5adc16-ac69-40e3-8b2f-3bc888fcb723'
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-11-13T15:58:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: ff163dd2-2671-4a9c-bead-517148786a6d # Überschrift 
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 8e5adc16-ac69-40e3-8b2f-3bc888fcb723
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-13T15:58:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 30e962cd-8f19-4011-a569-2e6cb25791e8 # Bild
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 470ad8ee-9b96-452c-8863-09a0c163dcb8
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-13T15:58:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 79bbe8ce-2d7d-4097-9c21-fda54e467f4a # Ausrichtung
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 62104c36-a762-42ae-a34b-593860b00b73
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-13T15:58:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: e5dadefd-1251-46bb-a7ed-b3edc1d6dd7a # Text
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 2f4cc576-36c5-48a9-871f-731219e4df8e
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: fbbe2196-efff-4fa8-bf9e-0d76b14ba32b
+        userCondition: null
+handle: textImage
+hasTitleField: false
+icon: null
+name: 'Text + Bild'
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

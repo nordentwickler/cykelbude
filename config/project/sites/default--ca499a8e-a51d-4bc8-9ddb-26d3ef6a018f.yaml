@@ -1,0 +1,8 @@
+baseUrl: $PRIMARY_SITE_URL
+handle: default
+hasUrls: true
+language: de
+name: cykelbude
+primary: true
+siteGroup: 0f79b4a7-5345-4ad8-8f42-17d39cb44c73 # cykelbude
+sortOrder: 1

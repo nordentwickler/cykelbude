@@ -1,0 +1,16 @@
+columnSuffix: null
+handle: simpleText
+instructions: null
+name: Text
+searchable: false
+settings:
+  byteLimit: null
+  charLimit: null
+  code: false
+  initialRows: 2
+  multiline: true
+  placeholder: null
+  uiMode: enlarged
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\PlainText

@@ -1,0 +1,75 @@
+altTranslationKeyFormat: null
+altTranslationMethod: none
+fieldLayouts:
+  a7a82852-b94b-490d-b136-eaab53cec4b0:
+    cardThumbAlignment: start
+    cardView:
+      - 'layoutElement:faa448c1-a738-428f-98a3-694f785339a0'
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            dateAdded: '2025-11-13T12:11:32+00:00'
+            disabled: false
+            elementCondition: null
+            id: null
+            inputType: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            readonly: false
+            requirable: false
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\assets\AssetTitleField
+            uid: b8be5774-5c48-4d75-afdc-090ea3d8b493
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            attribute: alt
+            class: null
+            cols: null
+            dateAdded: '2025-11-13T12:13:19+00:00'
+            disabled: false
+            elementCondition: null
+            id: null
+            instructions: null
+            label: null
+            name: null
+            orientation: null
+            placeholder: null
+            readonly: false
+            requirable: true
+            required: false
+            rows: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\assets\AltField
+            uid: faa448c1-a738-428f-98a3-694f785339a0
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: 15900fd3-c988-4779-ad8f-7c0ddba6fd2f
+        userCondition: null
+fs: media
+handle: images
+name: Bilder
+sortOrder: 1
+subpath: images
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+transformFs: transforms
+transformSubpath: media/images

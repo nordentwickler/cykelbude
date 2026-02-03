@@ -1,0 +1,39 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 4,
+  "trailingComma": "es5",
+  "bracketSameLine": false,
+  "bracketSpacing": true,
+  "singleAttributePerLine": true,
+  "plugins": [
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-jsdoc",
+    "prettier-plugin-tailwindcss"
+  ],
+  "importOrder": [
+    "^(vue$)",
+    "<THIRD_PARTY_MODULES>",
+    "^@components/(.*)$",
+    "^@/(.*)$",
+    "^[./]",
+    "",
+    "^@styles/(.*)$"
+  ],
+  "importOrderSeparation": false,
+  "importOrderSortSpecifiers": true,
+  "importOrderBuiltinModulesToTop": true,
+  "importOrderMergeDuplicateImports": true,
+  "twigAlwaysBreakObjects": false,
+  "twigMultiTags": [
+    "cache,endcache",
+    "css,endcss",
+    "html,endhtml",
+    "js,endjs",
+    "namespace,endnamespace",
+    "nav,endnav",
+    "script,endscript",
+    "switch,case,default,endswitch",
+    "tag,endtag"
+  ]
+}

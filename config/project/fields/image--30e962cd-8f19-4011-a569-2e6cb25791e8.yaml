@@ -1,0 +1,38 @@
+columnSuffix: null
+handle: image
+instructions: null
+name: Bild
+searchable: false
+settings:
+  allowSelfRelations: false
+  allowSubfolders: false
+  allowUploads: true
+  allowedKinds:
+    - image
+    - vector
+  branchLimit: null
+  defaultPlacement: end
+  defaultUploadLocationSource: 'volume:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  defaultUploadLocationSubpath: null
+  maintainHierarchy: false
+  maxRelations: 1
+  minRelations: null
+  previewMode: full
+  restrictFiles: true
+  restrictLocation: true
+  restrictedDefaultUploadSubpath: null
+  restrictedLocationSource: 'volume:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  restrictedLocationSubpath: null
+  selectionLabel: null
+  showCardsInGrid: false
+  showSearchInput: true
+  showSiteMenu: true
+  showUnpermittedFiles: false
+  showUnpermittedVolumes: false
+  sources: '*'
+  targetSiteId: null
+  validateRelatedElements: false
+  viewMode: large
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Assets

@@ -1,0 +1,49 @@
+altTranslationKeyFormat: null
+altTranslationMethod: none
+fieldLayouts:
+  7da0294e-6938-4105-84af-0b7a13182032:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            dateAdded: '2025-11-13T12:16:05+00:00'
+            disabled: false
+            elementCondition: null
+            id: null
+            inputType: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            readonly: false
+            requirable: false
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\assets\AssetTitleField
+            uid: a015b412-3033-46f0-9f74-d39871a26644
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: 91a0d00d-b020-47fb-896c-4d7c191094a7
+        userCondition: null
+fs: media
+handle: downloads
+name: Downloads
+sortOrder: 3
+subpath: downloads
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+transformFs: ''
+transformSubpath: ''

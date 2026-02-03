@@ -1,0 +1,23 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Standard-Gebiet Beispiel"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [13.3500, 52.5000],
+            [13.4500, 52.5000],
+            [13.4500, 52.5500],
+            [13.3500, 52.5500],
+            [13.3500, 52.5000]
+          ]
+        ]
+      }
+    }
+  ]
+}

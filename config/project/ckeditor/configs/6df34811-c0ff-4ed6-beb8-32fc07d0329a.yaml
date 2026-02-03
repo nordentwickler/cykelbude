@@ -1,0 +1,14 @@
+headingLevels:
+  - 3
+name: Standard
+toolbar:
+  - heading
+  - '|'
+  - bulletedList
+  - numberedList
+  - blockQuote
+  - bold
+  - italic
+  - link
+  - insertTable
+  - createEntry

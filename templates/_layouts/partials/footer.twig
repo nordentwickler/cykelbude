@@ -1,0 +1,27 @@
+<footer class="flex flex-wrap md:flex-nowrap justify-between gap-y-12 gap-x-24 pt-48 pb-24 text-pink">
+
+    <div class="flex flex-col justify-between gap-y-8 lg:gap-y-16">
+
+        <div>
+            <p class="font-display text-4xl lg:text-6xl leading-tight">
+                {{ settings.footerClaim|nl2br }}
+            </p>
+        </div>
+
+        <nav>
+            <ul>
+                {% for entry in settings.footerNavigation.all() %}
+                    <li><a href="{{ entry.getUrl }}" class="hover:text-white">{{ entry.title }}</a> </li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+    </div>
+    <div class="flex items-end">
+        {{ craft.vite.inline('@assets/icons/logo-round.svg')|attr({
+            class: 'h-72 w-72 xl:h-128 w-auto fill-current'
+        }) }}
+    </div>
+
+
+</footer>

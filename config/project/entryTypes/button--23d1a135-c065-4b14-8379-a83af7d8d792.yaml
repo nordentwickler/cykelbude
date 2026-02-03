@@ -1,0 +1,40 @@
+color: null
+description: null
+fieldLayouts:
+  0876e135-b0d0-46bf-a1ce-b75f1084e5d4:
+    cardThumbAlignment: end
+    cardView:
+      - 'layoutElement:8fc30f78-49ca-4ead-94b6-6118f7efc03f'
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-11-13T12:18:43+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 70d41bcd-5646-4430-8ca6-7a02d7904f3e # Button
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 8fc30f78-49ca-4ead-94b6-6118f7efc03f
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: 4dd0ac82-2edd-4b4e-a08b-2a115e5dabd4
+        userCondition: null
+handle: button
+hasTitleField: false
+icon: link-horizontal
+name: Button
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

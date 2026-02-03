@@ -1,0 +1,38 @@
+color: null
+description: null
+fieldLayouts:
+  f37c6cb8-25f1-4964-bf90-3510c2a911ef:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-11-13T12:25:11+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: ff163dd2-2671-4a9c-bead-517148786a6d # Überschrift 
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: faf3c650-6d5f-416b-ab25-cd489d84174b
+            userCondition: null
+            warning: null
+            width: 100
+        name: Überschrift
+        uid: 188da177-58e4-4b03-ae46-4700862f65e9
+        userCondition: null
+handle: headline
+hasTitleField: false
+icon: null
+name: Überschrift
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

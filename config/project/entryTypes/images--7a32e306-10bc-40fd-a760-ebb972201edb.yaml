@@ -1,0 +1,40 @@
+color: null
+description: null
+fieldLayouts:
+  157931f8-0f71-4c56-9257-ff4c29634aa4:
+    cardThumbAlignment: end
+    cardView:
+      - 'layoutElement:0dc657a0-0bb0-406c-b54f-b71ebcc876d8'
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-11-13T12:28:50+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 913c178a-5f50-4f50-be32-254eab017b45 # Bilder
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 0dc657a0-0bb0-406c-b54f-b71ebcc876d8
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: 7c6ae285-fd06-4619-8624-da39a9b62e25
+        userCondition: null
+handle: images
+hasTitleField: false
+icon: null
+name: Bilder
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

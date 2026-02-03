@@ -1,0 +1,68 @@
+color: null
+description: null
+fieldLayouts:
+  410f4779-6d9e-4a9c-9ff4-7224e8e5f17e:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-11-14T10:51:59+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: d1ae8a5b-575a-47db-b394-72405b542fef # Hauptnavigation
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 99ac657a-c486-458c-b3c7-e2685ed703ae
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-14T10:51:59+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 58be0d43-ef58-4085-a273-a5443ffb046a # Footernavigation
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 9378d434-ca85-4d22-a396-3481d46e7970
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-14T10:51:59+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 7f38d71f-d230-47e4-969f-53b1d05752db # Text
+            handle: footerClaim
+            instructions: null
+            label: 'Footer Claim'
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: cf3071c6-e107-4159-97a0-f553c82e4442
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: 4b4bce91-6abc-4770-8ec2-293190a3cc35
+        userCondition: null
+handle: settings
+hasTitleField: false
+icon: null
+name: Einstellungen
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

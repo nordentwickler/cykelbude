@@ -1,0 +1,53 @@
+color: null
+description: null
+fieldLayouts:
+  c02d8135-1db6-481e-85a9-6d93d51c35b5:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-11-13T12:30:31+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: ff163dd2-2671-4a9c-bead-517148786a6d # Überschrift 
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: ba96aa69-99ff-4703-a7cc-36ef07ed0c0e
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-11-13T12:30:31+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 8f031085-703a-44a8-83d8-84ad75f80aba # Grid
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: f565507f-15d5-4d99-9309-18992c3cbee0
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: 4d3be381-21a2-4d0d-825e-7c67217ba024
+        userCondition: null
+handle: grid
+hasTitleField: false
+icon: null
+name: Grid
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

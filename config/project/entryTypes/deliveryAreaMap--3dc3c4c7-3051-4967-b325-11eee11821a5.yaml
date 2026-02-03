@@ -1,0 +1,32 @@
+color: null
+description: null
+fieldLayouts:
+  326bc990-daf7-41b6-950d-2e213d4d3208:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-12-20T13:31:08+00:00'
+            dismissible: false
+            elementCondition: null
+            style: tip
+            tip: 'Stellt das Liefergebiet als eine Karte da.'
+            type: craft\fieldlayoutelements\Tip
+            uid: e21a4970-7a39-41c1-9121-5dd10f0ba8a1
+            userCondition: null
+        name: Inhalt
+        uid: 649d000f-8e28-467e-abb1-edc2e55b85ea
+        userCondition: null
+handle: deliveryAreaMap
+hasTitleField: false
+icon: map
+name: Liefergebiet
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

@@ -1,0 +1,37 @@
+columnSuffix: null
+handle: hero
+instructions: null
+name: Hero
+searchable: false
+settings:
+  createButtonLabel: 'Neues Element'
+  defaultIndexViewMode: cards
+  enableVersioning: false
+  entryTypes:
+    -
+      __assoc__:
+        -
+          - uid
+          - 31d56266-f249-4519-98d5-76b48be7d27b # Hero mit Bild
+        -
+          - group
+          - Allgemein
+    -
+      __assoc__:
+        -
+          - uid
+          - b40d6014-72f1-4f94-83cf-db9fe21e557d # Hero mit Video 
+        -
+          - group
+          - Allgemein
+  includeTableView: false
+  maxEntries: null
+  minEntries: null
+  pageSize: null
+  propagationKeyFormat: null
+  propagationMethod: all
+  showCardsInGrid: false
+  viewMode: blocks
+translationKeyFormat: null
+translationMethod: site
+type: craft\fields\Matrix
