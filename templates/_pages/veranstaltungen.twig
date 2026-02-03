@@ -1,0 +1,7 @@
+<section class="container">
+    <h1 class="text-white text-5xl md:text-6xl xl:text-8xl">{{ entry.headline ?? entry.title }}</h1>
+</section>
+
+{% for block in entry.eventsMatrix.eagerly().all() %}
+    {{ block.render() }}
+{% endfor %}

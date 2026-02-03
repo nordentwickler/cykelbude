@@ -1,0 +1,104 @@
+color: null
+description: null
+fieldLayouts:
+  818fcc01-bc39-45d7-84ea-85cb17019fcc:
+    cardThumbAlignment: end
+    cardView:
+      - 'layoutElement:564aa159-715f-40ea-b014-6670350d1ffe'
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            disabled: false
+            elementCondition: null
+            id: null
+            inputType: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            readonly: false
+            required: true
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: 170a6fdd-ef7c-4671-9266-4f33879a63d4
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 30e962cd-8f19-4011-a569-2e6cb25791e8 # Bild
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 564aa159-715f-40ea-b014-6670350d1ffe
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: e5dadefd-1251-46bb-a7ed-b3edc1d6dd7a # Text
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 13c978d0-b94a-49dc-aba5-05fd1a32007b
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            elementCondition: null
+            type: craft\fieldlayoutelements\HorizontalRule
+            uid: ad266527-9331-42c0-9b2e-e296dcef71c7
+            userCondition: null
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: d9cbcb70-f6e1-4a56-8dac-af2d53a029a5 # Termine
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 6541fe8a-3a72-4ff5-962d-7bef4fe6d766
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: 081cf72f-52db-4f0d-ae1a-234925454412
+        userCondition: null
+handle: eventSeries
+hasTitleField: true
+icon: calendar-repeat
+name: Veranstaltungsreihe
+showSlugField: false
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

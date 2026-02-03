@@ -1,0 +1,119 @@
+color: null
+description: null
+fieldLayouts:
+  61631af8-6306-4264-a5ae-52232424ed8c:
+    cardThumbAlignment: end
+    cardView:
+      - 'layoutElement:1177915b-5238-463c-b63c-99521c36156e'
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            disabled: false
+            elementCondition: null
+            id: null
+            inputType: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            readonly: false
+            required: true
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: 68d33c28-348a-4c0c-afe5-345747ac6067
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 15e158d2-0bd4-454c-9cf2-f572718c49c6 # Datum
+            handle: null
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 1177915b-5238-463c-b63c-99521c36156e
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 50006a71-71e6-45d9-a0b8-9d1a05cdf281 # Veranstaltungsort
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 16e5d399-f6ad-4bf8-ae43-ec0f5eefd197
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            elementCondition: null
+            type: craft\fieldlayoutelements\HorizontalRule
+            uid: 38f926c8-753a-4c9c-9064-c000a25c6d9e
+            userCondition: null
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 30e962cd-8f19-4011-a569-2e6cb25791e8 # Bild
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 9095c6ad-e5b2-41b0-b224-6c0dd3e791fc
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: e5dadefd-1251-46bb-a7ed-b3edc1d6dd7a # Text
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 8c7cf24d-19c2-48c2-95fc-9b867775304f
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: e95d1957-46a8-486a-8b72-5429b6799ffe
+        userCondition: null
+handle: singleEvent
+hasTitleField: true
+icon: calendar
+name: Einzelveranstaltung
+showSlugField: false
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

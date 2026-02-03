@@ -1,0 +1,53 @@
+color: null
+description: null
+fieldLayouts:
+  cbeda1c5-9bb3-48b9-9241-4e61f5e87578:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 15e158d2-0bd4-454c-9cf2-f572718c49c6 # Datum
+            handle: null
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 1f877566-4edc-4163-8fd4-f2b0ef39d29d
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: 8d78b155-67db-4c17-8b18-ddba1195ddae # Hinweis
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: a6a22aac-8561-4d30-811a-9c8e963863ad
+            userCondition: null
+            warning: null
+            width: 50
+        name: Inhalt
+        uid: 6011a23b-175b-4539-8c1d-25abe5024a02
+        userCondition: null
+handle: eventDateEntry
+hasTitleField: false
+icon: calendar
+name: Termin
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: '{eventDate|date("d.m.Y H:i")}'
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

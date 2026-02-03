@@ -1,6 +1,6 @@
 <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8 gap-8 my-12 lg:mb-36 items-center justify-center">
 {% for logo in entry.logos.eagerly() %}
-    <div class="bg-white aspect-3/2 inline-flex items-center justify-center p-2 md:p-4 xl:p-8 rounded-lg"  data-aos="fade-up">
+    <div class="bg-white aspect-3/2 inline-flex items-center justify-center p-2 md:p-4 xl:p-4 rounded-lg"  data-aos="fade-up">
         {{ tag('img', {
             src: logo.url,
             width: logo.width,

@@ -1,0 +1,29 @@
+columnSuffix: null
+handle: eventDates
+instructions: null
+name: Termine
+searchable: false
+settings:
+  createButtonLabel: 'Neuer Termin'
+  defaultIndexViewMode: cards
+  enableVersioning: false
+  entryTypes:
+    -
+      __assoc__:
+        -
+          - uid
+          - 9bb3af9c-cc0b-43fa-bbbf-46d41325bcc1 # Termin
+        -
+          - group
+          - Allgemein
+  includeTableView: false
+  maxEntries: null
+  minEntries: null
+  pageSize: null
+  propagationKeyFormat: null
+  propagationMethod: all
+  showCardsInGrid: false
+  viewMode: cards
+translationKeyFormat: null
+translationMethod: site
+type: craft\fields\Matrix

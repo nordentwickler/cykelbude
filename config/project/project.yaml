@@ -1,4 +1,4 @@
-dateModified: 1770106130
+dateModified: 1770106596
 email:
   fromEmail: brosch@webhub.de
   fromName: cykelbude
@@ -31,8 +31,11 @@ meta:
     6df34811-c0ff-4ed6-beb8-32fc07d0329a: Standard # Standard
     7a32e306-10bc-40fd-a760-ebb972201edb: Bilder # Bilder
     7f38d71f-d230-47e4-969f-53b1d05752db: Text # Text
+    8d78b155-67db-4c17-8b18-ddba1195ddae: Hinweis # Hinweis
     8f031085-703a-44a8-83d8-84ad75f80aba: Grid # Grid
+    9bb3af9c-cc0b-43fa-bbbf-46d41325bcc1: Termin # Termin
     9d49f708-57e6-4582-acab-f2fdbfc5ddad: Bild # Bild
+    15e158d2-0bd4-454c-9cf2-f572718c49c6: Datum # Datum
     23d1a135-c065-4b14-8379-a83af7d8d792: Button # Button
     30e962cd-8f19-4011-a569-2e6cb25791e8: Bild # Bild
     31d56266-f249-4519-98d5-76b48be7d27b: 'Hero mit Bild' # Hero mit Bild
@@ -45,23 +48,29 @@ meta:
     662c794f-dd22-459b-919e-8ac67bb6b931: Seiten # Seiten
     913c178a-5f50-4f50-be32-254eab017b45: Bilder # Bilder
     3910bf66-3647-4955-a88b-b18e769eb939: Logos # Logos
+    50006a71-71e6-45d9-a0b8-9d1a05cdf281: Veranstaltungsort # Veranstaltungsort
     50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd: Seiten # Seiten
     062428a9-947a-4c57-8af0-3ac3998f31f7: Element # Element
+    93652fac-d36c-4bfb-a3c8-3c9ea3a0ceb1: Veranstaltungen # Veranstaltungen
     882551fe-18c6-445b-a5fb-2cd314b590fb: Icon # Icon
     4720702d-8a8e-4801-9fcd-35c71353a2f6: Grid # Grid
     5016465b-d4be-4ffa-8cfc-7086ff6d6501: Startseite # Startseite
     a3cd47c1-517c-459b-a604-f474743e83d3: Inhalt # Inhalt
     a53b236f-6e17-423b-ba8e-e1ce4d616ed3: Accordion # Accordion
     af9de71a-96d1-4be1-ab34-3dc6e954edec: Accordion # Accordion
+    b24c641a-2a43-49cf-b5d2-70dfcc44ccd4: Veranstaltungsreihe # Veranstaltungsreihe
     b40d6014-72f1-4f94-83cf-db9fe21e557d: 'Hero mit Video ' # Hero mit Video 
     b83fd678-578b-4d0e-a82f-8f46959d3721: Logos # Logos
     b264a3f5-9d66-4e78-8a0a-3de539c0408a: Einstellungen # Einstellungen
+    c043e738-7649-4836-8b52-6936805d9bd9: Veranstaltungen # Veranstaltungen
+    c0505cb7-b95a-46e4-ab9f-89d436bfd6b5: Einzelveranstaltung # Einzelveranstaltung
     c2f0251d-6440-4d2e-bca0-622a302bb5c2: Simple # Simple
     c2450464-e6c0-4703-b4bb-d00469e3b84f: Preisrechner # Preisrechner
     c8293756-f337-4ae6-9b12-5b9861acc0ed: Element # Element
     ca499a8e-a51d-4bc8-9ddb-26d3ef6a018f: cykelbude # cykelbude
     d1ae8a5b-575a-47db-b394-72405b542fef: Hauptnavigation # Hauptnavigation
     d5aa30a2-0ab9-4cdc-add4-c2be28babceb: SEO # SEO
+    d9cbcb70-f6e1-4a56-8dac-af2d53a029a5: Termine # Termine
     d771bc7c-2840-499a-9faa-58fab8bfc523: Hero # Hero
     df04f28c-0bcc-4705-b47c-47290748c72f: Einstellungen # Einstellungen
     e5dadefd-1251-46bb-a7ed-b3edc1d6dd7a: Text # Text

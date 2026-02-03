@@ -1,0 +1,129 @@
+color: null
+description: null
+fieldLayouts:
+  1a73ca1a-e55e-4ca6-a51a-b7660a37f5fc:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            disabled: false
+            elementCondition: null
+            id: null
+            inputType: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            readonly: false
+            required: true
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: 6ba1f6ef-ec2c-43d6-b1be-a605524aa9b8
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: ff163dd2-2671-4a9c-bead-517148786a6d # Überschrift 
+            handle: null
+            instructions: null
+            label: 'Überschrift H1'
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 6be9eaa3-7ddf-4d99-973b-d2c4baa06ad2
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            elementCondition: null
+            type: craft\fieldlayoutelements\HorizontalRule
+            uid: 733b2fb9-fe69-4e3e-a60e-7e6bd952c0d2
+            userCondition: null
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: d771bc7c-2840-499a-9faa-58fab8bfc523 # Hero
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: fe288362-4cbd-41e8-b15b-a85fa33169a4
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            elementCondition: null
+            type: craft\fieldlayoutelements\HorizontalRule
+            uid: 39a1ec47-e51d-4e2c-8c3a-cd2ae012ece0
+            userCondition: null
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: c043e738-7649-4836-8b52-6936805d9bd9 # Veranstaltungen
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 96305e2b-f748-4099-a318-a0a3bef80314
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: 937d12eb-6829-4f17-8562-657dc701d626
+        userCondition: null
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2025-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            fieldUid: d5aa30a2-0ab9-4cdc-add4-c2be28babceb # SEO
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 093566d2-e6c3-4244-83a4-7675bd41adb1
+            userCondition: null
+            warning: null
+            width: 100
+        name: SEO
+        uid: 561d2ef2-1e21-4c88-8007-4163f0c6136b
+        userCondition: null
+handle: veranstaltungen
+hasTitleField: true
+icon: calendar
+name: Veranstaltungen
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

@@ -1,0 +1,37 @@
+columnSuffix: null
+handle: eventsMatrix
+instructions: null
+name: Veranstaltungen
+searchable: false
+settings:
+  createButtonLabel: 'Neue Veranstaltung'
+  defaultIndexViewMode: cards
+  enableVersioning: false
+  entryTypes:
+    -
+      __assoc__:
+        -
+          - uid
+          - c0505cb7-b95a-46e4-ab9f-89d436bfd6b5 # Einzelveranstaltung
+        -
+          - group
+          - Allgemein
+    -
+      __assoc__:
+        -
+          - uid
+          - b24c641a-2a43-49cf-b5d2-70dfcc44ccd4 # Veranstaltungsreihe
+        -
+          - group
+          - Allgemein
+  includeTableView: false
+  maxEntries: null
+  minEntries: null
+  pageSize: null
+  propagationKeyFormat: null
+  propagationMethod: all
+  showCardsInGrid: false
+  viewMode: blocks
+translationKeyFormat: null
+translationMethod: site
+type: craft\fields\Matrix

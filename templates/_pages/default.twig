@@ -9,12 +9,15 @@
 
 {### Blocks #}
 {% block content %}
+    {% if entry.type.handle == 'veranstaltungen' %}
+        {% include '_pages/veranstaltungen.twig' %}
+    {% else %}
+        <section class="container">
+            <h1 class="text-white text-5xl md:text-6xl xl:text-8xl" >{{ entry.headline ?? entry.title }}</h1>
+        </section>
 
-    <section class="container">
-        <h1 class="text-white text-5xl md:text-6xl xl:text-8xl" >{{ entry.headline ?? entry.title }}</h1>
-    </section>
-
-    {% for block in entry.contentMatrix.eagerly().all()  %}
-        {{ block.render() }}
-    {% endfor %}
+        {% for block in entry.contentMatrix.eagerly().all()  %}
+            {{ block.render() }}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

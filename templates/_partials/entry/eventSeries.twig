@@ -1,0 +1,59 @@
+<article class="container my-24 lg:my-36">
+    <div class="grid md:grid-cols-2 gap-12 md:gap-24 mb-12">
+        {% if entry.image.one() %}
+            <div data-aos="fade-up">
+                {% set image = entry.image.one() %}
+                <img
+                    src="{{ image.url }}"
+                    alt="{{ image.alt ?? entry.title }}"
+                    class="rounded-lg w-full h-auto object-cover"
+                    loading="lazy"
+                >
+            </div>
+        {% endif %}
+
+        <div class="{{ entry.image.one() ? '' : 'md:col-span-2' }}" data-aos="fade-up">
+            <h2 class="text-white text-3xl md:text-4xl mb-6">{{ entry.title }}</h2>
+
+            {% if entry.text %}
+                <div class="prose prose-invert max-w-none">
+                    {% include '_partials/entry/richText.twig' %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% set eventDates = entry.eventDates.all() %}
+    {% if eventDates|length %}
+        <div class="mt-12" data-aos="fade-up">
+            <h3 class="text-white text-2xl mb-6">Termine</h3>
+            <div class="grid gap-4">
+                {% for dateEntry in eventDates %}
+                    <div class="bg-white/5 rounded-lg p-6 flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex flex-wrap items-center gap-6">
+                            {% if dateEntry.eventDate %}
+                                <div class="flex items-center gap-2 text-white">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span class="font-medium">{{ dateEntry.eventDate|date('d.m.Y') }}</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-white/80">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span>{{ dateEntry.eventDate|date('H:i') }} Uhr</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if dateEntry.eventNote %}
+                            <span class="text-sm bg-white/10 text-white/90 px-3 py-1 rounded-full">
+                                {{ dateEntry.eventNote }}
+                            </span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</article>
