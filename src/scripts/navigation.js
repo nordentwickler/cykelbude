@@ -1,38 +1,49 @@
-// Minimales barrierefreies Navigationsmenü
+// Minimales barrierefreies Push-Navigationsmenü
 document.addEventListener('DOMContentLoaded', () => {
     const toggleButton = document.getElementById('menu-toggle')
     const closeButton = document.getElementById('menu-close')
     const nav = document.getElementById('mobile-navigation')
+    const siteContent = document.getElementById('site-content')
 
-    if (!toggleButton || !closeButton || !nav) return
+    if (!toggleButton || !closeButton || !nav || !siteContent) return
 
     const focusableElements = 'a[href], button:not([disabled])'
     let firstFocusable, lastFocusable
 
+    // Overlay für Abdunklung erstellen
+    const overlay = document.createElement('div')
+    overlay.className = 'fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300'
+    siteContent.parentElement.appendChild(overlay)
+
     const openMenu = () => {
-        nav.classList.remove('opacity-0', 'pointer-events-none')
-        nav.classList.add('opacity-100', 'pointer-events-auto')
+        siteContent.classList.add('-translate-x-72', 'md:-translate-x-80', 'lg:-translate-x-96')
+        nav.classList.remove('translate-x-full')
+        nav.classList.add('translate-x-0')
+        overlay.classList.remove('opacity-0', 'pointer-events-none')
+        overlay.classList.add('opacity-100', 'pointer-events-auto')
+
         nav.setAttribute('aria-hidden', 'false')
         toggleButton.setAttribute('aria-expanded', 'true')
         toggleButton.setAttribute('aria-label', 'Menü schließen')
 
-        // Focus auf Close-Button setzen
         closeButton.focus()
 
-        // Alle fokussierbaren Elemente im Menü finden
         const focusables = nav.querySelectorAll(focusableElements)
         firstFocusable = focusables[0]
         lastFocusable = focusables[focusables.length - 1]
     }
 
     const closeMenu = () => {
-        nav.classList.add('opacity-0', 'pointer-events-none')
-        nav.classList.remove('opacity-100', 'pointer-events-auto')
+        siteContent.classList.remove('-translate-x-72', 'md:-translate-x-80', 'lg:-translate-x-96')
+        nav.classList.add('translate-x-full')
+        nav.classList.remove('translate-x-0')
+        overlay.classList.add('opacity-0', 'pointer-events-none')
+        overlay.classList.remove('opacity-100', 'pointer-events-auto')
+
         nav.setAttribute('aria-hidden', 'true')
         toggleButton.setAttribute('aria-expanded', 'false')
         toggleButton.setAttribute('aria-label', 'Menü öffnen')
 
-        // Focus zurück zum Toggle-Button
         toggleButton.focus()
     }
 
@@ -54,11 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // ESC zum Schließen
         if (e.key === 'Escape') {
             closeMenu()
         }
     }
+
+    // Klick auf abgedunkelten Bereich schließt das Menü
+    overlay.addEventListener('click', closeMenu)
 
     toggleButton.addEventListener('click', openMenu)
     closeButton.addEventListener('click', closeMenu)

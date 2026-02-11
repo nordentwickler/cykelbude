@@ -1,8 +1,7 @@
 color: null
 description: null
 fieldLayouts:
-  1a73ca1a-e55e-4ca6-a51a-b7660a37f5fc:
-    cardThumbAlignment: end
+  6e9e3258-7cff-4e23-a8aa-9426d0056332:
     tabs:
       -
         elementCondition: null
@@ -12,7 +11,7 @@ fieldLayouts:
             autocomplete: false
             autocorrect: true
             class: null
-            dateAdded: '2025-02-03T12:00:00+00:00'
+            dateAdded: '2026-02-03T12:00:00+00:00'
             disabled: false
             elementCondition: null
             id: null
@@ -25,105 +24,135 @@ fieldLayouts:
             orientation: null
             placeholder: null
             readonly: false
-            required: true
+            required: false
             size: null
             step: null
             tip: null
             title: null
             type: craft\fieldlayoutelements\entries\EntryTitleField
-            uid: 6ba1f6ef-ec2c-43d6-b1be-a605524aa9b8
-            userCondition: null
-            warning: null
-            width: 50
-          -
-            dateAdded: '2025-02-03T12:00:00+00:00'
-            editCondition: null
-            elementCondition: null
-            fieldUid: ff163dd2-2671-4a9c-bead-517148786a6d # Überschrift 
-            handle: null
-            instructions: null
-            label: 'Überschrift H1'
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 6be9eaa3-7ddf-4d99-973b-d2c4baa06ad2
-            userCondition: null
-            warning: null
-            width: 50
-          -
-            dateAdded: '2025-02-03T12:00:00+00:00'
-            elementCondition: null
-            type: craft\fieldlayoutelements\HorizontalRule
-            uid: 733b2fb9-fe69-4e3e-a60e-7e6bd952c0d2
-            userCondition: null
-          -
-            dateAdded: '2025-02-03T12:00:00+00:00'
-            editCondition: null
-            elementCondition: null
-            fieldUid: d771bc7c-2840-499a-9faa-58fab8bfc523 # Hero
-            handle: null
-            instructions: null
-            label: null
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: fe288362-4cbd-41e8-b15b-a85fa33169a4
+            uid: c558b5d3-3c91-4a45-ac82-58076842eca3
             userCondition: null
             warning: null
             width: 100
           -
-            dateAdded: '2025-02-03T12:00:00+00:00'
-            elementCondition: null
-            type: craft\fieldlayoutelements\HorizontalRule
-            uid: 39a1ec47-e51d-4e2c-8c3a-cd2ae012ece0
-            userCondition: null
-          -
-            dateAdded: '2025-02-03T12:00:00+00:00'
+            dateAdded: '2026-02-03T12:00:00+00:00'
             editCondition: null
             elementCondition: null
-            fieldUid: c043e738-7649-4836-8b52-6936805d9bd9 # Veranstaltungen
+            elementEditCondition: null
+            fieldUid: 15e158d2-0bd4-454c-9cf2-f572718c49c6 # Datum
+            handle: null
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 9f205869-6992-492c-98b3-d79b3428337f
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2026-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 50006a71-71e6-45d9-a0b8-9d1a05cdf281 # Veranstaltungsort
             handle: null
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 96305e2b-f748-4099-a318-a0a3bef80314
+            uid: be1a13ce-b56f-4f21-9992-d71a0aac5b2c
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2026-02-03T12:00:00+00:00'
+            elementCondition: null
+            type: craft\fieldlayoutelements\HorizontalRule
+            uid: 6836b9cd-2b61-4141-894a-38150257c144
+            userCondition: null
+          -
+            dateAdded: '2026-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 963a5968-e991-4e25-8bb3-3c12f6422098 # Veranstaltungsreihe
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 727ccab8-8ebc-4820-bf28-798dd5832d54
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-02-03T12:00:00+00:00'
+            elementCondition: null
+            type: craft\fieldlayoutelements\HorizontalRule
+            uid: 400f5962-d8da-4a3a-a54b-32c67077fd86
+            userCondition: null
+          -
+            dateAdded: '2026-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 30e962cd-8f19-4011-a569-2e6cb25791e8 # Bild
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 6a1312b5-56e7-4593-8569-0e2ff1543779
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: e5dadefd-1251-46bb-a7ed-b3edc1d6dd7a # Text
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 66a126e5-3f7c-42bb-b2ff-fbddfca01963
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-02-03T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 8d78b155-67db-4c17-8b18-ddba1195ddae # Hinweis
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: a832bb12-103b-4a93-b916-80e07b33aa45
             userCondition: null
             warning: null
             width: 100
         name: Inhalt
-        uid: 937d12eb-6829-4f17-8562-657dc701d626
+        uid: d31d6756-0870-4a8a-b666-12dd6454d0b0
         userCondition: null
-      -
-        elementCondition: null
-        elements:
-          -
-            dateAdded: '2025-02-03T12:00:00+00:00'
-            editCondition: null
-            elementCondition: null
-            fieldUid: d5aa30a2-0ab9-4cdc-add4-c2be28babceb # SEO
-            handle: null
-            instructions: null
-            label: null
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 093566d2-e6c3-4244-83a4-7675bd41adb1
-            userCondition: null
-            warning: null
-            width: 100
-        name: SEO
-        uid: 561d2ef2-1e21-4c88-8007-4163f0c6136b
-        userCondition: null
-handle: veranstaltungen
+handle: termin
 hasTitleField: true
 icon: calendar
-name: Veranstaltungen
-showSlugField: true
+name: Termin
+showSlugField: false
 showStatusField: true
 slugTranslationKeyFormat: null
 slugTranslationMethod: site
-titleFormat: null
+titleFormat: '{eventSeries.one.title ?? "Termin"}'
 titleTranslationKeyFormat: null
 titleTranslationMethod: site

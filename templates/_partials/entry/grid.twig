@@ -2,7 +2,7 @@
 
 <div class="container mx-auto my-12 lg:my-36 xl:my-64">
     {% if entry.headline %}
-        <h2 class="text-pink text-center mt-24 mb-12">{{ entry.headline }}</h2>
+        <h2 class="text-pink md:text-center mt-24 mb-12">{{ entry.headline }}</h2>
     {% endif %}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start ">
         {% for row in entry.gridElements.eagerly().all()|batch(batchNumber) %}
@@ -20,7 +20,28 @@
 
                     <h3 class="text-pink hyphens-auto">{{ block.headline }}</h3>
                     <div class="text-lg md:text-xl xl:text-2xl">
-                        {{ block.text }}
+                        {% for chunk in block.text %}
+
+                        {% if chunk.type== 'markup' %}
+                            <div class="chunk {{ chunk.type == 'markup' }} text">
+                                {{ chunk }}
+                            </div>
+
+                        {% else %}
+
+                            {% switch chunk.entry.type.handle %}
+                            {% case 'button' %}
+                                {{ chunk }}
+                            {% case 'image' %}
+                                {{ chunk }}
+                            {% default %}
+                                {{ chunk.entry.render() }}
+                            {% endswitch %}
+
+                        {% endif %}
+
+                        {% endfor %}
+
                     </div>
                 </div>
             {% endfor %}

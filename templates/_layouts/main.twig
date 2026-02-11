@@ -16,19 +16,42 @@ webhub.de
 
 <body {{ craft.app.config.general.devMode ? 'data-dev-mode="true"' }}>
 
-    <div id="app" class="bg-navy text-white p-4 lg:p-8">
+    <div id="app" class="bg-navy text-white overflow-x-hidden">
+        <div id="site-content" class="p-4 lg:p-8 transition-transform duration-300 ease-in-out min-h-screen">
+            {% include '_layouts/partials/header.twig' ignore missing %}
 
-        {% include '_layouts/partials/header.twig' ignore missing %}
+            <main>
+                {% block content %}
+                    <p class="text-center">If you see this, no block named content was provided.</p>
+                {% endblock %}
+            </main>
 
-        <main>
-            {% block content %}
-                <p class="text-center">If you see this, no block named content was provided.</p>
-            {% endblock %}
+            {% include '_layouts/partials/footer.twig' ignore missing %}
+        </div>
 
-        </main>
+        <nav class="fixed top-0 right-0 h-full w-72 md:w-80 lg:w-96 bg-pink text-white z-50 flex flex-col items-end justify-start translate-x-full transition-transform duration-300 ease-in-out p-6 md:p-8 lg:p-10" id="mobile-navigation" aria-label="Hauptnavigation" aria-hidden="true">
+            <div class="flex flex-col text-right justify-end items-end gap-12 lg:gap-24">
 
-        {% include '_layouts/partials/footer.twig' ignore missing %}
+                <div>
+                    <button id="menu-close" class="text-white hover:bg-navy focus:outline-2 focus:outline-white focus:outline-offset-4 p-2 inline-flex rounded-lg cursor-pointer" aria-label="Menü schließen">
+                        {{ craft.vite.inline('@assets/icons/close.svg')|attr({
+                            class: 'h-8 sm:h-13 w-auto fill-current'
+                        }) }}
+                    </button>
+                </div>
 
+                <ul class="space-y-6 lg:space-y-8" role="list">
+                    {% for entry in settings.mainNavigation %}
+                    <li>
+                        <a href="{{ entry.getUrl }}"
+                        class="text-white hover:text-navy font-display focus:outline-2 focus:outline-white focus:outline-offset-4 p-2 text-4xl md:text-5xl">
+                            {{ entry.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav>
     </div>
 
     {# Craft CSRF token #}

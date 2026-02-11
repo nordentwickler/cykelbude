@@ -1,7 +1,88 @@
-<section class="container my-24">
+<section class="container">
+    {% if entry.headline %}
+        <div class="lg:max-w-4/5">
+            <h2 class="mb-8">{{ entry.headline }}</h2>
+        </div>
+    {% endif %}
     <div id="price-calculator" class="w-full">
         <div id="calculator-content">
-            {# Wird dynamisch per JavaScript befüllt #}
+            <form id="calculator-form" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6">
+
+                    {# Spalte 1: Abholgebiet #}
+                    <div>
+                        <h3 class="text-lg lg:text-xl font-bold text-white px-4 py-3 bg-pink rounded-t-lg mb-0">Abholgebiet: <span id="pickup-area-display">–</span></h3>
+                        <div class="relative">
+                            <div id="pickup-map" class="w-full aspect-square md:aspect-2/3 2xl:h-full rounded-b-lg border-4 border-pink"></div>
+                            <div id="pickup-hint" class="absolute top-4 left-4 right-4 bg-navy text-white p-3 rounded-lg text-center font-bold text-lg shadow-lg pointer-events-none">
+                                Abholgebiet auf der Karte wählen
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Spalte 2: Liefergebiet #}
+                    <div>
+                        <h3 class="text-lg lg:text-xl font-bold text-white px-4 py-3 bg-mint rounded-t-lg mb-0">Liefergebiet: <span id="delivery-area-display">–</span></h3>
+                        <div class="relative">
+                            <div id="delivery-map" class="w-full aspect-square md:aspect-2/3 2xl:h-fullrounded-b-lg border-4 border-mint"></div>
+                            <div id="delivery-map-overlay" class="absolute inset-0 bg-navy/70 rounded-b-lg flex items-center justify-center cursor-not-allowed">
+                                <span class="text-white/60 text-lg font-bold text-center px-4">Bitte zuerst ein Abholgebiet wählen</span>
+                            </div>
+                            <div id="delivery-hint" class="absolute top-4 left-4 right-4 bg-navy text-white p-3 rounded-lg text-center font-bold text-lg shadow-lg pointer-events-none hidden">
+                                Liefergebiet auf der Karte wählen
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Spalte 3: Einstellungen + Preis #}
+                    <div class="bg-white text-navy rounded-lg flex flex-col col-span-1 md:col-span-2 2xl:col-span-1">
+                        {# Zustellzeit #}
+                        <div class="p-5">
+                            <h3 class="text-lg xl:text-xl font-bold text-navy mb-3">Zustellzeit</h3>
+                            <div id="delivery-time-options" class="flex flex-col gap-2">
+                                {# Wird per JS aus pricing.json befüllt #}
+                            </div>
+                        </div>
+
+                        <hr class="border-navy/50 my-4 mx-5">
+
+                        {# Pakete #}
+                        <div class="p-5">
+                            <h3 class="text-lg xl:text-xl  font-bold text-navy mb-3">Pakete</h3>
+                            <div id="packages-container" class="space-y-2 mb-3"></div>
+                            <button type="button" id="add-package" class="w-full bg-navy text-white px-4 py-2 rounded-lg hover:bg-navy/80 transition-colors text-lg xl:text-xl font-bold">
+                                + Paket hinzufügen
+                            </button>
+                            <div id="total-weight" class="mt-12 pt-4 border-t border-navy/50 space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg xl:text-xl text-navy">Gesamtgewicht:</span>
+                                    <span class="text-lg xl:text-xl font-bold text-navy"><span id="weight-total">0</span> kg</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg xl:text-xl text-navy">Gewichtsklasse:</span>
+                                    <span id="weight-class" class="text-lg xl:text-xl font-bold text-pink">–</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {# Preis #}
+                        <div class="bg-pink p-5 text-white mt-auto mx-4 mb-4 rounded-lg">
+                            <h3 class="text-5xl font-display mb-4">Preis</h3>
+                            <div class="space-y-2 divide-y divide-white/50">
+                                <div class="flex justify-between items-center py-2">
+                                    <span class="text-lg xl:text-xl">Netto</span>
+                                    <span id="price-netto" class="text-xl font-bold">0,00 €</span>
+                                </div>
+                                <div class="flex justify-between items-center py-2">
+                                    <span id="vat-label" class="text-lg xl:text-xl">inkl. MwSt.:</span>
+                                    <span id="price-brutto" class="text-lg xl:text-xl">0,00 €</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
         </div>
     </div>
 </section>

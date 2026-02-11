@@ -9,15 +9,22 @@
 
 {### Blocks #}
 {% block content %}
-    {% if entry.type.handle == 'veranstaltungen' %}
-        {% include '_pages/veranstaltungen.twig' %}
+    {% if entry.type.handle == 'events' %}
+        {% include '_pages/events.twig' %}
     {% else %}
-        <section class="container">
-            <h1 class="text-white text-5xl md:text-6xl xl:text-8xl" >{{ entry.headline ?? entry.title }}</h1>
+        <section class="container mb-12">
+            <h1 class="text-white text-5xl md:text-7xl xl:text-9xl" >
+            {% if entry.headline is defined and entry.headline|length %}
+                {{ entry.headline|replace({'[br]': '<br class="hidden md:inline"/>'})|raw }}
+            {% else %}
+              {{ entry.title }}
+            {% endif %}
+            </h1>
         </section>
-
+        <div class="space-y-12 md:space-y-16 lg:space-y-48">
         {% for block in entry.contentMatrix.eagerly().all()  %}
             {{ block.render() }}
         {% endfor %}
+        </div>
     {% endif %}
 {% endblock %}

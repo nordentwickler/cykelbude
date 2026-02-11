@@ -1,3 +1,4 @@
+allowLineBreaksInTitles: false
 color: null
 description: null
 fieldLayouts:
@@ -41,6 +42,7 @@ fieldLayouts:
             dateAdded: '2025-02-03T12:00:00+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 30e962cd-8f19-4011-a569-2e6cb25791e8 # Bild
             handle: null
             instructions: null
@@ -56,6 +58,7 @@ fieldLayouts:
             dateAdded: '2025-02-03T12:00:00+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: e5dadefd-1251-46bb-a7ed-b3edc1d6dd7a # Text
             handle: null
             instructions: null
@@ -77,6 +80,7 @@ fieldLayouts:
             dateAdded: '2025-02-03T12:00:00+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: d9cbcb70-f6e1-4a56-8dac-af2d53a029a5 # Termine
             handle: null
             instructions: null
@@ -91,9 +95,10 @@ fieldLayouts:
         name: Inhalt
         uid: 081cf72f-52db-4f0d-ae1a-234925454412
         userCondition: null
+    thumbFieldKey: null
 handle: eventSeries
 hasTitleField: true
-icon: calendar-repeat
+icon: calendar-days
 name: Veranstaltungsreihe
 showSlugField: false
 showStatusField: true
@@ -102,3 +107,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
+uiLabelFormat: '{title}'

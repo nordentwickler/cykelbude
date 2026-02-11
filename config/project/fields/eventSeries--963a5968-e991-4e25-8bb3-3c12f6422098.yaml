@@ -1,0 +1,23 @@
+columnSuffix: null
+handle: eventSeries
+instructions: 'Optionale Zuordnung zu einer Veranstaltungsreihe'
+name: Veranstaltungsreihe
+searchable: false
+settings:
+  allowSelfRelations: false
+  branchLimit: null
+  maintainHierarchy: false
+  maxRelations: 1
+  minRelations: null
+  selectionCondition: null
+  selectionLabel: 'Veranstaltungsreihe auswählen'
+  showCardsInGrid: false
+  showSiteMenu: false
+  sources:
+    - 'section:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+  targetSiteId: null
+  validateRelatedElements: false
+  viewMode: large
+translationKeyFormat: null
+translationMethod: site
+type: craft\fields\Entries

@@ -1,4 +1,69 @@
-dateModified: 1770106596
+dateModified: 1770820767
+elementSources:
+  craft\elements\Entry:
+    -
+      key: '*'
+      page: Entries
+      type: native
+    -
+      defaultSort:
+        - title
+        - asc
+      defaultViewMode: ''
+      disabled: false
+      key: singles
+      page: Entries
+      tableAttributes:
+        - status
+        - link
+      type: native
+    -
+      heading: Kanäle
+      key: 'heading:79604cca-b4f3-4c3e-bbc5-b352686c90be'
+      page: Entries
+      type: heading
+    -
+      key: 'section:441863aa-7a82-47fa-90fa-0d9c401fb1c1'
+      page: Entries
+      type: native
+    -
+      key: 'section:09759854-ca02-4770-a144-d93007a8525a' # Termine
+      page: Entries
+      type: native
+    -
+      key: 'section:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+      page: Entries
+      type: native
+    -
+      heading: Strukturen
+      key: 'heading:19cc049c-461d-4bf0-bc63-45e9325d91fb'
+      page: Entries
+      type: heading
+    -
+      key: 'section:50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd' # Seiten
+      page: Entries
+      type: native
+    -
+      condition:
+        class: craft\elements\conditions\entries\EntryCondition
+        conditionRules:
+          -
+            class: craft\elements\conditions\entries\SectionConditionRule
+            operator: in
+            uid: 109f49b6-43a1-4d4b-b3f2-96eafcb6a6c3
+            values:
+              - 539b26ae-51b9-4d0c-afa5-5443d9c6bf22 # Startseite
+        elementType: craft\elements\Entry
+        fieldContext: global
+      defaultSort:
+        - id
+        - asc
+      defaultViewMode: ''
+      key: 'custom:6647c12d-0c00-4622-b8b4-fde02768eed4'
+      label: Starsteite
+      page: Entries
+      tableAttributes: '-'
+      type: custom
 email:
   fromEmail: brosch@webhub.de
   fromName: cykelbude
@@ -23,6 +88,7 @@ meta:
     0a7f3093-d14e-4af0-9a47-782474c30438: Videos # Videos
     0f79b4a7-5345-4ad8-8f42-17d39cb44c73: cykelbude # cykelbude
     2a11f8b8-5f66-4305-a071-44e33b8b5d72: Bilder # Bilder
+    2cfe63bd-f87d-40b9-83b1-5610be0ce6e2: Dateidownload # Dateidownload
     3d01e2e5-75a3-4117-a026-c9e2144ed97e: Überschrift # Überschrift
     3dc3c4c7-3051-4967-b325-11eee11821a5: Liefergebiet # Liefergebiet
     5ccb0af0-c1fc-408d-951d-9282310c502f: Logos # Logos
@@ -31,12 +97,14 @@ meta:
     6df34811-c0ff-4ed6-beb8-32fc07d0329a: Standard # Standard
     7a32e306-10bc-40fd-a760-ebb972201edb: Bilder # Bilder
     7f38d71f-d230-47e4-969f-53b1d05752db: Text # Text
+    8b1e0660-142d-4b77-97a5-81f23eb3654f: Call2Action # Call2Action
     8d78b155-67db-4c17-8b18-ddba1195ddae: Hinweis # Hinweis
     8f031085-703a-44a8-83d8-84ad75f80aba: Grid # Grid
     9bb3af9c-cc0b-43fa-bbbf-46d41325bcc1: Termin # Termin
     9d49f708-57e6-4582-acab-f2fdbfc5ddad: Bild # Bild
     15e158d2-0bd4-454c-9cf2-f572718c49c6: Datum # Datum
     23d1a135-c065-4b14-8379-a83af7d8d792: Button # Button
+    25c518d7-9ccc-40ce-9c42-8a7523bb25a8: Veranstaltungsreihen # Veranstaltungsreihen
     30e962cd-8f19-4011-a569-2e6cb25791e8: Bild # Bild
     31d56266-f249-4519-98d5-76b48be7d27b: 'Hero mit Bild' # Hero mit Bild
     45fd3dd7-2f99-4dd8-878a-8cd6e7e02125: 'Text + Bild' # Text + Bild
@@ -47,6 +115,7 @@ meta:
     539b26ae-51b9-4d0c-afa5-5443d9c6bf22: Startseite # Startseite
     662c794f-dd22-459b-919e-8ac67bb6b931: Seiten # Seiten
     913c178a-5f50-4f50-be32-254eab017b45: Bilder # Bilder
+    963a5968-e991-4e25-8bb3-3c12f6422098: Veranstaltungsreihe # Veranstaltungsreihe
     3910bf66-3647-4955-a88b-b18e769eb939: Logos # Logos
     50006a71-71e6-45d9-a0b8-9d1a05cdf281: Veranstaltungsort # Veranstaltungsort
     50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd: Seiten # Seiten
@@ -55,16 +124,18 @@ meta:
     882551fe-18c6-445b-a5fb-2cd314b590fb: Icon # Icon
     4720702d-8a8e-4801-9fcd-35c71353a2f6: Grid # Grid
     5016465b-d4be-4ffa-8cfc-7086ff6d6501: Startseite # Startseite
+    09759854-ca02-4770-a144-d93007a8525a: Termine # Termine
     a3cd47c1-517c-459b-a604-f474743e83d3: Inhalt # Inhalt
     a53b236f-6e17-423b-ba8e-e1ce4d616ed3: Accordion # Accordion
     af9de71a-96d1-4be1-ab34-3dc6e954edec: Accordion # Accordion
     b24c641a-2a43-49cf-b5d2-70dfcc44ccd4: Veranstaltungsreihe # Veranstaltungsreihe
-    b40d6014-72f1-4f94-83cf-db9fe21e557d: 'Hero mit Video ' # Hero mit Video 
+    b40d6014-72f1-4f94-83cf-db9fe21e557d: 'Hero mit Video oder Bildern' # Hero mit Video oder Bildern
     b83fd678-578b-4d0e-a82f-8f46959d3721: Logos # Logos
     b264a3f5-9d66-4e78-8a0a-3de539c0408a: Einstellungen # Einstellungen
     c043e738-7649-4836-8b52-6936805d9bd9: Veranstaltungen # Veranstaltungen
     c0505cb7-b95a-46e4-ab9f-89d436bfd6b5: Einzelveranstaltung # Einzelveranstaltung
     c2f0251d-6440-4d2e-bca0-622a302bb5c2: Simple # Simple
+    c696d805-5834-4426-a413-f96178227d70: Termin # Termin
     c2450464-e6c0-4703-b4bb-d00469e3b84f: Preisrechner # Preisrechner
     c8293756-f337-4ae6-9b12-5b9861acc0ed: Element # Element
     ca499a8e-a51d-4bc8-9ddb-26d3ef6a018f: cykelbude # cykelbude
@@ -74,6 +145,7 @@ meta:
     d771bc7c-2840-499a-9faa-58fab8bfc523: Hero # Hero
     df04f28c-0bcc-4705-b47c-47290748c72f: Einstellungen # Einstellungen
     e5dadefd-1251-46bb-a7ed-b3edc1d6dd7a: Text # Text
+    e6c6b663-ee2c-4476-a2e4-49fe575dc1a3: Veranstaltungsreihe # Veranstaltungsreihe
     eaad13fa-ab0b-4a45-af4a-faf401a49a2b: Downloads # Downloads
     ff163dd2-2671-4a9c-bead-517148786a6d: 'Überschrift ' # Überschrift 
 plugins:

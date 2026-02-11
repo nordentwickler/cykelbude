@@ -1,8 +1,12 @@
 
-<div class="container mt-24 mb-12">
+<div class="container">
+
     {% if entry.headline %}
-        <h2>{{ entry.headline }}</h2>
+    <div class="lg:max-w-4/5">
+        <h2 class="mb-8">{{ entry.headline }}</h2>
+    </div>
     {% endif %}
 
    {% include '_partials/entry/richText.twig' %}
+
 </div>

@@ -5,7 +5,7 @@
   "prefer-stable": true,
   "require": {
     "craftcms/ckeditor": "4.11.0",
-    "craftcms/cms": "5.9.5",
+    "craftcms/cms": "^5.9.7",
     "ether/seo": "^5.0.0",
     "nystudio107/craft-vite": "5.0.1",
     "putyourlightson/craft-elements-panel": "3.0.1",

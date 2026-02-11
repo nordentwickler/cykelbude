@@ -1,0 +1,49 @@
+{### Extends #}
+{% extends '_layouts/main.twig' %}
+
+{### Blocks #}
+{% block content %}
+    <article class="container">
+        {# Kategorien #}
+        {% set categories = entry.blogCategories.all() %}
+        {% if categories|length %}
+            <div class="flex flex-wrap gap-2 mb-6">
+                {% for category in categories %}
+                    <a href="{{ url('blog', { kategorie: category.slug }) }}"
+                       class="px-3 py-1 bg-white/10 hover:bg-pink text-white text-sm rounded-full transition-colors">
+                        {{ category.title }}
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h1 class="text-white text-5xl md:text-7xl xl:text-8xl">{{ entry.headline ?? entry.title }}</h1>
+
+        <div class="text-white/60 mt-4">
+            {{ entry.postDate|date('d.m.Y') }}
+        </div>
+
+        {# Beitragsbild #}
+        {% if entry.image|length %}
+            <div class="mt-8">
+                <img src="{{ entry.image.one().url }}"
+                     alt="{{ entry.title }}"
+                     class="w-full rounded-lg object-cover max-h-[500px]">
+            </div>
+        {% endif %}
+
+        {# Text #}
+        {% if entry.text %}
+            <div class="mt-12 text max-w-prose">
+                {% include '_partials/entry/richText.twig' %}
+            </div>
+        {% endif %}
+    </article>
+
+    {# Zurück-Link #}
+    <div class="container mt-16">
+        <a href="{{ url('blog') }}" class="text-pink hover:text-mint transition-colors">
+            &larr; Alle Beitr&auml;ge
+        </a>
+    </div>
+{% endblock %}

@@ -19,7 +19,7 @@ settings:
   includeTableView: false
   maxEntries: null
   minEntries: null
-  pageSize: null
+  pageSize: 50
   propagationKeyFormat: null
   propagationMethod: all
   showCardsInGrid: false

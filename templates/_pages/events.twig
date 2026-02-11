@@ -1,0 +1,130 @@
+<section class="container">
+    <h1 class="text-white text-5xl md:text-7xl xl:text-8xl">{{ entry.headline ?? entry.title }}</h1>
+</section>
+
+{# Einzeltermine (ohne Veranstaltungsreihe) #}
+{% set singleEvents = craft.entries()
+    .section('events')
+    .eventSeries(':empty:')
+    .orderBy('eventDate asc')
+    .all() %}
+
+{# Alle Veranstaltungsreihen mit ihren Events #}
+{% set allSeries = craft.entries()
+    .section('eventSeries')
+    .all() %}
+
+{# Veranstaltungsreihen anzeigen #}
+{% if allSeries|length %}
+    <section class="container mt-16">
+        <h2 class="text-white text-3xl md:text-4xl mb-8">Veranstaltungsreihen</h2>
+
+        {% for series in allSeries %}
+            {# Kommende Events (aktuellste oben) #}
+            {% set upcomingEvents = craft.entries()
+                .section('events')
+                .relatedTo(series)
+                .eventDate('>= ' ~ now|date('Y-m-d'))
+                .orderBy('eventDate asc')
+                .all() %}
+
+            {# Vergangene Events (letzte 6) #}
+            {% set pastEvents = craft.entries()
+                .section('events')
+                .relatedTo(series)
+                .eventDate('< ' ~ now|date('Y-m-d'))
+                .orderBy('eventDate desc')
+                .limit(6)
+                .all() %}
+
+            {% set seriesEvents = upcomingEvents|merge(pastEvents) %}
+
+            {% if seriesEvents|length %}
+            <div class="mb-12 p-6 bg-white/10 rounded-lg">
+                <div class="flex gap-6 mb-6">
+                    {% if series.image|length %}
+                        <img src="{{ series.image.one().url }}"
+                             alt="{{ series.title }}"
+                             class="w-32 h-32 object-cover rounded">
+                    {% endif %}
+                    <div>
+                        <h3 class="text-white text-2xl font-bold">{{ series.title }}</h3>
+                        {% if series.text %}
+                            <div class="text-white/80 mt-2">{{ series.text }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    {% for event in seriesEvents %}
+                        <div class="flex items-center gap-4 p-4 bg-white/5 rounded">
+                            <div class="text-white font-mono">
+                                {{ event.eventDate|date('d.m.Y') }}
+                                {% if event.eventDate|date('H:i') != '00:00' %}
+                                    <span class="text-white/60">{{ event.eventDate|date('H:i') }} Uhr</span>
+                                {% endif %}
+                            </div>
+                            {% if event.eventLocation %}
+                                <div class="text-white/60">{{ event.eventLocation }}</div>
+                            {% endif %}
+                            {% if event.eventNote %}
+                                <span class="px-2 py-1 bg-yellow-500/20 text-yellow-300 text-sm rounded">
+                                    {{ event.eventNote }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </section>
+{% endif %}
+
+{# Einzeltermine anzeigen #}
+{% if singleEvents|length %}
+    <section class="container mt-16">
+        <h2 class="text-white text-3xl md:text-4xl mb-8">Einzeltermine</h2>
+
+        <div class="space-y-4">
+            {% for event in singleEvents %}
+                <div class="flex items-start gap-6 p-6 bg-white/10 rounded-lg">
+                    {% if event.image|length %}
+                        <img src="{{ event.image.one().url }}"
+                             alt="{{ event.title }}"
+                             class="w-24 h-24 object-cover rounded">
+                    {% endif %}
+                    <div class="flex-1">
+                        <div class="flex items-center gap-4 mb-2">
+                            <span class="text-white font-mono">
+                                {{ event.eventDate|date('d.m.Y') }}
+                                {% if event.eventDate|date('H:i') != '00:00' %}
+                                    {{ event.eventDate|date('H:i') }} Uhr
+                                {% endif %}
+                            </span>
+                            {% if event.eventLocation %}
+                                <span class="text-white/60">{{ event.eventLocation }}</span>
+                            {% endif %}
+                            {% if event.eventNote %}
+                                <span class="px-2 py-1 bg-yellow-500/20 text-yellow-300 text-sm rounded">
+                                    {{ event.eventNote }}
+                                </span>
+                            {% endif %}
+                        </div>
+                        <h3 class="text-white text-xl font-bold">{{ event.title }}</h3>
+                        {% if event.text %}
+                            <div class="text-white/80 mt-2">{{ event.text }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
+
+{# Fallback wenn keine Events vorhanden #}
+{% if not singleEvents|length and not allSeries|length %}
+    <section class="container mt-16">
+        <p class="text-white/60">Aktuell sind keine Termine geplant.</p>
+    </section>
+{% endif %}

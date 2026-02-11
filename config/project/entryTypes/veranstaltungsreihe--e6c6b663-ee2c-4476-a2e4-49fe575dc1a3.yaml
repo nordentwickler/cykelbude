@@ -1,47 +1,57 @@
-allowLineBreaksInTitles: false
 color: null
 description: null
 fieldLayouts:
-  cbeda1c5-9bb3-48b9-9241-4e61f5e87578:
-    cardThumbAlignment: end
+  a63d83d3-1ef9-40d0-a83a-eb38a06f023e:
     tabs:
       -
         elementCondition: null
         elements:
           -
-            dateAdded: '2025-02-03T12:00:00+00:00'
-            editCondition: null
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            dateAdded: '2026-02-03T12:00:00+00:00'
+            disabled: false
             elementCondition: null
-            elementEditCondition: null
-            fieldUid: 15e158d2-0bd4-454c-9cf2-f572718c49c6 # Datum
-            handle: null
+            id: null
+            inputType: null
             instructions: null
             label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            readonly: false
             required: true
+            size: null
+            step: null
             tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 1f877566-4edc-4163-8fd4-f2b0ef39d29d
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: 9e56d7bb-ca7d-4f33-9ebd-32142603e251
             userCondition: null
             warning: null
-            width: 50
+            width: 100
           -
-            dateAdded: '2025-02-03T12:00:00+00:00'
+            dateAdded: '2026-02-03T12:00:00+00:00'
             editCondition: null
             elementCondition: null
             elementEditCondition: null
-            fieldUid: 8d78b155-67db-4c17-8b18-ddba1195ddae # Hinweis
+            fieldUid: 30e962cd-8f19-4011-a569-2e6cb25791e8 # Bild
             handle: null
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: a6a22aac-8561-4d30-811a-9c8e963863ad
+            uid: d57b23c2-2f21-4426-99ff-ec35b017d9e6
             userCondition: null
             warning: null
-            width: 50
+            width: 100
           -
-            dateAdded: '2026-02-03T10:44:03+00:00'
+            dateAdded: '2026-02-03T12:00:00+00:00'
             editCondition: null
             elementCondition: null
             elementEditCondition: null
@@ -52,23 +62,21 @@ fieldLayouts:
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 811094b5-d38a-4b7b-8f74-1a3428781d9b
+            uid: 244f80eb-abfe-4042-a44f-5a03c17d87b9
             userCondition: null
             warning: null
             width: 100
         name: Inhalt
-        uid: 6011a23b-175b-4539-8c1d-25abe5024a02
+        uid: 26a6f103-baca-47f5-a7ba-e200d9471dc8
         userCondition: null
-    thumbFieldKey: null
-handle: eventDateEntry
-hasTitleField: false
-icon: calendar
-name: Termin
+handle: veranstaltungsreihe
+hasTitleField: true
+icon: calendar-days
+name: Veranstaltungsreihe
 showSlugField: false
-showStatusField: false
+showStatusField: true
 slugTranslationKeyFormat: null
 slugTranslationMethod: site
-titleFormat: '{eventDate|date("d.m.Y H:i")}'
+titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: '{title}'

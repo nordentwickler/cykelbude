@@ -1,0 +1,16 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  -
+    uid: e6c6b663-ee2c-4476-a2e4-49fe575dc1a3 # Veranstaltungsreihe
+handle: eventSeries
+maxAuthors: 1
+name: Veranstaltungsreihen
+propagationMethod: all
+siteSettings:
+  ca499a8e-a51d-4bc8-9ddb-26d3ef6a018f: # cykelbude
+    enabledByDefault: true
+    hasUrls: false
+    template: null
+    uriFormat: null
+type: channel

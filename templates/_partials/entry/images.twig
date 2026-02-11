@@ -1,0 +1,22 @@
+{% set images = entry.images.eagerly() %}
+
+<div class="grid xl:grid-cols-3 gap-8 xl:gap-12" >
+
+
+{% for asset in images  %}
+    {% if asset %}
+        <div data-aos="fade-up">
+
+        {{ tag('img', {
+            src: asset.url,
+            width: asset.width,
+            height: asset.height,
+            srcset: asset.getSrcset(['1.5x', '2x', '3x']),
+            alt: asset.alt,
+            class: 'rounded-lg'
+        }) }}
+        </div>
+    {% endif %}
+{% endfor %}
+
+</div>

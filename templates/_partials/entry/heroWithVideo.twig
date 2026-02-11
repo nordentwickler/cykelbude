@@ -1,26 +1,40 @@
 <div class=" grid grid-cols-1 justify-between w-full items-center">
-    <div class="text-center">
-        <h1 class="text-navy text-5xl md:text-6xl xl:text-8xl" >{{ entry.headline }}</h1>
-        <div class="aspect-square w-2/3 lg:w-1/3 bg-mint mx-auto">
+    <div class="text-center lg:pt-24">
+        <div class="relative">
+            <h1 class="claim-one font-display text-5xl sm:text-6xl lg:text-9xl xl:text-10xl absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 text-white">CYKELBUDE</h1>
+                <div class="aspect-square md:max-w-[740px] bg-mint mx-auto relative overflow-hidden" data-hero-slideshow>
+                    {% if entry.images %}
+                        {% set images = entry.images.eagerly() %}
+                        {% for image in images %}
+                            {% set transformed = image.setTransform({ width: 740, height: 740, mode: 'crop' }) %}
+                            {{ tag('img', {
+                                src: transformed.url,
+                                width: 740,
+                                height: 740,
+                                srcset: transformed.getSrcset(['1.5x', '2x']),
+                                alt: image.alt,
+                                class: "absolute inset-0 w-full h-full object-cover " ~ (loop.first ? "z-10" : "z-0")
+                            }) }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            <span class="claim-one font-display text-5xl sm:text-6xl lg:text-9xl xl:text-10xl absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 z-100 text-white">KURRIERKOLLEKTIV</span>
 
         </div>
 
-        <div class="max-w-[720px] mx-auto">
-            <p class="text-navy text-4xl xl:text-6xl leading-tight font-display">{{ entry.simpleText }}</p>
+        <div class="max-w-[720px] mx-auto mt-24 lg:mt-48">
+            <p class="text-white  font-sans">{{ entry.simpleText }}</p>
         </div>
     </div>
 
     {% if entry.buttons is defined and entry.buttons|length %}
         <div class="flex flex-wrap justify-center gap-4 py-8">
-
             {% for entry in entry.buttons  %}
                 {% include '_partials/entry/button.twig' with {
                     variant: 'navy'
                 }%}
             {% endfor %}
         </div>
-
-
     {% endif %}
 
 

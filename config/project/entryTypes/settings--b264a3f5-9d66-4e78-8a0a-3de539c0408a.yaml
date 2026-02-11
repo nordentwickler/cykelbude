@@ -1,3 +1,4 @@
+allowLineBreaksInTitles: false
 color: null
 description: null
 fieldLayouts:
@@ -8,9 +9,26 @@ fieldLayouts:
         elementCondition: null
         elements:
           -
+            dateAdded: '2026-02-11T11:18:31+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 8b1e0660-142d-4b77-97a5-81f23eb3654f # Call2Action
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 7a71cc84-54b9-4ca3-87f6-4363758f883a
+            userCondition: null
+            warning: null
+            width: 100
+          -
             dateAdded: '2025-11-14T10:51:59+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: d1ae8a5b-575a-47db-b394-72405b542fef # Hauptnavigation
             handle: null
             instructions: null
@@ -26,6 +44,7 @@ fieldLayouts:
             dateAdded: '2025-11-14T10:51:59+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 58be0d43-ef58-4085-a273-a5443ffb046a # Footernavigation
             handle: null
             instructions: null
@@ -41,6 +60,7 @@ fieldLayouts:
             dateAdded: '2025-11-14T10:51:59+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 7f38d71f-d230-47e4-969f-53b1d05752db # Text
             handle: footerClaim
             instructions: null
@@ -55,6 +75,7 @@ fieldLayouts:
         name: Inhalt
         uid: 4b4bce91-6abc-4770-8ec2-293190a3cc35
         userCondition: null
+    thumbFieldKey: null
 handle: settings
 hasTitleField: false
 icon: null
@@ -66,3 +87,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
+uiLabelFormat: '{title}'

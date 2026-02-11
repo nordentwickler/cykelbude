@@ -11,10 +11,16 @@
     --font-display: "Bebas Neue", sans-serif;
     --font-sans: "Open Sans", sans-serif;
 
+    --text-8xl: 7rem;
+    --text-9xl: 10rem;
+    --text-10xl: 12rem;
+
+    --breakpoint-2xl:110rem;
 }
 
 @utility container {
     margin-inline: auto;
+
 }
 
 @layer base {
@@ -29,28 +35,57 @@
         @apply leading-normal;
     }
 
+
+
     table{
-        @apply text-lg border-2 border-collapse border-pink rounded-lg my-6 lg:my-10;
+        @apply  border-2 border-collapse border-pink rounded-lg my-6 lg:my-10 w-full;
         thead{
             @apply text-left bg-pink text-white;
             tr {
                 th {
-                    @apply px-2 py-1.5 align-top;
+                    @apply p-3 lg:p-5 align-top;
                 }
             }
         }
 
         tr td{
-            @apply px-2 py-2.5 border-b-2 border-pink align-top;
+            @apply p-3 lg:p-5 border-b-2 border-pink align-top ;
         }
     }
 
+    p + h2 {
+        @apply mt-16;
+    }
+
     h2{
-        @apply text-4xl md:text-7xl xl:text-8xl;
+        @apply text-4xl md:text-7xl xl:text-8xl break-words;
     }
 
     h3{
-        @apply text-2xl md:text-3xl lg:text-4xl font-bold;
+        @apply text-xl md:text-3xl lg:text-4xl font-bold mb-6;
+    }
+
+    .text {
+
+        h2{
+            @apply mt-24;
+        }
+
+        * + h3{
+            @apply mt-12;
+        }
+
+        p, ul, table, ol {
+            @apply mb-6;
+        }
+
+        ul{
+            @apply list-disc list-inside;
+            li{
+                @apply mb-2;
+            }
+        }
+
     }
 
 }

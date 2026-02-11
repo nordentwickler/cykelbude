@@ -1,20 +1,32 @@
 <header class="bg-pink text-navy rounded-lg mb-16 mt:mb-24 xl:mb-64">
     <div class="flex items-center justify-between text-white p-6 lg:p-8 ">
-        <a href="{{ siteUrl }}" title="{{ siteName }}">
+        {% set isHomepage = entry is defined and entry.uri is defined and entry.uri == '__home__' %}
+
+        <a href="{{ siteUrl }}" title="{{ siteName }}" class="{{ isHomepage ? 'hidden' : '' }}">
         {{ craft.vite.inline('@assets/icons/logo.svg')|attr({
-            class: 'h-12 sm:h-16 md:h-24 xl:h-32 w-auto fill-current'
+            class: 'h-12 sm:h-16 lg:h-24 xl:h-28 w-auto fill-current'
         }) }}
             <span class="sr-only">{{ siteName }}</span>
         </a>
 
-        <button id="menu-toggle" class="bg-white hover:bg-navy hover:text-white p-2 sm:p-3 lg:p-4 inline-flex text-pink rounded-lg cursor-pointer" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-navigation">
+        <div class="bg-white flex items-center p-1 rounded-lg gap-1 ml-auto">
+            {% if settings.call2action %}
+                <a href="{{ settings.call2action.url }}" class="text-white bg-mint hover:bg-navy uppercase p-2 px-6 lg:px-10 sm:py-3 lg:py-4 rounded-lg font-semibold hidden lg:inline-flex">
+                    {{ settings.call2action.label ?? settings.call2action.title }}
+                </a>
+            {% endif %}
+
+
+        <button id="menu-toggle" class="bg-white hover:bg-pink hover:text-white p-2 inline-flex text-pink rounded-lg cursor-pointer h-full w-auto flex-grow" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-navigation">
             {{ craft.vite.inline('@assets/icons/menu.svg')|attr({
-                class: 'h-8 sm:h-10 lg:h-12 w-auto fill-current'
+                class: 'h-8 sm:h-13 w-auto fill-current'
             }) }}
         </button>
+
+        </div>
     </div>
 
-    {% if entry.hero.eagerly() %}
+    {% if entry.hero is defined and entry.hero %}
         {% if entry.hero is defined and entry.hero|length %}
         <div class="px-8 py-8 lg:pt-12 lg:dpb-24">
             {% for block in entry.hero.eagerly().all()  %}
@@ -25,27 +37,3 @@
     {% endif %}
 
 </header>
-
-<nav class="fixed bg-pink/80 backdrop-blur-md top-0 left-0 w-full h-full z-50 flex flex-col items-end justify-start transition-opacity duration-300 opacity-0 pointer-events-none" id="mobile-navigation" aria-label="Hauptnavigation" aria-hidden="true">
-    <div class="flex flex-col text-right justify-end items-end p-4 md:p-6 md:px-8 md:py-12 lg:p-18 gap-12 lg:gap-24">
-
-        <ul class="order-2 space-y-2" role="list">
-            {% for entry in settings.mainNavigation  %}
-            <li>
-                <a href="{{ entry.getUrl }}"
-                class="text-white hover:text-navy p-2 text-2xl sm:text-3xl md:text-4xl">
-                    {{ entry.title }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-
-        <div>
-            <button id="menu-close" class="order-1 text-white hover:text-navy p-2 sm:p-3 lg:p-4 inline-flex text-pink rounded-lg cursor-pointer" aria-label="Menü schließen">
-                {{ craft.vite.inline('@assets/icons/close.svg')|attr({
-                    class: 'h-8 sm:h-10 lg:h-12 w-auto fill-current'
-                }) }}
-            </button>
-        </div>
-    </div>
-</nav>

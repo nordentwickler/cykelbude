@@ -7,6 +7,7 @@ import '@styles/app.css'
 import './navigation.js'
 import './priceCalculator.js'
 import './deliveryAreaMap.js'
+import './heroSlideshow.js'
 
 const app = createApp({
     components: {},

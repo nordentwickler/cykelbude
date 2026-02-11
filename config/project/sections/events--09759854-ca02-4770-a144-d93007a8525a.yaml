@@ -1,0 +1,16 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  -
+    uid: c696d805-5834-4426-a413-f96178227d70 # Termin
+handle: events
+maxAuthors: 1
+name: Termine
+propagationMethod: all
+siteSettings:
+  ca499a8e-a51d-4bc8-9ddb-26d3ef6a018f: # cykelbude
+    enabledByDefault: true
+    hasUrls: false
+    template: null
+    uriFormat: null
+type: channel
