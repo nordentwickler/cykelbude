@@ -5,6 +5,7 @@ entryTypes:
     uid: c696d805-5834-4426-a413-f96178227d70 # Termin
 handle: events
 maxAuthors: 1
+minAuthors: 1
 name: Termine
 propagationMethod: all
 siteSettings:

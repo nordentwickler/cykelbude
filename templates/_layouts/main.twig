@@ -50,6 +50,12 @@ webhub.de
                     </li>
                     {% endfor %}
                 </ul>
+
+                <ul class="lg:mt-8">
+                    {% for entry in settings.footerNavigation.all() %}
+                        <li><a href="{{ entry.getUrl }}" class="text-2xl lg:text-3xl hover:text-navy focus:outline-2 focus:outline-white">{{ entry.title }}</a> </li>
+                    {% endfor %}
+                </ul>
             </div>
         </nav>
     </div>

@@ -5,6 +5,7 @@ entryTypes:
     uid: e6c6b663-ee2c-4476-a2e4-49fe575dc1a3 # Veranstaltungsreihe
 handle: eventSeries
 maxAuthors: 1
+minAuthors: 1
 name: Veranstaltungsreihen
 propagationMethod: all
 siteSettings:

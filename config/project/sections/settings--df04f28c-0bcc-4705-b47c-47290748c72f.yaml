@@ -5,6 +5,7 @@ entryTypes:
     uid: b264a3f5-9d66-4e78-8a0a-3de539c0408a # Einstellungen
 handle: settings
 maxAuthors: 1
+minAuthors: 1
 name: Einstellungen
 previewTargets:
   -

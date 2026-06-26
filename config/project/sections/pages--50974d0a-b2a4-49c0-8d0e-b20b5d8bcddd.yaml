@@ -7,6 +7,7 @@ entryTypes:
     uid: 93652fac-d36c-4bfb-a3c8-3c9ea3a0ceb1 # Veranstaltungen
 handle: pages
 maxAuthors: 1
+minAuthors: 1
 name: Seiten
 previewTargets:
   -

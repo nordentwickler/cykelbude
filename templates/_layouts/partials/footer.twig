@@ -7,7 +7,7 @@
             </p>
         </div>
         <nav>
-            <ul class="">
+            <ul>
                 {% for entry in settings.footerNavigation.all() %}
                     <li><a href="{{ entry.getUrl }}" class="hover:text-white  text-2xl lg:text-3xl">{{ entry.title }}</a> </li>
                 {% endfor %}
