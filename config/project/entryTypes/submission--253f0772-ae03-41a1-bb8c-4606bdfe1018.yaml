@@ -1,0 +1,74 @@
+allowLineBreaksInTitles: false
+color: null
+description: null
+fieldLayouts:
+  b48df793-9d05-4feb-906c-c39e23195b13:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 658914fa-d474-4202-9102-8b23e2ef1a99 # Formular
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: ab8384ae-a803-4ebf-a929-e897606a5e91
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 9a236fbf-e52c-46e5-9710-89694b304fe4 # Absender E-Mail
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 62fe5e57-c63f-471a-ba80-3cc3a25a92b9
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 10e33c55-c536-46a3-b321-e806ee7dbb7b # Daten
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: d32e2bcb-c2c8-4a00-bea7-da0bda98be8e
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: d1571ed5-8d16-42d3-a251-27f031a21cdb
+        userCondition: null
+    thumbFieldKey: null
+handle: submission
+hasTitleField: false
+icon: null
+name: Anfrage
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: "{formName} - {senderEmail} - {dateCreated|date('d.m.Y H:i')}"
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+uiLabelFormat: '{title}'

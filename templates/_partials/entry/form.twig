@@ -1,0 +1,15 @@
+{#
+ # Matrix block "form": renders a front-end form by its handle.
+ # The actual fields live in _partials/forms/<handle>.twig and the
+ # server-side definition in config/forms.php.
+ #}
+{% set handle = entry.formHandle|trim %}
+
+{% if handle %}
+    <div class="container">
+        {% if entry.headline is defined and entry.headline|length %}
+            <h2 class="text-white mb-8">{{ entry.headline }}</h2>
+        {% endif %}
+        {% include '_partials/forms/' ~ handle ~ '.twig' ignore missing %}
+    </div>
+{% endif %}

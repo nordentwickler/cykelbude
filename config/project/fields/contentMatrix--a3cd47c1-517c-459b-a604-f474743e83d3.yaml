@@ -72,6 +72,11 @@ settings:
         -
           - group
           - Specials
+    -
+      __assoc__:
+        -
+          - uid
+          - 3b568193-2abb-4953-a9e4-95f805b324d5 # Formular
   includeTableView: false
   maxEntries: null
   minEntries: null

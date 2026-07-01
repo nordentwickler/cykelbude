@@ -2,9 +2,9 @@
 <div class="container">
 
     {% if entry.headline %}
-    <div class="lg:max-w-4/5">
-        <h2 class="mb-8">{{ entry.headline }}</h2>
-    </div>
+        <div class="lg:max-w-4/5">
+            <h2 class="mb-8">{{ entry.headline|nl2br }}</h2>
+        </div>
     {% endif %}
     <div class="max-w-screen-xl">
         {% include '_partials/entry/richText.twig' %}

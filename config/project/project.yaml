@@ -1,4 +1,4 @@
-dateModified: 1782457605
+dateModified: 1782463430
 elementSources:
   craft\elements\Entry:
     -
@@ -67,7 +67,15 @@ elementSources:
 email:
   fromEmail: brosch@webhub.de
   fromName: cykelbude
-  transportType: craft\mail\transportadapters\Sendmail
+  replyToEmail: null
+  template: null
+  transportSettings:
+    host: $SMTP_HOSTNAME
+    password: ''
+    port: $SMTP_PORT
+    useAuthentication: $SMTP_USE_AUTHENTICATION
+    username: ''
+  transportType: craft\mail\transportadapters\Smtp
 fs:
   media:
     hasUrls: true
@@ -89,6 +97,7 @@ meta:
     0f79b4a7-5345-4ad8-8f42-17d39cb44c73: cykelbude # cykelbude
     2a11f8b8-5f66-4305-a071-44e33b8b5d72: Bilder # Bilder
     2cfe63bd-f87d-40b9-83b1-5610be0ce6e2: Dateidownload # Dateidownload
+    3b568193-2abb-4953-a9e4-95f805b324d5: Formular # Formular
     3d01e2e5-75a3-4117-a026-c9e2144ed97e: Überschrift # Überschrift
     3dc3c4c7-3051-4967-b325-11eee11821a5: Liefergebiet # Liefergebiet
     5ccb0af0-c1fc-408d-951d-9282310c502f: Logos # Logos
@@ -99,8 +108,11 @@ meta:
     8b1e0660-142d-4b77-97a5-81f23eb3654f: Call2Action # Call2Action
     8d78b155-67db-4c17-8b18-ddba1195ddae: Hinweis # Hinweis
     8f031085-703a-44a8-83d8-84ad75f80aba: Grid # Grid
+    8f062321-b4fd-4358-a904-b70bb85171b6: Anfragen # Anfragen
+    9a236fbf-e52c-46e5-9710-89694b304fe4: 'Absender E-Mail' # Absender E-Mail
     9bb3af9c-cc0b-43fa-bbbf-46d41325bcc1: Termin # Termin
     9d49f708-57e6-4582-acab-f2fdbfc5ddad: Bild # Bild
+    10e33c55-c536-46a3-b321-e806ee7dbb7b: Daten # Daten
     15e158d2-0bd4-454c-9cf2-f572718c49c6: Datum # Datum
     23d1a135-c065-4b14-8379-a83af7d8d792: Button # Button
     25c518d7-9ccc-40ce-9c42-8a7523bb25a8: Veranstaltungsreihen # Veranstaltungsreihen
@@ -111,6 +123,7 @@ meta:
     70d41bcd-5646-4430-8ca6-7a02d7904f3e: Button # Button
     78f8041d-6436-46c7-b344-6b411bf8e249: Video # Video
     79bbe8ce-2d7d-4097-9c21-fda54e467f4a: Ausrichtung # Ausrichtung
+    253f0772-ae03-41a1-bb8c-4606bdfe1018: Anfrage # Anfrage
     539b26ae-51b9-4d0c-afa5-5443d9c6bf22: Startseite # Startseite
     662c794f-dd22-459b-919e-8ac67bb6b931: Seiten # Seiten
     913c178a-5f50-4f50-be32-254eab017b45: Bilder # Bilder
@@ -121,12 +134,14 @@ meta:
     062428a9-947a-4c57-8af0-3ac3998f31f7: Element # Element
     93652fac-d36c-4bfb-a3c8-3c9ea3a0ceb1: Veranstaltungen # Veranstaltungen
     441863aa-7a82-47fa-90fa-0d9c401fb1c1: Blog # Blog
+    658914fa-d474-4202-9102-8b23e2ef1a99: Formular # Formular
     882551fe-18c6-445b-a5fb-2cd314b590fb: Icon # Icon
     4720702d-8a8e-4801-9fcd-35c71353a2f6: Grid # Grid
     5016465b-d4be-4ffa-8cfc-7086ff6d6501: Startseite # Startseite
     09759854-ca02-4770-a144-d93007a8525a: Termine # Termine
     a3cd47c1-517c-459b-a604-f474743e83d3: Inhalt # Inhalt
     a53b236f-6e17-423b-ba8e-e1ce4d616ed3: Accordion # Accordion
+    aa95d781-2712-4f39-a17b-bd228020518d: Form-Handle # Form-Handle
     af9de71a-96d1-4be1-ab34-3dc6e954edec: Accordion # Accordion
     b24c641a-2a43-49cf-b5d2-70dfcc44ccd4: Veranstaltungsreihe # Veranstaltungsreihe
     b40d6014-72f1-4f94-83cf-db9fe21e557d: 'Hero mit Video oder Bildern' # Hero mit Video oder Bildern

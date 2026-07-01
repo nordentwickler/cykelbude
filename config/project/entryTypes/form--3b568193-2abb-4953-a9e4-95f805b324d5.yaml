@@ -1,0 +1,58 @@
+allowLineBreaksInTitles: false
+color: null
+description: null
+fieldLayouts:
+  b3bf5b80-5110-4fd8-a7aa-8bbf967ac82b:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: ff163dd2-2671-4a9c-bead-517148786a6d # Überschrift 
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: cdfa15a2-326f-4b4a-bd5e-9afe30064c9d
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: aa95d781-2712-4f39-a17b-bd228020518d # Form-Handle
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 11282f10-7376-478b-ad4d-953192c00881
+            userCondition: null
+            warning: null
+            width: 100
+        name: Inhalt
+        uid: e4921f2e-28e7-4c42-b4c4-d544cb7cbe90
+        userCondition: null
+    thumbFieldKey: null
+handle: form
+hasTitleField: false
+icon: null
+name: Formular
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+uiLabelFormat: '{title}'

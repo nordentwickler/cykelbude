@@ -1,0 +1,96 @@
+{#
+ # Reusable form field macros.
+ #
+ # Typography deliberately follows one consistent scale (text-base md:text-lg)
+ # and the brand tokens (navy / pink) so forms match the rest of the frontend
+ # instead of mixing sizes. `errors` and `values` come from the FormsController
+ # when a submission is re-rendered with validation errors.
+ #}
+
+{% macro label(name, text, required) %}
+    <label for="f-{{ name }}" class="block font-bold text-navy text-base md:text-lg mb-2">
+        {{ text|raw }}{% if required %} <span class="text-pink">*</span>{% endif %}
+    </label>
+{% endmacro %}
+
+{% macro error(errors, name) %}
+    {% if errors[name] is defined %}
+        <p class="text-pink text-sm md:text-base mt-2">{{ errors[name] }}</p>
+    {% endif %}
+{% endmacro %}
+
+{% macro input(name, label, errors, values, opts) %}
+    {% import _self as f %}
+    {% set opts = opts ?? {} %}
+    {% set base = 'w-full rounded-lg border-2 bg-white text-navy text-base md:text-lg px-4 py-3 focus:border-pink focus:outline-none transition-colors' %}
+    <div class="{{ opts.wrapper ?? '' }}">
+        {{ f.label(name, label, opts.required ?? false) }}
+        <input
+            type="{{ opts.type ?? 'text' }}"
+            id="f-{{ name }}"
+            name="{{ name }}"
+            value="{{ values[name] ?? (opts.default ?? '') }}"
+            {% if opts.placeholder is defined %}placeholder="{{ opts.placeholder }}"{% endif %}
+            {% if opts.min is defined %}min="{{ opts.min }}"{% endif %}
+            {% if opts.step is defined %}step="{{ opts.step }}"{% endif %}
+            {% if opts.required ?? false %}required{% endif %}
+            {% if (opts.type ?? '') == 'email' %}autocomplete="email"{% endif %}
+            class="{{ base }} {{ errors[name] is defined ? 'border-pink' : 'border-navy/20' }}">
+        {{ f.error(errors, name) }}
+    </div>
+{% endmacro %}
+
+{% macro select(name, label, options, errors, values, opts) %}
+    {% import _self as f %}
+    {% set opts = opts ?? {} %}
+    {% set base = 'w-full rounded-lg border-2 bg-white text-navy text-base md:text-lg px-4 py-3 focus:border-pink focus:outline-none transition-colors' %}
+    <div class="{{ opts.wrapper ?? '' }}">
+        {{ f.label(name, label, opts.required ?? false) }}
+        <select
+            id="f-{{ name }}"
+            name="{{ name }}"
+            {% if opts.required ?? false %}required{% endif %}
+            class="{{ base }} {{ errors[name] is defined ? 'border-pink' : 'border-navy/20' }}">
+            <option value="">Bitte wählen</option>
+            {% for value, optLabel in options %}
+                <option value="{{ value }}" {{ (values[name] ?? '') == value ? 'selected' }}>{{ optLabel }}</option>
+            {% endfor %}
+        </select>
+        {{ f.error(errors, name) }}
+    </div>
+{% endmacro %}
+
+{% macro textarea(name, label, errors, values, opts) %}
+    {% import _self as f %}
+    {% set opts = opts ?? {} %}
+    {% set base = 'w-full rounded-lg border-2 bg-white text-navy text-base md:text-lg px-4 py-3 focus:border-pink focus:outline-none transition-colors' %}
+    <div class="{{ opts.wrapper ?? '' }}">
+        {{ f.label(name, label, opts.required ?? false) }}
+        <textarea
+            id="f-{{ name }}"
+            name="{{ name }}"
+            rows="{{ opts.rows ?? 4 }}"
+            {% if opts.placeholder is defined %}placeholder="{{ opts.placeholder }}"{% endif %}
+            {% if opts.required ?? false %}required{% endif %}
+            class="{{ base }} {{ errors[name] is defined ? 'border-pink' : 'border-navy/20' }}">{{ values[name] ?? '' }}</textarea>
+        {{ f.error(errors, name) }}
+    </div>
+{% endmacro %}
+
+{% macro checkbox(name, label, errors, values, opts) %}
+    {% import _self as f %}
+    {% set opts = opts ?? {} %}
+    <div class="{{ opts.wrapper ?? '' }}">
+        <label class="flex items-start gap-3 text-navy text-base md:text-lg cursor-pointer">
+            <input
+                type="checkbox"
+                name="{{ name }}"
+                value="1"
+                {{ (values[name] ?? '') ? 'checked' }}
+                {% if opts.required ?? false %}required{% endif %}
+                class="mt-1 size-5 shrink-0 rounded border-2 {{ errors[name] is defined ? 'border-pink' : 'border-navy/30' }} text-pink focus:ring-pink">
+            <span>{{ label|raw }}{% if opts.required ?? false %} <span class="text-pink">*</span>{% endif %}</span>
+        </label>
+        {{ f.error(errors, name) }}
+    </div>
+{% endmacro %}

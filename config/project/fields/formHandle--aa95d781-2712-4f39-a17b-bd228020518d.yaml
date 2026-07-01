@@ -1,14 +1,14 @@
 columnSuffix: null
-handle: headline
+handle: formHandle
 instructions: null
-name: 'Überschrift '
+name: Form-Handle
 searchable: false
 settings:
   byteLimit: null
   charLimit: null
   code: false
-  initialRows: 2
-  multiline: true
+  initialRows: 4
+  multiline: false
   placeholder: null
   uiMode: normal
 translationKeyFormat: null

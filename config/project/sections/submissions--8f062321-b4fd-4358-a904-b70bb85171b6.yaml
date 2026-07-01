@@ -1,0 +1,21 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  -
+    uid: 253f0772-ae03-41a1-bb8c-4606bdfe1018 # Anfrage
+handle: submissions
+maxAuthors: 1
+minAuthors: 1
+name: Anfragen
+previewTargets:
+  -
+    label: 'Primary entry page'
+    urlFormat: '{url}'
+propagationMethod: all
+siteSettings:
+  ca499a8e-a51d-4bc8-9ddb-26d3ef6a018f: # cykelbude
+    enabledByDefault: true
+    hasUrls: false
+    template: null
+    uriFormat: null
+type: channel

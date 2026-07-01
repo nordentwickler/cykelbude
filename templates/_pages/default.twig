@@ -12,7 +12,7 @@
     {% if entry.type.handle == 'events' %}
         {% include '_pages/events.twig' %}
     {% else %}
-        <section class="container mb-12">
+        <section class="container mb-12 lg:mb-32">
             <h1 class="text-white text-5xl md:text-7xl xl:text-9xl" >
             {% if entry.headline is defined and entry.headline|length %}
                 {{ entry.headline|replace({'[br]': '<br class="hidden md:inline"/>'})|raw }}

@@ -1,13 +1,13 @@
 columnSuffix: null
-handle: headline
+handle: submissionData
 instructions: null
-name: 'Überschrift '
+name: Daten
 searchable: false
 settings:
   byteLimit: null
   charLimit: null
   code: false
-  initialRows: 2
+  initialRows: 10
   multiline: true
   placeholder: null
   uiMode: normal

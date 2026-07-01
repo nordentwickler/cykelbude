@@ -2,7 +2,7 @@
 
 <div class="container mx-auto my-12 lg:my-36 xl:my-64">
     {% if entry.headline %}
-        <h2 class="text-pink md:text-center mt-24 mb-12">{{ entry.headline }}</h2>
+        <h2 class="text-pink md:text-center mt-24 mb-12">{{ entry.headline|nl2br }}</h2>
     {% endif %}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start ">
         {% for row in entry.gridElements.eagerly().all()|batch(batchNumber) %}

@@ -1,0 +1,88 @@
+{% import '_partials/forms/_macros.twig' as f %}
+
+{% set errors = formErrors ?? {} %}
+{% set values = formValues ?? {} %}
+{% set success = craft.app.session.getFlash('formSuccess') %}
+
+<div class="bg-white rounded-lg text-navy p-6 md:p-10 xl:p-12">
+    {% if success %}
+        <div class="text-center py-8" data-aos="fade-up">
+            <h3 class="text-pink">Anfrage abgeschickt</h3>
+            <p class="text-lg md:text-xl max-w-2xl mx-auto">{{ success }}</p>
+        </div>
+    {% else %}
+        <p class="text-lg md:text-xl mb-8">
+            Schick uns deine unverbindliche Anfrage. Wir melden uns persönlich bei dir - mit allen
+            Infos zur Bezahlung (Überweisung oder PayPal) und stimmen Lieferstart und Details ab.
+        </p>
+
+        <div class="rounded-lg bg-navy/5 border-l-4 border-pink p-5 md:p-6 mb-8">
+            <p class="font-bold text-base md:text-lg mb-1">Was kostet das Wochenbett-Wunder?</p>
+            <p class="text-base md:text-lg text-navy/80">
+                Je nach Variante <strong>ca. 175-200 €</strong> für das komplette 5-Tage-Paket -
+                warmes Mittagessen für 2 Personen inkl. täglicher Lieferung und Rücknahme der Mehrwegboxen.
+                Zusätzliche Portionen lassen sich gegen Aufpreis dazubuchen. Den genauen Preis bestätigen
+                wir dir mit deiner Anfrage.
+            </p>
+        </div>
+
+        {% if errors|length %}
+            <div class="rounded-lg border-2 border-pink text-pink text-base md:text-lg px-4 py-3 mb-8">
+                Bitte überprüfe die markierten Felder.
+            </div>
+        {% endif %}
+
+        <form method="post" accept-charset="UTF-8" class="space-y-6">
+            {{ csrfInput() }}
+            {{ actionInput('site-module/forms/submit') }}
+            {{ hiddenInput('form', 'wochenbett') }}
+            {{ redirectInput(craft.app.request.getPathInfo()) }}
+
+            {# Honeypot - hidden from humans, catches bots. #}
+            <div class="hidden" aria-hidden="true">
+                <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                {{ f.select('variant', 'Ernährungsform', {
+                    'Vegan': 'Vegan (Grüne Kombüse, Di-Sa)',
+                    'Vegetarisch': 'Vegetarisch (Haltestelle 111, Mo-Fr)',
+                    'Vollkost': 'Vollkost (Haltestelle 111, Mo-Fr)'
+                }, errors, values, { required: true }) }}
+
+                {{ f.input('startDate', 'Wunsch-Startdatum', errors, values, { type: 'date', required: true }) }}
+
+                {{ f.input('portions', 'Portionen pro Tag', errors, values, {
+                    type: 'number', required: true, min: 2, step: 1, default: 2, placeholder: '2'
+                }) }}
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                {{ f.input('name', 'Name', errors, values, { required: true }) }}
+                {{ f.input('email', 'E-Mail', errors, values, { type: 'email', required: true }) }}
+                {{ f.input('phone', 'Telefon', errors, values, { type: 'tel', required: true }) }}
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                {{ f.input('street', 'Straße & Hausnummer', errors, values, { required: true, wrapper: 'md:col-span-2' }) }}
+                {{ f.input('zip', 'PLZ', errors, values, { required: true }) }}
+                {{ f.input('city', 'Ort', errors, values, { required: true }) }}
+            </div>
+
+            <div class="space-y-4">
+                {{ f.checkbox('gift', 'Das Wochenbett-Wunder ist ein Geschenk', errors, values) }}
+                {{ f.input('giftName', 'Name der/des Beschenkten (optional)', errors, values) }}
+            </div>
+
+            {{ f.textarea('notes', 'Allergien, Unverträglichkeiten oder Nachricht', errors, values, {
+                rows: 4, placeholder: 'Gibt es etwas, das wir wissen sollten?'
+            }) }}
+
+            {{ f.checkbox('privacy', 'Ich habe die <a href="/datenschutz" class="underline hover:text-pink">Datenschutzhinweise</a> gelesen und bin einverstanden.', errors, values, { required: true }) }}
+
+            <button type="submit" class="bg-pink hover:bg-mint text-white inline-block py-4 px-6 font-bold rounded-lg transition-colors">
+                Anfrage senden
+            </button>
+        </form>
+    {% endif %}
+</div>
