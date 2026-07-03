@@ -5,7 +5,7 @@
     </div>
     <div class="grid md:grid-cols-2 gap-12 md:gap-24 md:-mt-8 z-10">
         {% if entry.image is defined and entry.image is not null %}
-            <div class="{{ entry.position == 'left' ? 'order-0' : 'order-1' }}" data-aos="fade-up">
+            <div class="{{ entry.position == 'left' ? 'lg:order-0' : 'lg:order-1' }}" data-aos="fade-up">
                 {{ include('_partials/entry/image.twig') }}
             </div>
         {% endif %}

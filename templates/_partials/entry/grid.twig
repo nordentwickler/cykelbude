@@ -1,6 +1,6 @@
 {% set batchNumber = (entry.gridElements.eagerly()|length / 2)|round(0, 'common') %}
 
-<div class="container mx-auto my-12 lg:my-36 xl:my-64">
+<div class="container mx-auto">
     {% if entry.headline %}
         <h2 class="text-pink md:text-center mt-24 mb-12">{{ entry.headline|nl2br }}</h2>
     {% endif %}
