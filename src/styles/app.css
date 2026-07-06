@@ -38,7 +38,7 @@
 
 
     table{
-        @apply  text-base sm:text-lg border-2 border-collapse border-pink rounded-lg my-6 lg:my-10 w-full sm:table-fixed;
+        @apply  text-base sm:text-lg md:text-xl border-2 border-collapse border-pink rounded-lg my-6 lg:my-10 w-full sm:table-fixed;
         thead{
             @apply text-left bg-pink text-white;
             tr {
