@@ -38,18 +38,18 @@
 
 
     table{
-        @apply  border-2 border-collapse border-pink rounded-lg my-6 lg:my-10 w-full;
+        @apply  text-base sm:text-lg border-2 border-collapse border-pink rounded-lg my-6 lg:my-10 w-full sm:table-fixed;
         thead{
             @apply text-left bg-pink text-white;
             tr {
                 th {
-                    @apply p-3 lg:p-5 align-top;
+                    @apply p-2 sm:p-3 lg:p-5 align-top break-words hyphens-auto;
                 }
             }
         }
 
         tr td{
-            @apply p-3 lg:p-5 border-b-2 border-pink align-top ;
+            @apply p-2 sm:p-3 lg:p-5 border-b-2 border-pink align-top break-words hyphens-auto;
         }
     }
 

@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     siteContent.parentElement.appendChild(overlay)
 
     const openMenu = () => {
+        document.body.classList.add('overflow-hidden')
         siteContent.classList.add('-translate-x-72', 'md:-translate-x-80', 'lg:-translate-x-96')
         nav.classList.remove('translate-x-full')
         nav.classList.add('translate-x-0')
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const closeMenu = () => {
+        document.body.classList.remove('overflow-hidden')
         siteContent.classList.remove('-translate-x-72', 'md:-translate-x-80', 'lg:-translate-x-96')
         nav.classList.add('translate-x-full')
         nav.classList.remove('translate-x-0')

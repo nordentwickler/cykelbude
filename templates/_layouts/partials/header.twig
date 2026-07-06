@@ -1,10 +1,10 @@
 <header class="bg-pink text-navy rounded-lg mb-16 mt:mb-24 xl:mb-64">
-    <div class="flex items-center justify-between text-white p-6 lg:p-8 ">
+    <div class="flex items-center justify-between text-white p-4 sm:p-6 lg:p-8 ">
         {% set isHomepage = entry is defined and entry.uri is defined and entry.uri == '__home__' %}
 
         <a href="{{ siteUrl }}" title="{{ siteName }}" class="{{ isHomepage ? 'hidden' : '' }}">
         {{ craft.vite.inline('@assets/icons/logo.svg')|attr({
-            class: 'h-12 sm:h-16 lg:h-24 xl:h-28 w-auto fill-current'
+            class: 'h-10 xs:h-12 sm:h-16 lg:h-24 xl:h-28 w-auto fill-current'
         }) }}
             <span class="sr-only">{{ siteName }}</span>
         </a>
