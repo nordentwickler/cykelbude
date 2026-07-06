@@ -1,4 +1,4 @@
-dateModified: 1782463430
+dateModified: 1783351727
 elementSources:
   craft\elements\Entry:
     -
@@ -165,7 +165,7 @@ meta:
 plugins:
   _craft-panoptikum-cell:
     edition: standard
-    enabled: true
+    enabled: false
     schemaVersion: 1.0.0
   ckeditor:
     edition: standard
