@@ -4,11 +4,11 @@
   "delivery": {
     "nextDay": {
       "label": "Next Day",
-      "surcharge": 0
+      "description": "Am nächsten Werktag"
     },
     "sameDay": {
       "label": "Same Day",
-      "surcharge": 100
+      "description": "Noch heute unterwegs"
     }
   },
   "areas": {
@@ -43,7 +43,7 @@
       "max": 25,
       "surcharges": {
         "nextDay": 100,
-        "sameDay": 130
+        "sameDay": 230
       }
     },
     {

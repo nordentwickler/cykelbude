@@ -15,6 +15,9 @@ config/license.key
 /public/dist/*
 /public/uploads/*
 /public/media/*
+/public/cms/*.pmtiles
+/public/cms/fonts/*
+/public/cms/sprites/*
 
 # BUILD FILES
 node_modules

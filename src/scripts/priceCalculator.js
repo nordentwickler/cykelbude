@@ -1,20 +1,49 @@
 // Preisrechner für Fahrradkurier-Kollektiv
-import mapboxgl from 'mapbox-gl'
-import 'mapbox-gl/dist/mapbox-gl.css'
+//
+// Eine Karte: der erste gesetzte Marker ist die Abholung, alle weiteren sind
+// Zielstopps. Zustellzeit + Preis stehen im Panel daneben (mobil darunter).
+//
+// Preismodell (Stopp-basiert):
+//   - Ein Auftrag besteht aus 1 Abholung + N Zielstopps.
+//   - Jeder Stopp kostet: basePrice + Gewichtsaufschlag der Sendung bei der
+//     gewählten Zustellzeit (weightClass.surcharges[nextDay|sameDay]).
+//     Die Abholung zählt als Standard-Sendung (kein Gewichtsaufschlag).
+//   - Gebietsaufschlag: nur der höchste betroffene Tier, einmalig pro Auftrag.
+import {
+    createBaseStyle,
+    DEFAULT_CENTER,
+    DEFAULT_MAX_ZOOM,
+    DEFAULT_MIN_ZOOM,
+    DEFAULT_ZOOM,
+    maplibregl,
+    MAX_BOUNDS,
+} from './lib/basemap.js'
 
-mapboxgl.accessToken =
-    'pk.eyJ1IjoibWFydG9ub3MiLCJhIjoiY21qZThiZW5oMGRoMjNlczUza3ljY3F5dSJ9.4c-7Y2VEmPxqpe8MBFXYiA'
+const AREA_COLORS = {
+    standard: '#ea4d65', // Brand-Pink
+    stadtrand: '#68c3cd', // Mint
+    umland: '#6b7db3',
+}
+
+// Klick näher als so viele Pixel an einem Marker-Zentrum setzt keinen neuen
+// Stop. Klein halten (~ Marker-Radius): der Marker fängt Direkttreffer selbst
+// ab, hier geht es nur um einen minimalen Saum gegen versehentliche Stops.
+const NEAR_MARKER_PX = 18
 
 document.addEventListener('DOMContentLoaded', async () => {
     const container = document.getElementById('calculator-content')
     if (!container) return
 
     let pricing = null
-    let pickupMap = null
-    let deliveryMap = null
-    let selectedPickupArea = null
-    let selectedDeliveryArea = null
-    let pickupSelected = false
+    let geoJSONData = {}
+    let map = null
+
+    // Zustand
+    let deliveryTime = null // 'nextDay' | 'sameDay'
+    let pickup = null // { areaKey, lngLat }
+    let pickupMarker = null
+    const deliveries = [] // [{ id, areaKey, weight, marker, badge }]
+    let deliveryCounter = 0
 
     // Preise laden
     try {
@@ -27,343 +56,503 @@ document.addEventListener('DOMContentLoaded', async () => {
         return
     }
 
+    deliveryTime = Object.keys(pricing.delivery)[0]
+
     // Cent zu Euro formatieren
-    const formatPrice = (cents) => {
-        const euros = cents / 100
+    const formatPrice = (cents) =>
+        (cents / 100).toLocaleString('de-DE', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        }) + ' €'
+
+    // Gewichtsklasse zu einem Gewicht ermitteln
+    const getWeightClass = (weight) => {
+        const w = weight > 0 ? weight : 0
         return (
-            euros.toLocaleString('de-DE', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-            }) + ' €'
+            pricing.weightClasses.find((wc) => w >= wc.min && w <= wc.max) ||
+            pricing.weightClasses[pricing.weightClasses.length - 1]
         )
     }
 
-    // Dynamische Teile aus pricing.json ins DOM schreiben
-    const renderDynamicParts = () => {
-        // Zustellzeit-Optionen
-        const optionsContainer = document.getElementById('delivery-time-options')
-        if (optionsContainer) {
-            optionsContainer.innerHTML = Object.entries(pricing.delivery)
-                .map(([key, data], index) => {
-                    const priceText =
-                        data.surcharge > 0 ? ` (+${formatPrice(data.surcharge)})` : ''
-                    const checked = index === 0 ? 'checked' : ''
-                    return `
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="radio" name="delivery-time" value="${key}" ${checked} class="w-4 h-4 text-pink focus:ring-pink">
-                            <span class="text-base text-navy">${data.label}${priceText}</span>
-                        </label>
-                    `
-                })
-                .join('')
-        }
+    // Preis eines einzelnen Stopps: Grundpreis + Gewichtsaufschlag (je Zustellzeit)
+    const stopPrice = (weight) =>
+        pricing.basePrice + getWeightClass(weight).surcharges[deliveryTime]
 
-        // MwSt.-Label
-        const vatLabel = document.getElementById('vat-label')
-        if (vatLabel) {
-            vatLabel.textContent = `inkl. ${pricing.vat}% MwSt.:`
-        }
-    }
-
-    // GeoJSON laden
+    // GeoJSON nach Gebiet gruppieren
     const loadGeoJSON = async () => {
         try {
             const response = await fetch('/data/areas.json')
             const fullGeoJSON = await response.json()
-            const geoJSONData = {}
+            const grouped = {}
 
             Object.keys(pricing.areas).forEach((areaKey) => {
                 const areaLabel = pricing.areas[areaKey].label
-                const features = fullGeoJSON.features.filter((feature) => {
-                    const deliveryArea = feature.properties.delivery_area
-                    return (
-                        deliveryArea &&
-                        deliveryArea.toLowerCase() === areaLabel.toLowerCase()
-                    )
-                })
-                geoJSONData[areaKey] = {
+                grouped[areaKey] = {
                     type: 'FeatureCollection',
-                    features: features,
+                    features: fullGeoJSON.features.filter((feature) => {
+                        const deliveryArea = feature.properties.delivery_area
+                        return (
+                            deliveryArea &&
+                            deliveryArea.toLowerCase() ===
+                                areaLabel.toLowerCase()
+                        )
+                    }),
                 }
             })
 
-            return geoJSONData
+            return grouped
         } catch (error) {
             console.error('GeoJSON konnte nicht geladen werden:', error)
             return {}
         }
     }
 
-    // Mapbox-Karte initialisieren
-    const initMap = (containerId, geoJSONData, onAreaSelect) => {
-        const map = new mapboxgl.Map({
-            container: containerId,
-            style: 'mapbox://styles/mapbox/streets-v12',
-            center: [12.13, 54.09],
-            zoom: 11,
+    // Gebiets-Layer auf die Karte legen und auf alle Features zoomen
+    const addAreaLayers = () => {
+        let bounds = null
+
+        Object.entries(geoJSONData).forEach(([areaKey, geoJSON]) => {
+            geoJSON.features.forEach((feature) => {
+                feature.geometry?.coordinates?.[0]?.forEach((coord) => {
+                    bounds = bounds
+                        ? bounds.extend(coord)
+                        : new maplibregl.LngLatBounds(coord, coord)
+                })
+            })
+
+            map.addSource(`area-${areaKey}`, { type: 'geojson', data: geoJSON })
+
+            map.addLayer({
+                id: `area-${areaKey}-fill`,
+                type: 'fill',
+                source: `area-${areaKey}`,
+                paint: {
+                    'fill-color': AREA_COLORS[areaKey] ?? '#6b7db3',
+                    // Niedrige Deckkraft, damit die Straßen darunter sichtbar bleiben
+                    'fill-opacity': 0.25,
+                },
+            })
+
+            map.addLayer({
+                id: `area-${areaKey}-outline`,
+                type: 'line',
+                source: `area-${areaKey}`,
+                paint: { 'line-color': '#FFFFFF', 'line-width': 2 },
+            })
         })
 
-        map.on('load', () => {
-            let bounds = null
+        if (bounds) map.fitBounds(bounds, { padding: 40 })
+    }
 
-            Object.entries(geoJSONData).forEach(([areaKey, geoJSON]) => {
-                if (geoJSON.features && geoJSON.features.length > 0) {
-                    geoJSON.features.forEach((feature) => {
-                        if (feature.geometry && feature.geometry.coordinates) {
-                            feature.geometry.coordinates[0].forEach((coord) => {
-                                if (!bounds) {
-                                    bounds = new mapboxgl.LngLatBounds(coord, coord)
-                                } else {
-                                    bounds.extend(coord)
-                                }
-                            })
-                        }
-                    })
+    // Route-Linie (Abholung -> Stop 1 -> Stop 2 ...) anlegen
+    const addRouteLine = () => {
+        map.addSource('route-line', {
+            type: 'geojson',
+            data: {
+                type: 'Feature',
+                geometry: { type: 'LineString', coordinates: [] },
+            },
+        })
+        map.addLayer({
+            id: 'route-line',
+            type: 'line',
+            source: 'route-line',
+            layout: { 'line-cap': 'round', 'line-join': 'round' },
+            paint: {
+                'line-color': '#1d2133', // navy
+                'line-width': 3,
+                'line-opacity': 0.6,
+                'line-dasharray': [1.5, 1.5],
+            },
+        })
+    }
+
+    // Route-Linie an die aktuellen Marker-Positionen anpassen
+    const updateRouteLine = () => {
+        if (!map || !map.getSource('route-line')) return
+        const coordinates = []
+        if (pickup) coordinates.push(pickup.lngLat.toArray())
+        deliveries.forEach((d) => coordinates.push(d.lngLat.toArray()))
+        map.getSource('route-line').setData({
+            type: 'Feature',
+            geometry: { type: 'LineString', coordinates },
+        })
+    }
+
+    // Gebiet unter einem Kartenpunkt bestimmen
+    const areaKeyAt = (lngLat) => {
+        const point = map.project(lngLat)
+        const layers = Object.keys(pricing.areas).map((k) => `area-${k}-fill`)
+        const hit = map.queryRenderedFeatures(point, { layers })[0]
+        return hit ? hit.layer.id.replace(/^area-|-fill$/g, '') : null
+    }
+
+    // Klick zu nah an einem bestehenden Marker? Dann keinen neuen Stop setzen,
+    // damit ein knapp verfehlter Marker-Klick nicht versehentlich einen Stop
+    // erzeugt.
+    const isNearExistingMarker = (screenPoint) => {
+        const markers = [
+            pickupMarker,
+            ...deliveries.map((d) => d.marker),
+        ].filter(Boolean)
+        return markers.some((marker) => {
+            const p = map.project(marker.getLngLat())
+            return (
+                Math.hypot(p.x - screenPoint.x, p.y - screenPoint.y) <=
+                NEAR_MARKER_PX
+            )
+        })
+    }
+
+    // Marker-Element (Abholung = pink „A", Stop = navy mit Nummer)
+    const createMarkerElement = (variant = 'stop') => {
+        const el = document.createElement('div')
+        const isPickup = variant === 'pickup'
+        // Kein transition-transform: MapLibre positioniert den Marker selbst per
+        // CSS-transform - eine Transition darauf lässt ihn flackern.
+        el.className = `flex h-8 w-8 cursor-grab items-center justify-center rounded-full ${isPickup ? 'bg-pink' : 'bg-navy'} text-white text-base font-bold border-2 border-white shadow-lg hover:ring-2 ${isPickup ? 'hover:ring-navy' : 'hover:ring-pink'} active:cursor-grabbing`
+        el.title = isPickup
+            ? 'Abholung - ziehen zum Verschieben'
+            : 'Ziehen zum Verschieben, klicken zum Bearbeiten'
+        if (isPickup) el.textContent = 'A'
+        return el
+    }
+
+    // --- Abholung ---------------------------------------------------------
+
+    const placePickup = (lngLat, areaKey) => {
+        pickup = { areaKey, lngLat }
+
+        const el = createMarkerElement('pickup')
+        pickupMarker = new maplibregl.Marker({ element: el, draggable: true })
+            .setLngLat(lngLat)
+            .addTo(map)
+        pickupMarker.on('dragend', () => {
+            const pos = pickupMarker.getLngLat()
+            const key = areaKeyAt(pos)
+            if (key) {
+                pickup = { areaKey: key, lngLat: pos }
+                refresh()
+            } else {
+                pickupMarker.setLngLat(pickup.lngLat)
+            }
+        })
+
+        refresh()
+    }
+
+    // --- Stops ------------------------------------------------------------
+
+    // Popover-Inhalt eines Stops: Gewicht eintragen + Stop entfernen
+    const buildStopPopup = (delivery) => {
+        const wrap = document.createElement('div')
+        wrap.className = 'min-w-[180px] p-1'
+        wrap.innerHTML = `
+            <label class="block text-sm font-bold text-navy mb-1">Gewicht</label>
+            <div class="grid grid-cols-5 items-center gap-2 mb-3">
+                <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="0.1"
+                    value="${delivery.weight}"
+                    aria-label="Gewicht in kg"
+                    class="col-span-4 p-2 text-base border-2 border-navy rounded-lg bg-white text-navy focus:outline-none focus:ring-2 focus:ring-pink"
+                >
+                <span class="text-base text-navy/70">kg</span>
+            </div>
+            <button type="button" data-remove class="text-sm font-bold text-pink hover:underline">Stop entfernen</button>
+        `
+        wrap.querySelector('input').addEventListener('input', (event) => {
+            delivery.weight = parseFloat(event.target.value) || 0
+            refresh()
+        })
+        wrap.querySelector('[data-remove]').addEventListener('click', () =>
+            removeDelivery(delivery.id)
+        )
+        return wrap
+    }
+
+    const addDelivery = (areaKey, lngLat) => {
+        const id = ++deliveryCounter
+        const el = createMarkerElement('stop')
+        const marker = new maplibregl.Marker({ element: el, draggable: true })
+            .setLngLat(lngLat)
+            .addTo(map)
+
+        const delivery = { id, areaKey, weight: 5, marker, badge: el, lngLat }
+        deliveries.push(delivery)
+
+        // Klick auf den Marker öffnet das Popover (Gewicht + Entfernen).
+        const popup = new maplibregl.Popup({
+            offset: 24,
+            closeButton: true,
+            maxWidth: 'none',
+        }).setDOMContent(buildStopPopup(delivery))
+        marker.setPopup(popup)
+
+        popup.on('open', () => {
+            // Immer nur ein Popover offen: beim Öffnen alle anderen schließen
+            deliveries.forEach((other) => {
+                const otherPopup = other.marker.getPopup()
+                if (otherPopup && otherPopup !== popup && otherPopup.isOpen()) {
+                    otherPopup.remove()
                 }
+            })
+            // Marker zentrieren, damit das Popover Platz hat und nicht am
+            // Kartenrand abgeschnitten wird (v. a. mobil).
+            map.easeTo({ center: marker.getLngLat(), duration: 300 })
+        })
 
-                map.addSource(`area-${areaKey}`, {
-                    type: 'geojson',
-                    data: geoJSON,
+        marker.on('dragend', () => {
+            const pos = marker.getLngLat()
+            const newAreaKey = areaKeyAt(pos)
+            if (newAreaKey) {
+                delivery.areaKey = newAreaKey
+                delivery.lngLat = pos
+                refresh()
+            } else {
+                marker.setLngLat(delivery.lngLat)
+            }
+        })
+
+        refresh()
+    }
+
+    const removeDelivery = (id) => {
+        const index = deliveries.findIndex((d) => d.id === id)
+        if (index === -1) return
+        deliveries[index].marker.remove()
+        deliveries.splice(index, 1)
+        refresh()
+    }
+
+    // Marker auf der Karte durchnummerieren (1, 2, 3, ...)
+    const renumberMarkers = () => {
+        deliveries.forEach((delivery, index) => {
+            delivery.badge.textContent = String(index + 1)
+        })
+    }
+
+    // Stop in der Zusammensetzung anklicken -> Popover togglen (auf/zu).
+    // Das Zentrieren übernimmt der 'open'-Handler des Popovers.
+    const openStop = (delivery) => {
+        const popup = delivery.marker.getPopup()
+        if (popup && popup.isOpen()) {
+            popup.remove()
+            return
+        }
+        delivery.marker.togglePopup()
+    }
+
+    // --- Preis ------------------------------------------------------------
+
+    const calculatePrice = () => {
+        const ready = pickup && deliveries.length > 0
+        document.getElementById('price-empty').classList.toggle('hidden', ready)
+        document
+            .getElementById('price-section')
+            .classList.toggle('hidden', !ready)
+        if (!ready) return
+
+        // Stopp-Preise: Abholung (Standard) + je Stop
+        const pickupFee = stopPrice(0)
+        const deliveryFees = deliveries.map((d) => stopPrice(d.weight))
+        const stopsFee = pickupFee + deliveryFees.reduce((a, b) => a + b, 0)
+
+        // Gebietsaufschlag: höchster betroffener Tier, einmalig
+        const areaKeys = [pickup.areaKey, ...deliveries.map((d) => d.areaKey)]
+        const topAreaKey = areaKeys.reduce((top, key) =>
+            pricing.areas[key].surcharge > pricing.areas[top].surcharge
+                ? key
+                : top
+        )
+        const areaFee = pricing.areas[topAreaKey].surcharge
+
+        const netto = stopsFee + areaFee
+        const brutto = Math.round(netto * (1 + pricing.vat / 100))
+
+        const breakdown = document.getElementById('price-breakdown')
+        breakdown.innerHTML = ''
+
+        // Posten (Abholung/Stop): Badge, Titel, Gebiet + Größe, Preis.
+        // Stops sind anklickbar und öffnen ihren Marker.
+        const item = ({ badge, badgeBg, title, sub, value, delivery }) => {
+            const el = document.createElement(delivery ? 'button' : 'div')
+            if (delivery) el.type = 'button'
+            el.className =
+                'flex w-full items-start gap-3 text-left' +
+                (delivery ? ' group cursor-pointer' : '')
+            el.innerHTML = `
+                <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${badgeBg} text-white text-xs font-bold">${badge}</span>
+                <span class="flex-1 min-w-0">
+                    <span class="block font-bold text-navy ${delivery ? 'group-hover:text-pink transition-colors' : ''}">${title}</span>
+                    <span class="block text-sm text-navy/60">${sub}</span>
+                </span>
+                <span class="font-bold text-navy whitespace-nowrap">${formatPrice(value)}</span>
+            `
+            if (delivery) el.addEventListener('click', () => openStop(delivery))
+            breakdown.appendChild(el)
+        }
+
+        const areaTag = (label) =>
+            `Gebiet: <span class="font-semibold text-navy">${label}</span>`
+        const sizeTag = (weight, wc) =>
+            `Größe: <span class="font-semibold text-navy">${weight} kg (${wc})</span>`
+
+        item({
+            badge: 'A',
+            badgeBg: 'bg-pink',
+            title: 'Abholung',
+            sub: areaTag(pricing.areas[pickup.areaKey].label),
+            value: pickupFee,
+        })
+        deliveries.forEach((d, i) => {
+            const wc = getWeightClass(d.weight)
+            item({
+                badge: String(i + 1),
+                badgeBg: 'bg-navy',
+                title: `Stop ${i + 1}`,
+                sub: `${areaTag(pricing.areas[d.areaKey].label)} · ${sizeTag(d.weight, wc.label)}`,
+                value: deliveryFees[i],
+                delivery: d,
+            })
+        })
+
+        // Summenzeilen
+        const sumRow = (label, value, cls = '') => {
+            const el = document.createElement('div')
+            el.className = 'flex items-center justify-between gap-4 ' + cls
+            el.innerHTML = `<span>${label}</span><span class="font-bold whitespace-nowrap">${formatPrice(value)}</span>`
+            breakdown.appendChild(el)
+        }
+
+        sumRow(
+            `Zwischensumme - ${1 + deliveries.length} Stopps`,
+            stopsFee,
+            'border-t border-navy/10 pt-3 mt-3 font-bold text-navy'
+        )
+        if (areaFee > 0) {
+            sumRow(
+                `Gebietsaufschlag - ${pricing.areas[topAreaKey].label}`,
+                areaFee,
+                'text-navy'
+            )
+        }
+        sumRow(
+            'Netto gesamt',
+            netto,
+            'border-t border-navy/10 pt-3 mt-1 font-bold text-pink'
+        )
+
+        document.getElementById('price-vat').textContent = formatPrice(
+            brutto - netto
+        )
+        document.getElementById('price-brutto').textContent =
+            formatPrice(brutto)
+    }
+
+    // --- Hinweis auf der Karte -------------------------------------------
+
+    const updateMapHint = () => {
+        const hint = document.getElementById('map-hint')
+        if (!pickup) {
+            hint.textContent = 'Tippe zuerst deinen Abholort an'
+            hint.classList.remove('hidden')
+        } else if (deliveries.length === 0) {
+            hint.textContent = 'Jetzt die Zielstopps antippen'
+            hint.classList.remove('hidden')
+        } else {
+            hint.classList.add('hidden')
+        }
+    }
+
+    // Alles neu zeichnen (Route, Preis, Hinweis)
+    const refresh = () => {
+        renumberMarkers()
+        updateRouteLine()
+        calculatePrice()
+        updateMapHint()
+    }
+
+    // --- Zustellzeit ------------------------------------------------------
+
+    const renderDeliveryTimeOptions = () => {
+        const optionsContainer = document.getElementById(
+            'delivery-time-options'
+        )
+        optionsContainer.innerHTML = Object.entries(pricing.delivery)
+            .map(([key, data], index) => {
+                const checked = index === 0 ? 'checked' : ''
+                return `
+                    <label class="flex-1 cursor-pointer px-4 py-2 text-center leading-tight text-navy transition-colors has-[:checked]:bg-pink has-[:checked]:text-white [&:not(:first-child)]:border-l-2 [&:not(:first-child)]:border-navy has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-inset has-[:focus-visible]:ring-pink">
+                        <input type="radio" name="delivery-time" value="${key}" ${checked} class="sr-only">
+                        <span class="block text-base md:text-lg font-bold">${data.label}</span>
+                        <span class="block text-sm md:text-base opacity-80">${data.description ?? ''}</span>
+                    </label>
+                `
+            })
+            .join('')
+
+        document.getElementById('vat-label').textContent =
+            `inkl. ${pricing.vat}% MwSt.`
+
+        optionsContainer
+            .querySelectorAll('input[name="delivery-time"]')
+            .forEach((radio) => {
+                radio.addEventListener('change', () => {
+                    deliveryTime = radio.value
+                    calculatePrice()
                 })
+            })
+    }
 
-                map.addLayer({
-                    id: `area-${areaKey}-fill`,
-                    type: 'fill',
-                    source: `area-${areaKey}`,
-                    paint: {
-                        'fill-color':
-                            areaKey === 'standard'
-                                ? '#ff1493'
-                                : areaKey === 'stadtrand'
-                                  ? '#68c3cd'
-                                  : '#6b7db3',
-                        'fill-opacity': 0.4,
-                    },
+    // --- Karte ------------------------------------------------------------
+
+    const initMap = () => {
+        map = new maplibregl.Map({
+            container: 'map',
+            style: createBaseStyle(),
+            center: DEFAULT_CENTER,
+            zoom: DEFAULT_ZOOM,
+            minZoom: DEFAULT_MIN_ZOOM,
+            maxZoom: DEFAULT_MAX_ZOOM,
+            maxBounds: MAX_BOUNDS,
+        })
+        map.addControl(
+            new maplibregl.NavigationControl({ showCompass: false }),
+            'bottom-left'
+        )
+
+        map.on('load', () => {
+            addAreaLayers()
+            addRouteLine()
+            updateRouteLine()
+            Object.keys(pricing.areas).forEach((areaKey) => {
+                map.on('click', `area-${areaKey}-fill`, (e) => {
+                    // Erster Punkt = Abholung, alle weiteren = Stops
+                    if (!pickup) {
+                        placePickup(e.lngLat, areaKey)
+                        return
+                    }
+                    if (isNearExistingMarker(e.point)) return
+                    addDelivery(areaKey, e.lngLat)
                 })
-
-                map.addLayer({
-                    id: `area-${areaKey}-outline`,
-                    type: 'line',
-                    source: `area-${areaKey}`,
-                    paint: {
-                        'line-color': '#FFFFFF',
-                        'line-width': 2,
-                    },
-                })
-
-                map.on('click', `area-${areaKey}-fill`, () => {
-                    onAreaSelect(areaKey, pricing.areas[areaKey].label)
-                    highlightArea(map, areaKey)
-                })
-
                 map.on('mouseenter', `area-${areaKey}-fill`, () => {
                     map.getCanvas().style.cursor = 'pointer'
                 })
-
                 map.on('mouseleave', `area-${areaKey}-fill`, () => {
                     map.getCanvas().style.cursor = ''
                 })
             })
-
-            if (bounds) {
-                map.fitBounds(bounds, { padding: 40 })
-            }
-        })
-
-        return map
-    }
-
-    // Area hervorheben
-    const highlightArea = (map, selectedAreaKey) => {
-        Object.keys(pricing.areas).forEach((areaKey) => {
-            const isSelected = areaKey === selectedAreaKey
-            map.setPaintProperty(
-                `area-${areaKey}-fill`,
-                'fill-opacity',
-                isSelected ? 0.8 : 0.2
-            )
-            map.setPaintProperty(
-                `area-${areaKey}-outline`,
-                'line-width',
-                isSelected ? 4 : 2
-            )
+            map.resize()
         })
     }
 
-    // Lieferkarte aktivieren/deaktivieren
-    const setDeliveryMapEnabled = (enabled) => {
-        const overlay = document.getElementById('delivery-map-overlay')
-        if (enabled) {
-            overlay.classList.add('hidden')
-            if (deliveryMap) {
-                deliveryMap.resize()
-                if (pickupMap) {
-                    deliveryMap.setCenter(pickupMap.getCenter())
-                    deliveryMap.setZoom(pickupMap.getZoom())
-                }
-            }
-        } else {
-            overlay.classList.remove('hidden')
-        }
-    }
+    // --- Initialisierung --------------------------------------------------
 
-    // Gesamtgewicht direkt aus DOM lesen
-    const calculateTotalWeight = () => {
-        const inputs = document.querySelectorAll('#packages-container input[type="number"]')
-        let total = 0
-        inputs.forEach((input) => {
-            total += parseFloat(input.value) || 0
-        })
-        return total
-    }
-
-    // Paketnummern im DOM neu durchnummerieren
-    const renumberPackages = () => {
-        const packagesContainer = document.getElementById('packages-container')
-        if (!packagesContainer) return
-        const rows = packagesContainer.querySelectorAll('.package-row')
-        rows.forEach((row, i) => {
-            const label = row.querySelector('.package-label')
-            if (label) label.textContent = `Paket ${i + 1}:`
-            const removeBtn = row.querySelector('[data-remove-package]')
-            if (removeBtn) removeBtn.setAttribute('aria-label', `Paket ${i + 1} entfernen`)
-        })
-    }
-
-    // Gewichtsklasse
-    const getWeightClass = (totalWeight) => {
-        if (totalWeight <= 0) {
-            const first = pricing.weightClasses[0]
-            return { ...first, displayLabel: `${first.label} (${first.min}–${first.max} kg)` }
-        }
-        for (const weightClass of pricing.weightClasses) {
-            if (totalWeight >= weightClass.min && totalWeight <= weightClass.max) {
-                return {
-                    ...weightClass,
-                    displayLabel: `${weightClass.label} (${weightClass.min}–${weightClass.max} kg)`,
-                }
-            }
-        }
-        return pricing.weightClasses[pricing.weightClasses.length - 1]
-    }
-
-    // Preis berechnen
-    const calculatePrice = () => {
-        const deliveryTimeRadio = document.querySelector(
-            'input[name="delivery-time"]:checked'
-        )
-        const weightTotalEl = document.getElementById('weight-total')
-        const weightClassEl = document.getElementById('weight-class')
-        const priceNettoEl = document.getElementById('price-netto')
-        const priceBruttoEl = document.getElementById('price-brutto')
-
-        if (!deliveryTimeRadio) return
-
-        const totalWeight = calculateTotalWeight()
-        const weightClass = getWeightClass(totalWeight)
-        const deliveryTimeKey = deliveryTimeRadio.value
-
-        const pickupAreaFee = selectedPickupArea
-            ? pricing.areas[selectedPickupArea].surcharge
-            : 0
-        const deliveryAreaFee = selectedDeliveryArea
-            ? pricing.areas[selectedDeliveryArea].surcharge
-            : 0
-        const areaFee = Math.max(pickupAreaFee, deliveryAreaFee)
-        const deliveryTimeFee = pricing.delivery[deliveryTimeKey].surcharge
-        const weightClassFee = weightClass.surcharges[deliveryTimeKey]
-
-        const netto =
-            pricing.basePrice * 2 + areaFee + weightClassFee + deliveryTimeFee
-        const brutto = Math.round(netto * (1 + pricing.vat / 100))
-
-        weightTotalEl.textContent = totalWeight.toFixed(1)
-        weightClassEl.textContent = weightClass.displayLabel
-        priceNettoEl.textContent = formatPrice(netto)
-        priceBruttoEl.textContent = formatPrice(brutto)
-    }
-
-    // Paket hinzufügen
-    const addPackage = () => {
-        const packagesContainer = document.getElementById('packages-container')
-        const count = packagesContainer.querySelectorAll('.package-row').length
-
-        const packageEl = document.createElement('div')
-        packageEl.className = 'package-row flex items-center gap-3'
-
-        packageEl.innerHTML = `
-            <label class="flex-1">
-                <span class="sr-only">Paket Gewicht in kg</span>
-                <div class="flex items-center gap-2">
-                    <span class="package-label text-base text-navy font-bold min-w-[70px]">Paket ${count + 1}:</span>
-                    <input
-                        type="number"
-                        min="0"
-                        max="100"
-                        step="0.1"
-                        value="5"
-                        placeholder="kg"
-                        class="flex-1 p-2 text-base border-2 border-navy rounded-lg bg-white text-navy focus:outline-none focus:ring-2 focus:ring-pink"
-                    >
-                    <span class="text-base text-navy">kg</span>
-                </div>
-            </label>
-            <button
-                type="button"
-                data-remove-package
-                class="bg-white text-navy p-2 rounded-lg hover:bg-pink hover:text-navy transition-colors"
-                aria-label="Paket ${count + 1} entfernen"
-            >
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                </svg>
-            </button>
-        `
-
-        packagesContainer.appendChild(packageEl)
-
-        packageEl.querySelector('input').addEventListener('input', calculatePrice)
-        packageEl.querySelector('[data-remove-package]').addEventListener('click', () => {
-            packageEl.remove()
-            renumberPackages()
-            calculatePrice()
-        })
-
-        calculatePrice()
-    }
-
-    // Dynamische Teile rendern
-    renderDynamicParts()
-
-    // Event Listeners
-    document.querySelectorAll('input[name="delivery-time"]').forEach((radio) => {
-        radio.addEventListener('change', calculatePrice)
-    })
-    document.getElementById('add-package').addEventListener('click', addPackage)
-
-    // GeoJSON laden & Karten initialisieren
-    const geoJSONData = await loadGeoJSON()
-
-    pickupMap = initMap('pickup-map', geoJSONData, (areaKey, areaLabel) => {
-        selectedPickupArea = areaKey
-        pickupSelected = true
-        document.getElementById('pickup-area-display').textContent = areaLabel
-        document.getElementById('pickup-hint').classList.add('hidden')
-
-        setDeliveryMapEnabled(true)
-        document.getElementById('delivery-hint').classList.remove('hidden')
-
-        calculatePrice()
-    })
-
-    deliveryMap = initMap('delivery-map', geoJSONData, (areaKey, areaLabel) => {
-        if (!pickupSelected) return
-        selectedDeliveryArea = areaKey
-        document.getElementById('delivery-area-display').textContent = areaLabel
-        document.getElementById('delivery-hint').classList.add('hidden')
-        calculatePrice()
-    })
-
-    // Erstes Paket hinzufügen
-    addPackage()
+    renderDeliveryTimeOptions()
+    geoJSONData = await loadGeoJSON()
+    refresh()
+    requestAnimationFrame(initMap)
 })

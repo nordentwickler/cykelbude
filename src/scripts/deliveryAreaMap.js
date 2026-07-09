@@ -1,10 +1,12 @@
 // Standalone Liefergebietskarte
-import mapboxgl from 'mapbox-gl'
-import 'mapbox-gl/dist/mapbox-gl.css'
-
-// Mapbox Access Token
-mapboxgl.accessToken =
-    'pk.eyJ1IjoibWFydG9ub3MiLCJhIjoiY21qZThiZW5oMGRoMjNlczUza3ljY3F5dSJ9.4c-7Y2VEmPxqpe8MBFXYiA'
+import {
+    createBaseStyle,
+    DEFAULT_CENTER,
+    DEFAULT_MIN_ZOOM,
+    DEFAULT_ZOOM,
+    MAX_BOUNDS,
+    maplibregl,
+} from './lib/basemap.js'
 
 // Popup für Gebietsanzeige
 let activePopup = null
@@ -18,7 +20,7 @@ const initDeliveryAreaMap = async () => {
         const style = document.createElement('style')
         style.id = 'delivery-area-map-styles'
         style.textContent = `
-            .mapboxgl-popup-close-button {
+            .maplibregl-popup-close-button {
                 padding: 3px !important;
             }
         `
@@ -52,11 +54,13 @@ const initDeliveryAreaMap = async () => {
         })
 
         // Karte initialisieren
-        const map = new mapboxgl.Map({
+        const map = new maplibregl.Map({
             container: 'delivery-areas-map',
-            style: 'mapbox://styles/mapbox/streets-v12',
-            center: [12.13, 54.09], // Rostock
-            zoom: 11,
+            style: createBaseStyle(),
+            center: DEFAULT_CENTER, // Rostock
+            zoom: DEFAULT_ZOOM,
+            minZoom: DEFAULT_MIN_ZOOM,
+            maxBounds: MAX_BOUNDS,
         })
 
         map.on('load', () => {
@@ -72,7 +76,7 @@ const initDeliveryAreaMap = async () => {
                         if (feature.geometry && feature.geometry.coordinates) {
                             feature.geometry.coordinates[0].forEach((coord) => {
                                 if (!bounds) {
-                                    bounds = new mapboxgl.LngLatBounds(
+                                    bounds = new maplibregl.LngLatBounds(
                                         coord,
                                         coord
                                     )
@@ -126,7 +130,7 @@ const initDeliveryAreaMap = async () => {
                     const coordinates = e.lngLat
                     const areaName = areaData.label
 
-                    activePopup = new mapboxgl.Popup({
+                    activePopup = new maplibregl.Popup({
                         closeButton: true,
                         closeOnClick: false,
                     })
