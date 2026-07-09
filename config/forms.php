@@ -50,4 +50,42 @@ return [
         ],
         'successMessage' => 'Vielen Dank für deine Anfrage! Wir haben sie erhalten und melden uns persönlich bei dir - mit allen Infos zur Bezahlung (Überweisung oder PayPal) und dem weiteren Ablauf.',
     ],
+
+    'delivery' => [
+        'name' => 'Lieferanfrage',
+        'honeypot' => 'website',
+        'fields' => [
+            // Aus dem Preisrechner übernommen (per JS in Hidden-Felder gefüllt)
+            'deliveryTime' => ['label' => 'Zustellzeit', 'required' => true],
+            'estimatedTotal' => ['label' => 'Geschätzter Gesamtpreis', 'required' => false],
+            // Menschenlesbarer Route-Block (Abholung + Stops mit Gebiet/Gewicht/Preis/Adresse)
+            'stops' => ['label' => 'Route (Abholung & Stops)', 'required' => true],
+            // Strukturierte Rohdaten für Rehydrierung/Weiterverarbeitung - nicht in Mail/Übersicht
+            'stopsData' => ['label' => 'Stops (Rohdaten)', 'required' => false, 'summary' => false],
+            // Kundendaten
+            'name' => ['label' => 'Name', 'required' => true],
+            'email' => ['label' => 'E-Mail', 'required' => true, 'type' => 'email'],
+            'phone' => ['label' => 'Telefon', 'required' => true],
+            // Rechnungsanschrift
+            'company' => ['label' => 'Firma', 'required' => false],
+            'billingStreet' => ['label' => 'Rechnungsanschrift - Straße & Hausnummer', 'required' => true],
+            'billingZip' => ['label' => 'PLZ', 'required' => true],
+            'billingCity' => ['label' => 'Ort', 'required' => true],
+            'notes' => ['label' => 'Nachricht', 'required' => false],
+            'privacy' => ['label' => 'Datenschutz akzeptiert', 'required' => true, 'boolean' => true],
+        ],
+        'store' => 'submissions',
+        'admin' => [
+            'recipients' => ['auftrag@cykelbu.de'],
+            'subject' => 'Neue Lieferanfrage',
+            'template' => '_emails/delivery-admin',
+        ],
+        'customer' => [
+            'subject' => 'Danke für deine Lieferanfrage',
+            'template' => '_emails/delivery-customer',
+            'emailField' => 'email',
+            'nameField' => 'name',
+        ],
+        'successMessage' => 'Danke für deine Anfrage! Der angezeigte Preis ist eine unverbindliche Schätzung - wir prüfen deine Angaben (Adressen, Gebiete, Gewichte) und melden uns persönlich mit dem exakten Preis und dem weiteren Ablauf.',
+    ],
 ];

@@ -171,6 +171,12 @@ class FormsController extends Controller
         $lines = [];
 
         foreach ($def['fields'] as $name => $field) {
+            // Felder, die explizit von der Übersicht ausgenommen sind (z. B.
+            // strukturierte Rohdaten wie stopsData), überspringen.
+            if (($field['summary'] ?? true) === false) {
+                continue;
+            }
+
             $value = $values[$name] ?? '';
 
             if ($value === '' || $value === null || $value === []) {

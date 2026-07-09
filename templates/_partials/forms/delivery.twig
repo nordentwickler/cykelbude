@@ -1,0 +1,84 @@
+{% import '_partials/forms/_macros.twig' as f %}
+
+{% set errors = formErrors ?? {} %}
+{% set values = formValues ?? {} %}
+{% set success = craft.app.session.getFlash('formSuccess') %}
+{% set isDelivery = (formHandle ?? '') == 'delivery' %}
+{# Sichtbar bei Erfolg, bei Fehler-Re-Render, sonst blendet das JS es beim
+   Klick auf „Lieferung anfragen" ein. #}
+{% set reveal = success or isDelivery %}
+
+<div id="order-form" class="{{ reveal ? '' : 'hidden' }} mt-8 bg-white rounded-2xl border border-navy/10 shadow-lg text-navy p-5 lg:p-8">
+    {% if success %}
+        <div class="text-center py-8" data-aos="fade-up">
+            <h3 class="text-pink">Anfrage abgeschickt</h3>
+            <p class="text-lg md:text-xl max-w-2xl mx-auto">{{ success }}</p>
+        </div>
+    {% else %}
+        <h3 class="text-2xl md:text-3xl font-bold mb-1">Lieferung anfragen</h3>
+        <p class="text-base md:text-lg text-navy/60 mb-6">
+            Deine Angaben aus dem Rechner sind übernommen. Ergänze die Adressen und deine Kontaktdaten -
+            ab hier ist alles eine unverbindliche Anfrage.
+        </p>
+
+        {% if errors|length %}
+            <div class="rounded-lg border-2 border-pink text-pink text-base md:text-lg px-4 py-3 mb-6">
+                Bitte überprüfe die markierten Felder.
+            </div>
+        {% endif %}
+
+        <form method="post" accept-charset="UTF-8" class="space-y-6">
+            {{ csrfInput() }}
+            {{ actionInput('site-module/forms/submit') }}
+            {{ hiddenInput('form', 'delivery') }}
+            {{ redirectInput(craft.app.request.getPathInfo()) }}
+
+            {# Honeypot #}
+            <div class="hidden" aria-hidden="true">
+                <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+            </div>
+
+            {# Aus dem Preisrechner - vom JS befüllt, bei Fehler wiederhergestellt #}
+            <input type="hidden" name="deliveryTime" id="order-delivery-time" value="{{ values.deliveryTime ?? '' }}">
+            <input type="hidden" name="estimatedTotal" id="order-estimated-total" value="{{ values.estimatedTotal ?? '' }}">
+            <input type="hidden" name="stops" id="order-stops-text" value="{{ values.stops ?? '' }}">
+            <input type="hidden" name="stopsData" id="order-stops-data" value="{{ values.stopsData ?? '' }}">
+
+            {# Route mit Adressfeldern (live aus dem Rechner, JS-gerendert) #}
+            <div class="rounded-lg border border-navy/10 p-4 md:p-5">
+                <span class="block text-lg font-bold mb-1">Deine Route</span>
+                <p class="text-base md:text-lg text-navy/60 mb-4">
+                    Bitte gib zu Abholung und jedem Stop die genaue Adresse an. Tippe einen Stop an,
+                    um ihn auf der Karte zu öffnen - den exakten Preis bestätigen wir dir mit unserer Antwort.
+                </p>
+                <div id="order-stops"></div>
+                <button type="button" id="order-scroll-map" class="mt-3 text-base font-bold text-pink hover:underline">
+                    Weiteren Stop auf der Karte hinzufügen
+                </button>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                {{ f.input('name', 'Name', errors, values, { required: true }) }}
+                {{ f.input('email', 'E-Mail', errors, values, { type: 'email', required: true }) }}
+                {{ f.input('phone', 'Telefon', errors, values, { type: 'tel', required: true }) }}
+                {{ f.input('company', 'Firma (optional)', errors, values, {}) }}
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                {{ f.input('billingStreet', 'Rechnungsanschrift - Straße & Hausnummer', errors, values, { required: true, wrapper: 'md:col-span-2' }) }}
+                {{ f.input('billingZip', 'PLZ', errors, values, { required: true }) }}
+                {{ f.input('billingCity', 'Ort', errors, values, { required: true }) }}
+            </div>
+
+            {{ f.textarea('notes', 'Nachricht (optional)', errors, values, {
+                rows: 4, placeholder: 'Gibt es etwas, das wir wissen sollten?'
+            }) }}
+
+            {{ f.checkbox('privacy', 'Ich habe die <a href="/datenschutz" class="underline hover:text-pink">Datenschutzhinweise</a> gelesen und bin einverstanden.', errors, values, { required: true }) }}
+
+            <button type="submit" class="bg-pink hover:bg-mint text-white inline-block py-4 px-6 font-bold rounded-lg transition-colors">
+                Anfrage senden
+            </button>
+        </form>
+    {% endif %}
+</div>

@@ -52,10 +52,15 @@
                                 <span id="price-vat" class="font-bold">0,00 €</span>
                             </div>
                         </div>
+                        <button type="button" id="order-request-btn" class="w-full bg-navy text-white py-4 px-6 font-bold rounded-lg hover:bg-navy/80 transition-colors">
+                            Lieferung anfragen
+                        </button>
                     </div>
                 </div>
 
             </div>
         </div>
+
+        {% include '_partials/forms/delivery.twig' %}
     </div>
 </section>

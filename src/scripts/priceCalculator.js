@@ -40,10 +40,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Zustand
     let deliveryTime = null // 'nextDay' | 'sameDay'
-    let pickup = null // { areaKey, lngLat }
+    let pickup = null // { areaKey, lngLat, address }
     let pickupMarker = null
-    const deliveries = [] // [{ id, areaKey, weight, marker, badge }]
+    const deliveries = [] // [{ id, areaKey, weight, address, marker, badge, lngLat }]
     let deliveryCounter = 0
+    let savedOrder = null // aus dem Hidden-JSON wiederhergestellte Bestelldaten
 
     // Preise laden
     try {
@@ -220,8 +221,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- Abholung ---------------------------------------------------------
 
-    const placePickup = (lngLat, areaKey) => {
-        pickup = { areaKey, lngLat }
+    const placePickup = (lngLat, areaKey, address = '') => {
+        pickup = { areaKey, lngLat, address }
 
         const el = createMarkerElement('pickup')
         pickupMarker = new maplibregl.Marker({ element: el, draggable: true })
@@ -231,7 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const pos = pickupMarker.getLngLat()
             const key = areaKeyAt(pos)
             if (key) {
-                pickup = { areaKey: key, lngLat: pos }
+                pickup = { areaKey: key, lngLat: pos, address: pickup.address }
                 refresh()
             } else {
                 pickupMarker.setLngLat(pickup.lngLat)
@@ -273,14 +274,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         return wrap
     }
 
-    const addDelivery = (areaKey, lngLat) => {
+    const addDelivery = (areaKey, lngLat, opts = {}) => {
         const id = ++deliveryCounter
         const el = createMarkerElement('stop')
         const marker = new maplibregl.Marker({ element: el, draggable: true })
             .setLngLat(lngLat)
             .addTo(map)
 
-        const delivery = { id, areaKey, weight: 5, marker, badge: el, lngLat }
+        const delivery = {
+            id,
+            areaKey,
+            weight: opts.weight ?? 5,
+            address: opts.address ?? '',
+            marker,
+            badge: el,
+            lngLat,
+        }
         deliveries.push(delivery)
 
         // Klick auf den Marker öffnet das Popover (Gewicht + Entfernen).
@@ -473,6 +482,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateRouteLine()
         calculatePrice()
         updateMapHint()
+        renderOrderForm()
     }
 
     // --- Zustellzeit ------------------------------------------------------
@@ -546,13 +556,203 @@ document.addEventListener('DOMContentLoaded', async () => {
                 })
             })
             map.resize()
+            restoreOrder()
         })
+    }
+
+    // --- Bestellformular (live aus dem Rechner) ---------------------------
+    //
+    // Die Karte ist die einzige Quelle. Das Formular rendert Abholung + Stops
+    // live aus `pickup`/`deliveries`; Adressen werden pro Stop am Modell
+    // gespeichert. Stops werden nur auf der Karte hinzugefügt.
+
+    // Zur Karte scrollen und (falls vorhanden) den Marker öffnen
+    const showOnMap = (lngLat, marker) => {
+        document
+            .getElementById('map')
+            .scrollIntoView({ behavior: 'smooth', block: 'center' })
+        if (marker) {
+            const popup = marker.getPopup()
+            if (popup && !popup.isOpen()) {
+                marker.togglePopup()
+                return
+            }
+        }
+        map.easeTo({ center: lngLat, duration: 300 })
+    }
+
+    // Eine Formularzeile: klickbarer Kopf (Badge + Titel + Info + Stift) + Adressfeld
+    const buildOrderRow = ({ badge, badgeBg, title, detail, address, onOpen, onAddress }) => {
+        const div = document.createElement('div')
+        div.className = 'py-3 border-t border-navy/10 first:border-t-0 first:pt-0'
+        div.innerHTML = `
+            <button type="button" data-open class="flex items-center gap-3 w-full text-left group mb-2">
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${badgeBg} text-white text-sm font-bold">${badge}</span>
+                <span class="flex-1 min-w-0 text-base md:text-lg leading-snug">
+                    <span class="font-bold text-navy">${title}</span>
+                    <span class="text-navy/60"> · ${detail}</span>
+                </span>
+                <svg class="w-5 h-5 shrink-0 text-navy/40 group-hover:text-pink transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>
+            </button>
+            <input type="text" data-address required aria-label="Adresse (Pflichtfeld)" placeholder="Adresse: Straße Nr., PLZ Ort"
+                class="w-full rounded-lg border-2 border-navy/20 bg-white text-navy text-base px-3 py-2 focus:border-pink focus:outline-none">
+        `
+        const input = div.querySelector('[data-address]')
+        input.value = address ?? ''
+        input.addEventListener('input', (e) => onAddress(e.target.value))
+        div.querySelector('[data-open]').addEventListener('click', onOpen)
+        return div
+    }
+
+    // Formular-Stopliste live aus dem Rechner rendern
+    const renderOrderForm = () => {
+        const el = document.getElementById('order-stops')
+        if (!el) return
+        el.innerHTML = ''
+
+        if (pickup) {
+            el.appendChild(
+                buildOrderRow({
+                    badge: 'A',
+                    badgeBg: 'bg-pink',
+                    title: 'Abholung',
+                    detail: `Gebiet: ${pricing.areas[pickup.areaKey].label}`,
+                    address: pickup.address,
+                    onOpen: () => showOnMap(pickup.lngLat, null),
+                    onAddress: (value) => {
+                        pickup.address = value
+                    },
+                })
+            )
+        }
+
+        deliveries.forEach((d, i) => {
+            const wc = getWeightClass(d.weight)
+            el.appendChild(
+                buildOrderRow({
+                    badge: String(i + 1),
+                    badgeBg: 'bg-navy',
+                    title: `Stop ${i + 1}`,
+                    detail: `Gebiet: ${pricing.areas[d.areaKey].label} · ${d.weight} kg (${wc.label})`,
+                    address: d.address,
+                    onOpen: () => showOnMap(d.lngLat, d.marker),
+                    onAddress: (value) => {
+                        d.address = value
+                    },
+                })
+            )
+        })
+    }
+
+    // „Lieferung anfragen" -> Formular einblenden und hinscrollen
+    const revealOrderForm = () => {
+        if (!pickup || deliveries.length === 0) return
+        renderOrderForm()
+        const form = document.getElementById('order-form')
+        form.classList.remove('hidden')
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+
+    // Beim Absenden Route + Rohdaten in die Hidden-Felder serialisieren
+    const serializeOrder = () => {
+        // Mehrzeilig, gut zum Copy-paste: Kopfzeile + Adresse darunter,
+        // Blöcke durch Leerzeile getrennt.
+        const blocks = []
+        if (pickup) {
+            blocks.push(`Abholung\n${pickup.address || '(keine Adresse)'}`)
+        }
+        deliveries.forEach((d, i) => {
+            blocks.push(
+                `Stop ${i + 1} - ${d.weight} kg\n${d.address || '(keine Adresse)'}`
+            )
+        })
+
+        const label = pickup ? pricing.delivery[deliveryTime].label : ''
+        const total = document.getElementById('price-brutto').textContent
+
+        document.getElementById('order-stops-text').value = blocks.join('\n\n')
+        document.getElementById('order-delivery-time').value = label
+        document.getElementById('order-estimated-total').value = total
+        document.getElementById('order-stops-data').value = JSON.stringify({
+            deliveryTimeKey: deliveryTime,
+            deliveryTimeLabel: label,
+            estimatedTotal: total,
+            pickup: pickup
+                ? {
+                      areaKey: pickup.areaKey,
+                      address: pickup.address,
+                      lng: pickup.lngLat.lng,
+                      lat: pickup.lngLat.lat,
+                  }
+                : null,
+            stops: deliveries.map((d) => ({
+                areaKey: d.areaKey,
+                weight: d.weight,
+                address: d.address,
+                lng: d.lngLat.lng,
+                lat: d.lngLat.lat,
+            })),
+        })
+    }
+
+    // Nach Fehler-Re-Render den Rechner-Zustand aus dem Hidden-JSON aufbauen
+    const restoreOrder = () => {
+        if (!savedOrder) return
+        if (savedOrder.pickup) {
+            placePickup(
+                new maplibregl.LngLat(
+                    savedOrder.pickup.lng,
+                    savedOrder.pickup.lat
+                ),
+                savedOrder.pickup.areaKey,
+                savedOrder.pickup.address || ''
+            )
+        }
+        ;(savedOrder.stops || []).forEach((s) => {
+            addDelivery(s.areaKey, new maplibregl.LngLat(s.lng, s.lat), {
+                weight: s.weight,
+                address: s.address,
+            })
+        })
+        document.getElementById('order-form')?.classList.remove('hidden')
     }
 
     // --- Initialisierung --------------------------------------------------
 
+    try {
+        const dataEl = document.getElementById('order-stops-data')
+        savedOrder = dataEl && dataEl.value ? JSON.parse(dataEl.value) : null
+    } catch (error) {
+        savedOrder = null
+    }
+
     renderDeliveryTimeOptions()
+    if (
+        savedOrder?.deliveryTimeKey &&
+        pricing.delivery[savedOrder.deliveryTimeKey]
+    ) {
+        deliveryTime = savedOrder.deliveryTimeKey
+        const radio = document.querySelector(
+            `input[name="delivery-time"][value="${savedOrder.deliveryTimeKey}"]`
+        )
+        if (radio) radio.checked = true
+    }
+
     geoJSONData = await loadGeoJSON()
     refresh()
     requestAnimationFrame(initMap)
+
+    document
+        .getElementById('order-request-btn')
+        ?.addEventListener('click', revealOrderForm)
+    document
+        .getElementById('order-scroll-map')
+        ?.addEventListener('click', () => {
+            document
+                .getElementById('map')
+                .scrollIntoView({ behavior: 'smooth', block: 'center' })
+        })
+    document
+        .querySelector('#order-form form')
+        ?.addEventListener('submit', serializeOrder)
 })

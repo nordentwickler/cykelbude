@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin:0; padding:0; background-color:#f4f4f6;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f6; padding:32px 0;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%; background-color:#ffffff; border-radius:12px; overflow:hidden; font-family:Arial,Helvetica,sans-serif;">
+                    <tr>
+                        <td style="background-color:#e6007e; padding:28px 32px;">
+                            <h1 style="margin:0; color:#ffffff; font-size:22px; line-height:1.3;">Neue Lieferanfrage</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:32px;">
+                            <p style="margin:0 0 8px; color:#1f2440; font-size:16px; line-height:1.6;">
+                                Über den Preisrechner ist eine neue Lieferanfrage eingegangen.
+                            </p>
+                            <p style="margin:0 0 24px; color:#8a8a99; font-size:14px; line-height:1.6;">
+                                Der Gesamtpreis ist eine <strong>Schätzung aus dem Rechner</strong> - bitte den exakten Preis prüfen und der anfragenden Person bestätigen.
+                            </p>
+
+                            {% set field = 'Zustellzeit' %}
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin-bottom:24px;">
+                                <tr>
+                                    <td style="padding:12px 0; border-bottom:1px solid #ececf0; color:#8a8a99; font-size:13px; text-transform:uppercase; letter-spacing:0.04em; width:42%;">Zustellzeit</td>
+                                    <td style="padding:12px 0 12px 16px; border-bottom:1px solid #ececf0; color:#1f2440; font-size:16px;">{{ values.deliveryTime }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:12px 0; border-bottom:1px solid #ececf0; color:#8a8a99; font-size:13px; text-transform:uppercase; letter-spacing:0.04em;">Geschätzter Gesamtpreis</td>
+                                    <td style="padding:12px 0 12px 16px; border-bottom:1px solid #ececf0; color:#1f2440; font-size:16px;">{{ values.estimatedTotal ?: '-' }} <span style="color:#8a8a99; font-size:13px;">(Schätzung)</span></td>
+                                </tr>
+                            </table>
+
+                            <h2 style="margin:0 0 12px; color:#1f2440; font-size:18px;">Route &amp; Adressen</h2>
+                            <div style="background-color:#f7f7f9; border-radius:8px; padding:16px 20px; color:#1f2440; font-size:15px; line-height:1.7; margin-bottom:24px; white-space:pre-wrap;">{{ values.stops }}</div>
+
+                            <h2 style="margin:0 0 12px; color:#1f2440; font-size:18px;">Kunde</h2>
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin-bottom:24px;">
+                                <tr>
+                                    <td style="padding:10px 0; border-bottom:1px solid #ececf0; color:#8a8a99; font-size:13px; text-transform:uppercase; letter-spacing:0.04em; width:42%;">Name</td>
+                                    <td style="padding:10px 0 10px 16px; border-bottom:1px solid #ececf0; color:#1f2440; font-size:16px;">{{ values.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:10px 0; border-bottom:1px solid #ececf0; color:#8a8a99; font-size:13px; text-transform:uppercase; letter-spacing:0.04em;">E-Mail</td>
+                                    <td style="padding:10px 0 10px 16px; border-bottom:1px solid #ececf0; color:#1f2440; font-size:16px;"><a href="mailto:{{ values.email }}" style="color:#e6007e; text-decoration:none;">{{ values.email }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:10px 0; border-bottom:1px solid #ececf0; color:#8a8a99; font-size:13px; text-transform:uppercase; letter-spacing:0.04em;">Telefon</td>
+                                    <td style="padding:10px 0 10px 16px; border-bottom:1px solid #ececf0; color:#1f2440; font-size:16px;">{{ values.phone }}</td>
+                                </tr>
+                            </table>
+
+                            <h2 style="margin:0 0 12px; color:#1f2440; font-size:18px;">Rechnungsanschrift</h2>
+                            <p style="margin:0 0 24px; color:#1f2440; font-size:16px; line-height:1.6;">
+                                {{ values.company ?: values.name }}<br>
+                                {{ values.billingStreet }}<br>
+                                {{ values.billingZip }} {{ values.billingCity }}
+                            </p>
+
+                            {% if values.notes %}
+                                <h2 style="margin:0 0 12px; color:#1f2440; font-size:18px;">Nachricht</h2>
+                                <p style="margin:0 0 24px; color:#1f2440; font-size:16px; line-height:1.6;">{{ values.notes|nl2br }}</p>
+                            {% endif %}
+
+                            <p style="margin:28px 0 0; color:#8a8a99; font-size:13px; line-height:1.6;">
+                                Antwort auf diese E-Mail geht direkt an die anfragende Person.
+                                Die Anfrage liegt außerdem im CMS unter &bdquo;Anfragen&ldquo;.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
