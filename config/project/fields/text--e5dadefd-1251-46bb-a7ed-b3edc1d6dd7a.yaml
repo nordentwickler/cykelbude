@@ -4,23 +4,55 @@ instructions: null
 name: Text
 searchable: false
 settings:
+  advancedLinkFields: null
   availableTransforms: ''
   availableVolumes: ''
   characterLimit: null
   css: null
   cssFile: null
   defaultTransform: null
+  defaultUploadLocationSubpath: null
+  defaultUploadLocationVolume: null
   entryTypes:
     -
-      uid: 9d49f708-57e6-4582-acab-f2fdbfc5ddad # Bild
+      __assoc__:
+        -
+          - uid
+          - 9d49f708-57e6-4582-acab-f2fdbfc5ddad # Bild
+        -
+          - expanded
+          - false
     -
-      uid: 23d1a135-c065-4b14-8379-a83af7d8d792 # Button
+      __assoc__:
+        -
+          - uid
+          - 23d1a135-c065-4b14-8379-a83af7d8d792 # Button
+        -
+          - expanded
+          - false
     -
-      uid: 3dc3c4c7-3051-4967-b325-11eee11821a5 # Liefergebiet
-  fullGraphqlData: false
+      __assoc__:
+        -
+          - uid
+          - 3dc3c4c7-3051-4967-b325-11eee11821a5 # Liefergebiet
+        -
+          - expanded
+          - false
+    -
+      __assoc__:
+        -
+          - uid
+          - 2cfe63bd-f87d-40b9-83b1-5610be0ce6e2 # Dateidownload
+        -
+          - expanded
+          - false
+  fullGraphqlData: true
   headingLevels:
-    - 2
-    - 3
+    - '2'
+    - '3'
+  imageEntryTypeUid: 9d49f708-57e6-4582-acab-f2fdbfc5ddad # Bild
+  imageFieldUid: 25f570bc-1114-411d-b898-c275a8276ff6
+  imageMode: img
   js: null
   jsFile: null
   options: null

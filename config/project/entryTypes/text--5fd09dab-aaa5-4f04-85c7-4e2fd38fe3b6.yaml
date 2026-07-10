@@ -1,3 +1,4 @@
+allowLineBreaksInTitles: false
 color: null
 description: null
 fieldLayouts:
@@ -11,6 +12,7 @@ fieldLayouts:
             dateAdded: '2025-11-13T12:23:29+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: ff163dd2-2671-4a9c-bead-517148786a6d # Überschrift 
             handle: null
             instructions: null
@@ -26,6 +28,7 @@ fieldLayouts:
             dateAdded: '2025-11-13T12:10:29+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: e5dadefd-1251-46bb-a7ed-b3edc1d6dd7a # Text
             handle: null
             instructions: null
@@ -40,6 +43,7 @@ fieldLayouts:
         name: Inhalt
         uid: e26b64ad-4805-4d0e-b1cc-50728d03937f
         userCondition: null
+    thumbFieldKey: null
 handle: text
 hasTitleField: false
 icon: null
@@ -51,3 +55,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
+uiLabelFormat: '{title}'
