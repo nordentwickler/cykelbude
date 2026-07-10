@@ -12,6 +12,17 @@ webhub.de
     {# SEO-Tags einfangen; wenn kein eigenes Social-Bild gesetzt ist (og:image
        leer), unser dynamisch generiertes Share-Bild der Seite einsetzen. #}
     {% set seoTags %}{% hook 'seo' %}{% endset %}
+
+    {# Fallback-Beschreibung, falls im SEO-Feld keine gesetzt ist. Gesetzte
+       (nicht leere) Beschreibungen pro Seite bleiben unangetastet. #}
+    {% set fallbackDesc = 'Cykelbude - Fahrradkurier-Kollektiv aus Rostock. Emissionsfreie Lieferungen und Kurierfahrten mit dem Lastenrad - fair, zuverlässig und klimafreundlich.' %}
+    {% set seoTags = seoTags
+        | replace({
+            'name="description" content=""': 'name="description" content="' ~ fallbackDesc ~ '"',
+            'property="og:description" content=""': 'property="og:description" content="' ~ fallbackDesc ~ '"',
+            'name="twitter:description" content=""': 'name="twitter:description" content="' ~ fallbackDesc ~ '"'
+        }) %}
+
     {% set injectOg = entry is defined and entry and entry.id is defined and ('property="og:image" content=""' in seoTags) %}
     {% if injectOg %}
         {% set ogImage = url('og/' ~ entry.id) %}
