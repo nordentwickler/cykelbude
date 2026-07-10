@@ -9,7 +9,20 @@ webhub.de
     <link rel="home" href="{{ siteUrl }}"/>
     {# Preload fonts #}
     {# <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Switzer-Variable.woff2"/> #}
-    {% hook 'seo' %}
+    {# SEO-Tags einfangen; wenn kein eigenes Social-Bild gesetzt ist (og:image
+       leer), unser dynamisch generiertes Share-Bild der Seite einsetzen. #}
+    {% set seoTags %}{% hook 'seo' %}{% endset %}
+    {% set injectOg = entry is defined and entry and entry.id is defined and ('property="og:image" content=""' in seoTags) %}
+    {% if injectOg %}
+        {% set ogImage = url('og/' ~ entry.id) %}
+        {% set seoTags = seoTags
+            | replace({
+                'property="og:image" content=""': 'property="og:image" content="' ~ ogImage ~ '"',
+                'name="twitter:image" content=""': 'name="twitter:image" content="' ~ ogImage ~ '"'
+            }) %}
+    {% endif %}
+    {{ seoTags|raw }}
+    {% if injectOg %}<meta property="og:image:type" content="image/png">{% endif %}
     {{ craft.vite.script('src/scripts/app.js', false) }}
     {% set settings = craft.entries.section('settings').with(['footerNavigation', 'mainNavigation']).one() %}
 </head>

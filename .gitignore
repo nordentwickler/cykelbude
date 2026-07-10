@@ -31,3 +31,4 @@ npm-debug.log
 .project
 .settings
 auth.json
+/public/og/*
