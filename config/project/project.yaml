@@ -1,4 +1,4 @@
-dateModified: 1784099911
+dateModified: 1784100517
 elementSources:
   craft\elements\Entry:
     -
@@ -68,13 +68,13 @@ email:
   fromEmail: brosch@webhub.de
   fromName: cykelbude
   replyToEmail: null
-  template: null
+  template: ''
   transportSettings:
     host: $SMTP_HOSTNAME
-    password: ''
+    password: $SMTP_PASSWORD
     port: $SMTP_PORT
     useAuthentication: $SMTP_USE_AUTHENTICATION
-    username: ''
+    username: $SMTP_USERNAME
   transportType: craft\mail\transportadapters\Smtp
 fs:
   media:
