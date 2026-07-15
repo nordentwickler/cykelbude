@@ -1,0 +1,131 @@
+description: null
+handle: editors
+name: Redakteure
+permissions:
+  - accesscp
+  - accesscpwhensystemisoff
+  - accessplugin-seo
+  - accesssitewhensystemisoff
+  - administrateusers
+  - assignuserpermissions
+  - 'changeauthorforpeerentries:09759854-ca02-4770-a144-d93007a8525a' # Termine
+  - 'changeauthorforpeerentries:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+  - 'changeauthorforpeerentries:441863aa-7a82-47fa-90fa-0d9c401fb1c1' # Blog
+  - 'changeauthorforpeerentries:50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd' # Seiten
+  - 'changeauthorforpeerentries:8f062321-b4fd-4358-a904-b70bb85171b6' # Anfragen
+  - 'createentries:09759854-ca02-4770-a144-d93007a8525a' # Termine
+  - 'createentries:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+  - 'createentries:441863aa-7a82-47fa-90fa-0d9c401fb1c1' # Blog
+  - 'createentries:50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd' # Seiten
+  - 'createentries:8f062321-b4fd-4358-a904-b70bb85171b6' # Anfragen
+  - 'createfolders:0a7f3093-d14e-4af0-9a47-782474c30438' # Videos
+  - 'createfolders:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  - 'createfolders:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  - 'createfolders:eaad13fa-ab0b-4a45-af4a-faf401a49a2b' # Downloads
+  - 'deleteassets:0a7f3093-d14e-4af0-9a47-782474c30438' # Videos
+  - 'deleteassets:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  - 'deleteassets:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  - 'deleteassets:eaad13fa-ab0b-4a45-af4a-faf401a49a2b' # Downloads
+  - 'deletecategories:851ce8ba-2839-44af-adf1-4bfc6471384c'
+  - 'deleteentries:09759854-ca02-4770-a144-d93007a8525a' # Termine
+  - 'deleteentries:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+  - 'deleteentries:441863aa-7a82-47fa-90fa-0d9c401fb1c1' # Blog
+  - 'deleteentries:50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd' # Seiten
+  - 'deleteentries:8f062321-b4fd-4358-a904-b70bb85171b6' # Anfragen
+  - 'deletepeerassets:0a7f3093-d14e-4af0-9a47-782474c30438' # Videos
+  - 'deletepeerassets:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  - 'deletepeerassets:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  - 'deletepeerassets:eaad13fa-ab0b-4a45-af4a-faf401a49a2b' # Downloads
+  - 'deletepeercategorydrafts:851ce8ba-2839-44af-adf1-4bfc6471384c'
+  - 'deletepeerentries:09759854-ca02-4770-a144-d93007a8525a' # Termine
+  - 'deletepeerentries:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+  - 'deletepeerentries:441863aa-7a82-47fa-90fa-0d9c401fb1c1' # Blog
+  - 'deletepeerentries:50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd' # Seiten
+  - 'deletepeerentries:8f062321-b4fd-4358-a904-b70bb85171b6' # Anfragen
+  - 'deletepeerentrydrafts:09759854-ca02-4770-a144-d93007a8525a' # Termine
+  - 'deletepeerentrydrafts:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+  - 'deletepeerentrydrafts:441863aa-7a82-47fa-90fa-0d9c401fb1c1' # Blog
+  - 'deletepeerentrydrafts:50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd' # Seiten
+  - 'deletepeerentrydrafts:539b26ae-51b9-4d0c-afa5-5443d9c6bf22' # Startseite
+  - 'deletepeerentrydrafts:8f062321-b4fd-4358-a904-b70bb85171b6' # Anfragen
+  - 'deletepeerentrydrafts:df04f28c-0bcc-4705-b47c-47290748c72f' # Einstellungen
+  - deleteusers
+  - 'editimages:0a7f3093-d14e-4af0-9a47-782474c30438' # Videos
+  - 'editimages:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  - 'editimages:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  - 'editimages:eaad13fa-ab0b-4a45-af4a-faf401a49a2b' # Downloads
+  - 'editpeerimages:0a7f3093-d14e-4af0-9a47-782474c30438' # Videos
+  - 'editpeerimages:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  - 'editpeerimages:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  - 'editpeerimages:eaad13fa-ab0b-4a45-af4a-faf401a49a2b' # Downloads
+  - editusers
+  - impersonateusers
+  - moderateusers
+  - registerusers
+  - 'replacefiles:0a7f3093-d14e-4af0-9a47-782474c30438' # Videos
+  - 'replacefiles:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  - 'replacefiles:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  - 'replacefiles:eaad13fa-ab0b-4a45-af4a-faf401a49a2b' # Downloads
+  - 'replacepeerfiles:0a7f3093-d14e-4af0-9a47-782474c30438' # Videos
+  - 'replacepeerfiles:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  - 'replacepeerfiles:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  - 'replacepeerfiles:eaad13fa-ab0b-4a45-af4a-faf401a49a2b' # Downloads
+  - 'saveassets:0a7f3093-d14e-4af0-9a47-782474c30438' # Videos
+  - 'saveassets:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  - 'saveassets:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  - 'saveassets:eaad13fa-ab0b-4a45-af4a-faf401a49a2b' # Downloads
+  - 'savecategories:851ce8ba-2839-44af-adf1-4bfc6471384c'
+  - 'saveentries:09759854-ca02-4770-a144-d93007a8525a' # Termine
+  - 'saveentries:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+  - 'saveentries:441863aa-7a82-47fa-90fa-0d9c401fb1c1' # Blog
+  - 'saveentries:50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd' # Seiten
+  - 'saveentries:539b26ae-51b9-4d0c-afa5-5443d9c6bf22' # Startseite
+  - 'saveentries:8f062321-b4fd-4358-a904-b70bb85171b6' # Anfragen
+  - 'saveentries:df04f28c-0bcc-4705-b47c-47290748c72f' # Einstellungen
+  - 'savepeerassets:0a7f3093-d14e-4af0-9a47-782474c30438' # Videos
+  - 'savepeerassets:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  - 'savepeerassets:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  - 'savepeerassets:eaad13fa-ab0b-4a45-af4a-faf401a49a2b' # Downloads
+  - 'savepeercategorydrafts:851ce8ba-2839-44af-adf1-4bfc6471384c'
+  - 'savepeerentries:09759854-ca02-4770-a144-d93007a8525a' # Termine
+  - 'savepeerentries:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+  - 'savepeerentries:441863aa-7a82-47fa-90fa-0d9c401fb1c1' # Blog
+  - 'savepeerentries:50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd' # Seiten
+  - 'savepeerentries:8f062321-b4fd-4358-a904-b70bb85171b6' # Anfragen
+  - 'savepeerentrydrafts:09759854-ca02-4770-a144-d93007a8525a' # Termine
+  - 'savepeerentrydrafts:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+  - 'savepeerentrydrafts:441863aa-7a82-47fa-90fa-0d9c401fb1c1' # Blog
+  - 'savepeerentrydrafts:50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd' # Seiten
+  - 'savepeerentrydrafts:539b26ae-51b9-4d0c-afa5-5443d9c6bf22' # Startseite
+  - 'savepeerentrydrafts:8f062321-b4fd-4358-a904-b70bb85171b6' # Anfragen
+  - 'savepeerentrydrafts:df04f28c-0bcc-4705-b47c-47290748c72f' # Einstellungen
+  - 'viewassets:0a7f3093-d14e-4af0-9a47-782474c30438' # Videos
+  - 'viewassets:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  - 'viewassets:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  - 'viewassets:eaad13fa-ab0b-4a45-af4a-faf401a49a2b' # Downloads
+  - 'viewcategories:851ce8ba-2839-44af-adf1-4bfc6471384c'
+  - 'viewentries:09759854-ca02-4770-a144-d93007a8525a' # Termine
+  - 'viewentries:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+  - 'viewentries:441863aa-7a82-47fa-90fa-0d9c401fb1c1' # Blog
+  - 'viewentries:50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd' # Seiten
+  - 'viewentries:539b26ae-51b9-4d0c-afa5-5443d9c6bf22' # Startseite
+  - 'viewentries:8f062321-b4fd-4358-a904-b70bb85171b6' # Anfragen
+  - 'viewentries:df04f28c-0bcc-4705-b47c-47290748c72f' # Einstellungen
+  - 'viewpeerassets:0a7f3093-d14e-4af0-9a47-782474c30438' # Videos
+  - 'viewpeerassets:2a11f8b8-5f66-4305-a071-44e33b8b5d72' # Bilder
+  - 'viewpeerassets:b83fd678-578b-4d0e-a82f-8f46959d3721' # Logos
+  - 'viewpeerassets:eaad13fa-ab0b-4a45-af4a-faf401a49a2b' # Downloads
+  - 'viewpeercategorydrafts:851ce8ba-2839-44af-adf1-4bfc6471384c'
+  - 'viewpeerentries:09759854-ca02-4770-a144-d93007a8525a' # Termine
+  - 'viewpeerentries:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+  - 'viewpeerentries:441863aa-7a82-47fa-90fa-0d9c401fb1c1' # Blog
+  - 'viewpeerentries:50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd' # Seiten
+  - 'viewpeerentries:8f062321-b4fd-4358-a904-b70bb85171b6' # Anfragen
+  - 'viewpeerentrydrafts:09759854-ca02-4770-a144-d93007a8525a' # Termine
+  - 'viewpeerentrydrafts:25c518d7-9ccc-40ce-9c42-8a7523bb25a8' # Veranstaltungsreihen
+  - 'viewpeerentrydrafts:441863aa-7a82-47fa-90fa-0d9c401fb1c1' # Blog
+  - 'viewpeerentrydrafts:50974d0a-b2a4-49c0-8d0e-b20b5d8bcddd' # Seiten
+  - 'viewpeerentrydrafts:539b26ae-51b9-4d0c-afa5-5443d9c6bf22' # Startseite
+  - 'viewpeerentrydrafts:8f062321-b4fd-4358-a904-b70bb85171b6' # Anfragen
+  - 'viewpeerentrydrafts:df04f28c-0bcc-4705-b47c-47290748c72f' # Einstellungen
+  - viewusers

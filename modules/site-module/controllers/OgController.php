@@ -41,15 +41,22 @@ class OgController extends Controller
         $fontPath = $root . '/src/assets/fonts/BebasNeue-Regular.ttf';
         $logoPath = $root . '/src/assets/icons/logo.svg';
 
-        $cacheDir = Craft::getAlias('@webroot') . '/og';
+        // In storage/runtime cachen (immer beschreibbar) und über den
+        // Controller streamen - unabhängig von den Rechten auf public/.
+        $cacheDir = Craft::getAlias('@runtime') . '/og';
         $key = md5($title . '|' . self::VERSION);
         $cacheFile = $cacheDir . '/og-' . $key . '.png';
 
-        if (!is_file($cacheFile)) {
-            if (!is_dir($cacheDir)) {
-                @mkdir($cacheDir, 0775, true);
+        try {
+            if (!is_file($cacheFile)) {
+                if (!is_dir($cacheDir)) {
+                    @mkdir($cacheDir, 0775, true);
+                }
+                $this->generateImage($title, $fontPath, $logoPath, $cacheFile);
             }
-            $this->generateImage($title, $fontPath, $logoPath, $cacheFile);
+        } catch (\Throwable $e) {
+            Craft::error('OG-Bild konnte nicht erzeugt werden: ' . $e->getMessage(), __METHOD__);
+            throw $e;
         }
 
         $response = Craft::$app->getResponse();

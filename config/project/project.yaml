@@ -1,4 +1,4 @@
-dateModified: 1783604805
+dateModified: 1784099911
 elementSources:
   craft\elements\Entry:
     -
@@ -120,6 +120,7 @@ meta:
     31d56266-f249-4519-98d5-76b48be7d27b: 'Hero mit Bild' # Hero mit Bild
     45fd3dd7-2f99-4dd8-878a-8cd6e7e02125: 'Text + Bild' # Text + Bild
     58be0d43-ef58-4085-a273-a5443ffb046a: Footernavigation # Footernavigation
+    69f5c6da-bdfd-4ecf-ad3e-a944cc6df07a: Redakteure # Redakteure
     70d41bcd-5646-4430-8ca6-7a02d7904f3e: Button # Button
     78f8041d-6436-46c7-b344-6b411bf8e249: Video # Video
     79bbe8ce-2d7d-4097-9c21-fda54e467f4a: Ausrichtung # Ausrichtung
@@ -192,15 +193,8 @@ plugins:
     enabled: true
     schemaVersion: 1.0.0
 system:
-  edition: solo
+  edition: pro
   live: true
   name: cykelbude
   schemaVersion: 5.10.0.0
   timeZone: America/Los_Angeles
-users:
-  allowPublicRegistration: false
-  defaultGroup: null
-  photoSubpath: null
-  photoVolumeUid: null
-  require2fa: false
-  requireEmailVerification: true
