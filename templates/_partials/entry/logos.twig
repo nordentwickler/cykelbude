@@ -1,6 +1,8 @@
-<div class="flex -mx-6 lg:mx-0 gap-3 lg:gap-8 my-12 lg:mb-36 items-center justify-center flex-wrap">
+<div class="container">
+
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 my-12 lg:mb-36">
 {% for logo in entry.logos.eagerly() %}
-    <div class="flex-1 max-w-1/2 basis-48 xl:basis-32 xl:max-w-48 aspect-3/2 bg-white p-4 md:p-6 rounded-lg" data-aos="fade-up">
+    <div class="flex items-center justify-center aspect-3/2 bg-white p-5 md:p-8 rounded-lg" data-aos="fade-up">
         {{ tag('img', {
             src: logo.url,
             width: logo.width,
@@ -11,4 +13,5 @@
         }) }}
     </div>
 {% endfor %}
+</div>
 </div>
