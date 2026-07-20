@@ -1,7 +1,6 @@
 # Newsletter - Texte für die beiden Danke-Seiten
 
-Double-Opt-In hat zwei Momente. Lege dafür zwei „Seiten"-Einträge im CMS an und
-trage deren URLs an den jeweiligen Stellen in Brevo ein.
+Double-Opt-In hat zwei Momente. Lege dafür zwei „Seiten"-Einträge im CMS an und trage deren URLs an den jeweiligen Stellen in Brevo ein.
 
 ---
 
@@ -18,11 +17,9 @@ trage deren URLs an den jeweiligen Stellen in Brevo ein.
 
 **Fließtext:**
 
-> Wir haben dir eine E-Mail geschickt. Bitte klick auf den Bestätigungslink darin,
-> um deine Anmeldung zu den Street News abzuschließen.
+> Wir haben dir eine E-Mail geschickt. Bitte klick auf den Bestätigungslink darin, um deine Anmeldung zu den Street News abzuschließen.
 >
-> Keine Mail erhalten? Schau kurz im Spam-Ordner nach oder melde dich einfach
-> noch einmal an.
+> Keine Mail erhalten? Schau kurz im Spam-Ordner nach oder melde dich einfach noch einmal an.
 
 ---
 
@@ -39,7 +36,6 @@ trage deren URLs an den jeweiligen Stellen in Brevo ein.
 
 **Fließtext:**
 
-> Danke - deine Anmeldung ist bestätigt. Ab jetzt bekommst du einmal im Monat
-> die Street News mit Neuigkeiten aus der Rostocker Fahrradwelt.
+> Danke - deine Anmeldung ist bestätigt. Ab jetzt bekommst du einmal im Monat die Street News mit Neuigkeiten aus der Rostocker Fahrradwelt.
 >
 > Bis bald und allzeit gute Fahrt!

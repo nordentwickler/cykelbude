@@ -34,7 +34,8 @@
             {% if opts.min is defined %}min="{{ opts.min }}"{% endif %}
             {% if opts.step is defined %}step="{{ opts.step }}"{% endif %}
             {% if opts.required ?? false %}required{% endif %}
-            {% if (opts.type ?? '') == 'email' %}autocomplete="email"{% endif %}
+            {% set autocomplete = opts.autocomplete ?? ((opts.type ?? '') == 'email' ? 'email' : null) %}
+            {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
             class="{{ base }} {{ errors[name] is defined ? 'border-pink' : 'border-navy/20' }}">
         {{ f.error(errors, name) }}
     </div>

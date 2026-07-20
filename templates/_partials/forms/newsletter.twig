@@ -41,6 +41,16 @@
             </label>
         </div>
 
+        {#
+         # Vor-/Nachname: müssen als Attribute (VORNAME/NACHNAME) im Brevo-Formular
+         # existieren, sonst verwirft Brevo die Werte. Feldnamen ggf. gegen den
+         # aktuellen Brevo-Embed abgleichen.
+         #}
+        <div class="grid md:grid-cols-2 gap-6">
+            {{ f.input('VORNAME', 'Vorname', {}, {}, { required: true, autocomplete: 'given-name' }) }}
+            {{ f.input('NACHNAME', 'Nachname', {}, {}, { required: true, autocomplete: 'family-name' }) }}
+        </div>
+
         {{ f.input('EMAIL', 'E-Mail-Adresse', {}, {}, {
             type: 'email', required: true, placeholder: 'name@beispiel.de'
         }) }}
