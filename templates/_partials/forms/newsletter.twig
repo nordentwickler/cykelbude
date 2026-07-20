@@ -1,0 +1,65 @@
+{#
+ # Newsletter signup "Cykelbude - Street News" (Brevo).
+ #
+ # Bewusst KOMPLETT getrennt vom eigenen Formular-System (FormsController /
+ # config/forms.php). Dieses Formular postet direkt an Brevos Form-Endpoint
+ # (sibforms.com). Double-Opt-In, DSGVO-Consent, Listen-Zuordnung und die
+ # Bestätigungsmail übernimmt Brevo serverseitig.
+ #
+ # Werte stammen 1:1 aus dem Brevo-Embed (docs/newsletter.html); Brevos
+ # mitgeliefertes CSS/JS wird NICHT gebraucht - nur Action + Feldnamen.
+ #
+ # NOCH ZU TUN in Brevo:
+ #   - Danke-Seite im CMS anlegen (Section "Seiten", z.B. Slug "newsletter-danke").
+ #   - Im Brevo-Formular unter "Confirmation" die Weiterleitung auf deren URL
+ #     setzen (z.B. https://cykelbu.de/newsletter-danke).
+ #}
+
+{% import '_partials/forms/_macros.twig' as f %}
+
+{% set brevoAction = 'https://6f2f8395.sibforms.com/serve/MUIFACJlF5jh0j_gPYoi1Di9m6vvE5cn8X3bt_7FrD7qGEH83S8SR7fA93PpSkd7t8ypwW3xxIfifMbqAOSaWwHOV9hjTCxlJXghu-Fr-PXoZ0EMis-AduMPu492D3eYneMGcOVvYCbtwrEWXx4UR9g8gXNEpIAocmdQGpByTyOttKbQXQoCoo-9H0o9vW0akkaUlM5ESNxq6sGoRQ==' %}
+
+<div class="bg-white rounded-lg text-navy p-6 md:p-10 xl:p-12">
+    <p class="text-lg md:text-xl mb-8">
+        {%- if entry.simpleText|default|trim -%}
+            {{ entry.simpleText|nl2br }}
+        {%- else -%}
+            Wir schicken dir einmal im Monat Neuigkeiten aus der Rostocker Fahrradwelt -
+            kein Spam, jederzeit abbestellbar.
+        {%- endif -%}
+    </p>
+
+    <form action="{{ brevoAction }}" method="POST" accept-charset="UTF-8" class="space-y-6">
+        {# Von Brevo geforderte Hidden-Felder (aus docs/newsletter.html). #}
+        <input type="hidden" name="locale" value="de">
+        <input type="hidden" name="html_type" value="simple">
+
+        {# Brevo-Honeypot - muss leer bleiben, blendet Bots aus. #}
+        <div class="hidden" aria-hidden="true">
+            <label>Leave this field empty
+                <input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off">
+            </label>
+        </div>
+
+        {{ f.input('EMAIL', 'E-Mail-Adresse', {}, {}, {
+            type: 'email', required: true, placeholder: 'name@beispiel.de'
+        }) }}
+
+        {#
+         # Consent-Gate: Brevos Formular hat kein eigenes Einwilligungsfeld
+         # (die Einwilligung erfolgt über den Double-Opt-In-Link). Diese Checkbox
+         # ohne name-Attribut wird NICHT an Brevo gesendet, erzwingt aber clientseitig
+         # eine aktive Zustimmung vor dem Absenden.
+         #}
+        <label class="flex items-start gap-3 text-navy text-base md:text-lg cursor-pointer">
+            <input type="checkbox" required
+                class="mt-1 size-5 shrink-0 rounded border-2 border-navy/30 text-pink focus:ring-pink">
+            <span>Ich möchte den Newsletter erhalten und habe die
+                <a href="/datenschutz" class="underline hover:text-pink">Datenschutzhinweise</a> gelesen.</span>
+        </label>
+
+        <button type="submit" class="bg-pink hover:bg-mint text-white inline-block py-4 px-6 font-bold rounded-lg transition-colors">
+            Newsletter abonnieren
+        </button>
+    </form>
+</div>
