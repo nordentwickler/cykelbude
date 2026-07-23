@@ -23,10 +23,10 @@ settings:
           - '2'
         -
           - locked
-          - '1'
+          - '0'
         -
           - template
-          - ' {{ siteName }} - '
+          - 'Cykelbude Kurierkollektiv - '
     -
       __assoc__:
         -
