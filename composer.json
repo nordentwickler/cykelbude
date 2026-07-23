@@ -5,12 +5,12 @@
   "prefer-stable": true,
   "require": {
     "craftcms/ckeditor": "^5.5.0",
-    "craftcms/cms": "^5.10.8.1",
+    "craftcms/cms": "^5.10.12",
     "ether/seo": "^5.0.0",
     "nystudio107/craft-vite": "5.0.1",
     "putyourlightson/craft-elements-panel": "3.0.1",
     "spatie/craft-ray": "^2.1.4",
-    "stimmt/craft-mcp": "^v1.2.2",
+    "stimmt/craft-mcp": "^v1.3.0",
     "vlucas/phpdotenv": "^5.6.0",
     "webhubworks/craft-panoptikum-cell": "^1.2.0"
   },
