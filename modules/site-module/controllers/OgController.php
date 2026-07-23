@@ -5,15 +5,16 @@ namespace modules\sitemodule\controllers;
 use Craft;
 use craft\elements\Entry;
 use craft\web\Controller;
-use Imagick;
-use ImagickDraw;
-use ImagickPixel;
 use yii\web\Response;
 
 /**
  * Erzeugt dynamische Share-/OG-Bilder (1200x630): dunkler Hintergrund,
  * weiße cykelbude-Wortmarke, Seitentitel in Pink. Ergebnis wird auf Platte
  * gecacht und statisch ausgeliefert. Aufruf über die Route /og/<id>.
+ *
+ * Nutzt GD (überall verfügbar) statt Imagick. Das SVG-Logo kann GD nicht
+ * rastern, deshalb liegt eine vorgerenderte weiße PNG-Wortmarke bei
+ * (src/assets/icons/logo-white-og.png).
  */
 class OgController extends Controller
 {
@@ -21,10 +22,11 @@ class OgController extends Controller
 
     private const W = 1200;
     private const H = 630;
-    private const NAVY = '#1d2133';
-    private const PINK = '#ea4d65';
+    private const NAVY = [0x1d, 0x21, 0x33];
+    private const PINK = [0xea, 0x4d, 0x65];
     private const PADDING = 80;
-    private const VERSION = 'v1'; // erhöhen, wenn sich das Layout ändert
+    private const LOGO_WIDTH = 380;
+    private const VERSION = 'v2'; // erhöhen, wenn sich das Layout ändert
 
     public function actionImage(int $id = 0): Response
     {
@@ -39,7 +41,7 @@ class OgController extends Controller
 
         $root = Craft::getAlias('@root');
         $fontPath = $root . '/src/assets/fonts/BebasNeue-Regular.ttf';
-        $logoPath = $root . '/src/assets/icons/logo.svg';
+        $logoPath = $root . '/src/assets/icons/logo-white-og.png';
 
         // In storage/runtime cachen (immer beschreibbar) und über den
         // Controller streamen - unabhängig von den Rechten auf public/.
@@ -70,37 +72,26 @@ class OgController extends Controller
 
     private function generateImage(string $title, string $fontPath, string $logoPath, string $cacheFile): void
     {
-        $img = new Imagick();
-        $img->newImage(self::W, self::H, new ImagickPixel(self::NAVY));
-        $img->setImageFormat('png');
+        $img = imagecreatetruecolor(self::W, self::H);
+        imagesavealpha($img, true);
 
-        // Wortmarke (weiß) oben links
+        $navy = imagecolorallocate($img, ...self::NAVY);
+        $pink = imagecolorallocate($img, ...self::PINK);
+        imagefilledrectangle($img, 0, 0, self::W, self::H, $navy);
+
+        // Wortmarke (weiß, vorgerendertes PNG) oben links
         $logoBottom = self::PADDING;
-        if (is_file($logoPath)) {
-            $svg = file_get_contents($logoPath);
-            // Pfade haben keine eigene Farbe -> auf Weiß setzen
-            $svg = str_replace('<path ', '<path fill="#ffffff" ', $svg);
-
-            try {
-                $logo = new Imagick();
-                $logo->setBackgroundColor(new ImagickPixel('transparent'));
-                $logo->readImageBlob($svg);
-                $logo->setImageFormat('png32');
-                $logoWidth = 380;
-                $logo->resizeImage($logoWidth, 0, Imagick::FILTER_LANCZOS, 1);
-                $img->compositeImage($logo, Imagick::COMPOSITE_OVER, self::PADDING, self::PADDING);
-                $logoBottom = self::PADDING + $logo->getImageHeight();
-                $logo->clear();
-            } catch (\Throwable $e) {
-                Craft::warning('OG-Logo konnte nicht gerendert werden: ' . $e->getMessage(), __METHOD__);
-            }
+        if (is_file($logoPath) && ($logo = @imagecreatefrompng($logoPath))) {
+            $srcW = imagesx($logo);
+            $srcH = imagesy($logo);
+            $dstW = self::LOGO_WIDTH;
+            $dstH = (int) round($srcH * $dstW / $srcW);
+            imagecopyresampled($img, $logo, self::PADDING, self::PADDING, 0, 0, $dstW, $dstH, $srcW, $srcH);
+            imagedestroy($logo);
+            $logoBottom = self::PADDING + $dstH;
         }
 
         // Titel in Pink, Bebas Neue, umgebrochen und auf die Höhe eingepasst
-        $draw = new ImagickDraw();
-        $draw->setFillColor(new ImagickPixel(self::PINK));
-        $draw->setFont($fontPath);
-
         $maxWidth = self::W - 2 * self::PADDING;
         $startY = $logoBottom + 90;
         $available = self::H - $startY - self::PADDING;
@@ -108,8 +99,7 @@ class OgController extends Controller
         $fontSize = 110;
         $lines = [];
         while ($fontSize >= 54) {
-            $draw->setFontSize($fontSize);
-            $lines = $this->wrap($img, $draw, $title, $maxWidth);
+            $lines = $this->wrap($fontPath, $fontSize, $title, $maxWidth);
             $lineHeight = $fontSize * 1.08;
             if (count($lines) * $lineHeight <= $available) {
                 break;
@@ -120,12 +110,12 @@ class OgController extends Controller
         $lineHeight = $fontSize * 1.08;
         $y = $startY + $fontSize;
         foreach ($lines as $line) {
-            $img->annotateImage($draw, self::PADDING, $y, 0, $line);
+            imagettftext($img, $fontSize, 0, self::PADDING, (int) round($y), $pink, $fontPath, $line);
             $y += $lineHeight;
         }
 
-        $img->writeImage($cacheFile);
-        $img->clear();
+        imagepng($img, $cacheFile);
+        imagedestroy($img);
     }
 
     /**
@@ -133,7 +123,7 @@ class OgController extends Controller
      *
      * @return string[]
      */
-    private function wrap(Imagick $img, ImagickDraw $draw, string $text, float $maxWidth): array
+    private function wrap(string $fontPath, float $fontSize, string $text, float $maxWidth): array
     {
         $words = preg_split('/\s+/', trim($text));
         $lines = [];
@@ -141,8 +131,7 @@ class OgController extends Controller
 
         foreach ($words as $word) {
             $candidate = $line === '' ? $word : $line . ' ' . $word;
-            $metrics = $img->queryFontMetrics($draw, $candidate);
-            if ($metrics['textWidth'] > $maxWidth && $line !== '') {
+            if ($this->textWidth($fontPath, $fontSize, $candidate) > $maxWidth && $line !== '') {
                 $lines[] = $line;
                 $line = $word;
             } else {
@@ -155,5 +144,12 @@ class OgController extends Controller
         }
 
         return $lines;
+    }
+
+    private function textWidth(string $fontPath, float $fontSize, string $text): float
+    {
+        $box = imagettfbbox($fontSize, 0, $fontPath, $text);
+
+        return abs($box[2] - $box[0]);
     }
 }
