@@ -1,4 +1,4 @@
-dateModified: 1784100517
+dateModified: 1784816369
 elementSources:
   craft\elements\Entry:
     -
@@ -65,9 +65,9 @@ elementSources:
       tableAttributes: '-'
       type: custom
 email:
-  fromEmail: brosch@webhub.de
+  fromEmail: $SYSTEM_EMAIL
   fromName: cykelbude
-  replyToEmail: null
+  replyToEmail: $REPLY_EMAIL
   template: ''
   transportSettings:
     host: $SMTP_HOSTNAME
@@ -162,7 +162,7 @@ meta:
     e5dadefd-1251-46bb-a7ed-b3edc1d6dd7a: Text # Text
     e6c6b663-ee2c-4476-a2e4-49fe575dc1a3: Veranstaltungsreihe # Veranstaltungsreihe
     eaad13fa-ab0b-4a45-af4a-faf401a49a2b: Downloads # Downloads
-    ff163dd2-2671-4a9c-bead-517148786a6d: 'Überschrift ' # Überschrift 
+    ff163dd2-2671-4a9c-bead-517148786a6d: 'Überschrift ' # Überschrift
 plugins:
   _craft-panoptikum-cell:
     edition: standard
