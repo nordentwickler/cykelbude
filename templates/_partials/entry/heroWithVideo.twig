@@ -5,13 +5,18 @@
                 <div class="aspect-square md:max-w-[740px] bg-mint mx-auto relative overflow-hidden" data-hero-slideshow>
                     {% if entry.images %}
                         {% set images = entry.images.eagerly() %}
+                        {% set transform = { width: 740, height: 740, mode: 'crop', format: 'webp' } %}
                         {% for image in images %}
-                            {% set transformed = image.setTransform({ width: 740, height: 740, mode: 'crop', format: 'webp' }) %}
+                            {# Anzeigebreite: mobil 100vw minus Padding (Seite p-4 +
+                               Hero px-8 = 96px), ab ~840px auf 740px gedeckelt
+                               (md:max-w-[740px]). w-Deskriptoren + sizes statt
+                               1.5x/2x, damit mobil nicht das 1480er Bild lädt. #}
                             {{ tag('img', {
-                                src: transformed.url,
+                                src: image.getUrl(transform),
                                 width: 740,
                                 height: 740,
-                                srcset: transformed.getSrcset(['1.5x', '2x']),
+                                srcset: image.getSrcset(['400w', '600w', '740w', '900w', '1480w'], transform),
+                                sizes: '(min-width: 840px) 740px, calc(100vw - 96px)',
                                 alt: image.alt,
                                 fetchpriority: loop.first ? 'high' : null,
                                 loading: loop.first ? 'eager' : 'lazy',
