@@ -1,6 +1,6 @@
 {% set asset = entry.image.eagerly().one() %}
 {% if asset %}
-    {% set transform = { width: 800, format: 'webp' } %}
+    {% set transform = { width: 800, format: 'webp', quality: 80 } %}
     {{ tag('img', {
         src: asset.getUrl(transform),
         width: asset.width,
