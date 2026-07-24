@@ -3,12 +3,16 @@
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 my-12 lg:mb-36">
 {% for logo in entry.logos.eagerly() %}
     <div class="flex items-center justify-center aspect-3/2 bg-white p-5 md:p-8 rounded-lg" data-aos="fade-up">
+        {% set transform = { width: 400, format: 'webp' } %}
         {{ tag('img', {
-            src: logo.url,
+            src: logo.getUrl(transform),
             width: logo.width,
             height: logo.height,
-            srcset: logo.getSrcset(['1.5x', '2x', '3x']),
+            srcset: logo.getSrcset(['200w', '400w'], transform),
+            sizes: '(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw',
             alt: logo.alt,
+            loading: 'lazy',
+            decoding: 'async',
             class: "w-full h-full object-contain"
         }) }}
     </div>

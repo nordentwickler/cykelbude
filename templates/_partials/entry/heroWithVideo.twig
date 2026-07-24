@@ -6,13 +6,16 @@
                     {% if entry.images %}
                         {% set images = entry.images.eagerly() %}
                         {% for image in images %}
-                            {% set transformed = image.setTransform({ width: 740, height: 740, mode: 'crop' }) %}
+                            {% set transformed = image.setTransform({ width: 740, height: 740, mode: 'crop', format: 'webp' }) %}
                             {{ tag('img', {
                                 src: transformed.url,
                                 width: 740,
                                 height: 740,
                                 srcset: transformed.getSrcset(['1.5x', '2x']),
                                 alt: image.alt,
+                                fetchpriority: loop.first ? 'high' : null,
+                                loading: loop.first ? 'eager' : 'lazy',
+                                decoding: 'async',
                                 class: "absolute inset-0 w-full h-full object-cover " ~ (loop.first ? "z-10" : "z-0")
                             }) }}
                         {% endfor %}

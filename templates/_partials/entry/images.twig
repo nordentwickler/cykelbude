@@ -7,12 +7,16 @@
     {% if asset %}
         <div data-aos="fade-up">
 
+        {% set transform = { width: 800, format: 'webp' } %}
         {{ tag('img', {
-            src: asset.url,
+            src: asset.getUrl(transform),
             width: asset.width,
             height: asset.height,
-            srcset: asset.getSrcset(['1.5x', '2x', '3x']),
+            srcset: asset.getSrcset(['400w', '600w', '800w', '1200w'], transform),
+            sizes: '(min-width: 1280px) 33vw, 100vw',
             alt: asset.alt,
+            loading: 'lazy',
+            decoding: 'async',
             class: 'rounded-lg'
         }) }}
         </div>

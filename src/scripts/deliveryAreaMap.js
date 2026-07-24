@@ -11,7 +11,7 @@ import {
 // Popup für Gebietsanzeige
 let activePopup = null
 
-const initDeliveryAreaMap = async () => {
+export const initDeliveryAreaMap = async () => {
     const mapContainer = document.getElementById('delivery-areas-map')
     if (!mapContainer) return
 
@@ -170,6 +170,3 @@ const initDeliveryAreaMap = async () => {
         console.error('Fehler beim Laden der Delivery Area Map:', error)
     }
 }
-
-// Map initialisieren wenn DOM bereit ist
-document.addEventListener('DOMContentLoaded', initDeliveryAreaMap)

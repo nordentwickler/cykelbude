@@ -30,7 +30,7 @@ const AREA_COLORS = {
 // ab, hier geht es nur um einen minimalen Saum gegen versehentliche Stops.
 const NEAR_MARKER_PX = 18
 
-document.addEventListener('DOMContentLoaded', async () => {
+export const initPriceCalculator = async () => {
     const container = document.getElementById('calculator-content')
     if (!container) return
 
@@ -755,4 +755,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     document
         .querySelector('#order-form form')
         ?.addEventListener('submit', serializeOrder)
-})
+}
