@@ -4,7 +4,8 @@ instructions: null
 name: Text
 searchable: false
 settings:
-  advancedLinkFields: null
+  advancedLinkFields:
+    - target
   availableTransforms: ''
   availableVolumes: ''
   characterLimit: null

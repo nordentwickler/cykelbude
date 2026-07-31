@@ -86,6 +86,10 @@
             }
         }
 
+        a{
+            @apply text-pink underline underline-offset-4 hover:no-underline;
+        }
+
     }
 
 }
