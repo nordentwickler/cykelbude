@@ -32,7 +32,7 @@
             </div>
         {% endif %}
 
-        <form method="post" accept-charset="UTF-8" class="space-y-6">
+        <form method="post" accept-charset="UTF-8" class="space-y-10">
             {{ csrfInput() }}
             {{ actionInput('site-module/forms/submit') }}
             {{ hiddenInput('form', 'wochenbett') }}
@@ -43,46 +43,105 @@
                 <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6">
-                {{ f.select('variant', 'Ernährungsform', {
-                    'Vegan': 'Vegan (Grüne Kombüse, Di-Sa)',
-                    'Vegetarisch': 'Vegetarisch (Haltestelle 111, Mo-Fr)',
-                    'Vollkost': 'Vollkost (Haltestelle 111, Mo-Fr)'
-                }, errors, values, { required: true }) }}
+            {# Four numbered sections instead of a multistep form: the form is short,
+             # and server-side errors stay on one page. Sections after the first
+             # are set off with a rule. The legend floats so it sits inside the
+             # fieldset below the rule instead of on it, the next element clears it. #}
+            {% set section = 'space-y-6' %}
+            {% set divided = 'space-y-6 border-t-2 border-navy/10 pt-10' %}
+            {% set legend = 'float-left w-full font-bold text-navy text-xl md:text-2xl mb-6' %}
 
-                {{ f.input('startDate', 'Wunsch-Startdatum', errors, values, { type: 'date', required: true }) }}
+            <fieldset class="{{ section }}">
+                <legend class="{{ legend }}"><span class="text-pink">1.</span> Dein Wochenbett-Wunder</legend>
+                <div class="grid md:grid-cols-2 gap-6 clear-left">
+                    {{ f.select('variant', 'Ernährungsform', {
+                        'Vegan': 'Vegan (Grüne Kombüse, Di-Sa)',
+                        'Vegetarisch': 'Vegetarisch (Haltestelle 111, Mo-Fr)',
+                        'Vollkost': 'Vollkost (Haltestelle 111, Mo-Fr)'
+                    }, errors, values, { required: true }) }}
 
-                {{ f.input('portions', 'Portionen pro Tag', errors, values, {
-                    type: 'number', required: true, min: 2, step: 1, default: 2, placeholder: '2'
-                }) }}
+                    {{ f.input('portions', 'Portionen pro Tag', errors, values, {
+                        type: 'number', required: true, min: 2, step: 1, default: 2, placeholder: '2'
+                    }) }}
+
+                    {{ f.input('startDate', 'Wunsch-Startdatum', errors, values, { type: 'date', required: true }) }}
+
+                    {{ f.radios('deliveryWindow', 'Bevorzugter Lieferzeitraum', {
+                        '11:30-13:00': '11:30 bis 13:00 Uhr',
+                        '12:30-14:00': '12:30 bis 14:00 Uhr'
+                    }, errors, values, { required: true }) }}
+                </div>
+            </fieldset>
+
+            {% set otherPerson = 'Für eine andere Person' %}
+            <fieldset class="{{ divided }}">
+                <legend class="{{ legend }}"><span class="text-pink">2.</span> Für wen ist das Wochenbett-Wunder?</legend>
+                <div class="clear-left">
+                    {{ f.radios('recipient', 'Das Wochenbett-Wunder ist', {
+                        'Für mich': 'Für mich',
+                        (otherPerson): 'Für eine andere Person, als Geschenk'
+                    }, errors, values, { required: true, hideLabel: true, toggles: { (otherPerson): 'delivery-recipient' } }) }}
+                </div>
+            </fieldset>
+
+            <fieldset class="{{ divided }}">
+                <legend class="{{ legend }}"><span class="text-pink">3.</span> Deine Daten</legend>
+                {# One hint per answer to "Für wen", swapped by src/scripts/toggleFieldset.js. #}
+                {% set recipient = values.recipient ?? '' %}
+                <p class="clear-left text-base md:text-lg text-navy/80">
+                    <span data-when="recipient" data-is="" {{ recipient == '' ? '' : 'hidden' }}>
+                        An diese Anschrift geht die Rechnung.
+                    </span>
+                    <span data-when="recipient" data-is="Für mich" {{ recipient == 'Für mich' ? '' : 'hidden' }}>
+                        Hierhin liefern wir dein Essen, und an diese Anschrift geht auch die Rechnung.
+                    </span>
+                    <span data-when="recipient" data-is="{{ otherPerson }}" {{ recipient == otherPerson ? '' : 'hidden' }}>
+                        An diese Anschrift geht die Rechnung. Wohin wir das Essen liefern, trägst du gleich darunter ein.
+                    </span>
+                </p>
+                <div class="grid md:grid-cols-3 gap-6">
+                    {{ f.input('name', 'Name', errors, values, { required: true, wrapper: 'md:col-span-3', autocomplete: 'name' }) }}
+                    {{ f.input('email', 'E-Mail', errors, values, { type: 'email', required: true, wrapper: 'md:col-span-2' }) }}
+                    {{ f.input('phone', 'Telefon', errors, values, { type: 'tel', required: true, autocomplete: 'tel' }) }}
+                    {{ f.input('street', 'Straße & Hausnummer', errors, values, { required: true, wrapper: 'md:col-span-3', autocomplete: 'street-address' }) }}
+                    {{ f.input('zip', 'PLZ', errors, values, { required: true, autocomplete: 'postal-code' }) }}
+                    {{ f.input('city', 'Ort', errors, values, { required: true, wrapper: 'md:col-span-2', autocomplete: 'address-level2' }) }}
+                </div>
+            </fieldset>
+
+            {# Only shown, enabled, and submitted for an order for someone else, so its
+             # required fields don't block the browser's validation otherwise. #}
+            {% set forOtherPerson = (values.recipient ?? '') == otherPerson %}
+            <fieldset id="delivery-recipient" class="{{ divided }}" {{ forOtherPerson ? '' : 'hidden disabled' }}>
+                <legend class="{{ legend }}"><span class="text-pink">4.</span> Lieferung an</legend>
+                <p class="clear-left text-base md:text-lg text-navy/80">
+                    Wer bekommt das Wochenbett-Wunder? Hierhin liefern wir das Essen.
+                </p>
+                <div class="grid md:grid-cols-3 gap-6">
+                    {{ f.input('deliveryName', 'Name', errors, values, { required: true, wrapper: 'md:col-span-2', autocomplete: 'shipping name' }) }}
+                    {{ f.input('deliveryPhone', 'Telefon (optional)', errors, values, { type: 'tel', autocomplete: 'shipping tel' }) }}
+                    {{ f.input('deliveryStreet', 'Straße & Hausnummer', errors, values, { required: true, wrapper: 'md:col-span-3', autocomplete: 'shipping street-address' }) }}
+                    {{ f.input('deliveryZip', 'PLZ', errors, values, { required: true, autocomplete: 'shipping postal-code' }) }}
+                    {{ f.input('deliveryCity', 'Ort', errors, values, { required: true, wrapper: 'md:col-span-2', autocomplete: 'shipping address-level2' }) }}
+                </div>
+            </fieldset>
+
+            <fieldset class="{{ divided }}">
+                <legend class="{{ legend }}">Noch etwas?</legend>
+                <div class="clear-left">
+                    {{ f.textarea('notes', 'Allergien, Unverträglichkeiten oder Nachricht', errors, values, {
+                        rows: 4, placeholder: 'Gibt es etwas, das wir wissen sollten?'
+                    }) }}
+                </div>
+            </fieldset>
+
+            <div class="space-y-6 border-t-2 border-navy/10 pt-10">
+                {{ f.checkbox('privacy', 'Ich habe die <a href="/datenschutz" class="underline hover:text-pink">Datenschutzhinweise</a> gelesen und bin einverstanden.', errors, values, { required: true }) }}
+
+                <button type="submit" class="bg-pink hover:bg-mint text-white inline-block py-4 px-6 font-bold rounded-lg transition-colors">
+                    Anfrage senden
+                </button>
             </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                {{ f.input('name', 'Name', errors, values, { required: true }) }}
-                {{ f.input('email', 'E-Mail', errors, values, { type: 'email', required: true }) }}
-                {{ f.input('phone', 'Telefon', errors, values, { type: 'tel', required: true }) }}
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                {{ f.input('street', 'Straße & Hausnummer', errors, values, { required: true, wrapper: 'md:col-span-2' }) }}
-                {{ f.input('zip', 'PLZ', errors, values, { required: true }) }}
-                {{ f.input('city', 'Ort', errors, values, { required: true }) }}
-            </div>
-
-            <div class="space-y-4">
-                {{ f.checkbox('gift', 'Das Wochenbett-Wunder ist ein Geschenk', errors, values) }}
-                {{ f.input('giftName', 'Name der/des Beschenkten (optional)', errors, values) }}
-            </div>
-
-            {{ f.textarea('notes', 'Allergien, Unverträglichkeiten oder Nachricht', errors, values, {
-                rows: 4, placeholder: 'Gibt es etwas, das wir wissen sollten?'
-            }) }}
-
-            {{ f.checkbox('privacy', 'Ich habe die <a href="/datenschutz" class="underline hover:text-pink">Datenschutzhinweise</a> gelesen und bin einverstanden.', errors, values, { required: true }) }}
-
-            <button type="submit" class="bg-pink hover:bg-mint text-white inline-block py-4 px-6 font-bold rounded-lg transition-colors">
-                Anfrage senden
-            </button>
         </form>
     {% endif %}
 </div>

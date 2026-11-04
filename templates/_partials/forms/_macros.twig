@@ -61,6 +61,35 @@
     </div>
 {% endmacro %}
 
+{% macro radios(name, label, options, errors, values, opts) %}
+    {% import _self as f %}
+    {% set opts = opts ?? {} %}
+    <fieldset class="{{ opts.wrapper ?? '' }}">
+        {# hideLabel keeps the legend for screen readers when a heading above already asks the question. #}
+        <legend class="{{ (opts.hideLabel ?? false) ? 'sr-only' : 'block font-bold text-navy text-base md:text-lg mb-2' }}">
+            {{ label|raw }}{% if opts.required ?? false %} <span class="text-pink">*</span>{% endif %}
+        </legend>
+        {# min-h-14 matches the height of a text input, so the options line up with one in the same grid row. #}
+        <div class="flex flex-wrap items-center min-h-14 gap-x-8 gap-y-3">
+            {% for value, optLabel in options %}
+                <label class="flex items-center gap-3 text-navy text-base md:text-lg cursor-pointer">
+                    <input
+                        type="radio"
+                        name="{{ name }}"
+                        value="{{ value }}"
+                        {{ (values[name] ?? '') == value ? 'checked' }}
+                        {% if opts.required ?? false %}required{% endif %}
+                        {# opts.toggles maps an option to the id it shows, see src/scripts/toggleFieldset.js. #}
+                        {% if opts.toggles[value] is defined %}data-toggles="{{ opts.toggles[value] }}" aria-controls="{{ opts.toggles[value] }}"{% endif %}
+                        class="size-5 shrink-0 border-2 {{ errors[name] is defined ? 'border-pink' : 'border-navy/30' }} text-pink focus:ring-pink">
+                    <span>{{ optLabel }}</span>
+                </label>
+            {% endfor %}
+        </div>
+        {{ f.error(errors, name) }}
+    </fieldset>
+{% endmacro %}
+
 {% macro textarea(name, label, errors, values, opts) %}
     {% import _self as f %}
     {% set opts = opts ?? {} %}
@@ -89,6 +118,8 @@
                 value="1"
                 {{ (values[name] ?? '') ? 'checked' }}
                 {% if opts.required ?? false %}required{% endif %}
+                {# Shows and enables the element with this id while checked, see src/scripts/toggleFieldset.js. #}
+                {% if opts.toggles is defined %}data-toggles="{{ opts.toggles }}" aria-controls="{{ opts.toggles }}"{% endif %}
                 class="mt-1 size-5 shrink-0 rounded border-2 {{ errors[name] is defined ? 'border-pink' : 'border-navy/30' }} text-pink focus:ring-pink">
             <span>{{ label|raw }}{% if opts.required ?? false %} <span class="text-pink">*</span>{% endif %}</span>
         </label>

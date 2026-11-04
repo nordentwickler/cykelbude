@@ -71,6 +71,15 @@ class FormsController extends Controller
         $errors = [];
 
         foreach ($def['fields'] as $name => $field) {
+            // A field with `dependsOn` only exists while another field (defined
+            // earlier in the config) is filled in, `'dependsOn' => 'gift'`, or has a
+            // given value, `'dependsOn' => ['recipient' => 'Für eine andere Person']`.
+            // Otherwise it is neither collected nor validated.
+            if (isset($field['dependsOn']) && !$this->dependencyMet($field['dependsOn'], $values)) {
+                $values[$name] = null;
+                continue;
+            }
+
             $value = $request->getBodyParam($name);
             if (is_string($value)) {
                 $value = trim($value);
@@ -80,7 +89,12 @@ class FormsController extends Controller
             $isEmpty = ($value === null || $value === '' || $value === false || $value === []);
 
             if (($field['required'] ?? false) && $isEmpty) {
-                $errors[$name] = ($field['label'] ?? $name) . ' wird benötigt.';
+                $errors[$name] = $field['requiredMessage'] ?? ($field['label'] ?? $name) . ' wird benötigt.';
+                continue;
+            }
+
+            if (!$isEmpty && isset($field['options']) && !in_array($value, $field['options'], true)) {
+                $errors[$name] = 'Bitte wähle eine der angebotenen Optionen.';
                 continue;
             }
 
@@ -90,6 +104,21 @@ class FormsController extends Controller
         }
 
         return [$values, $errors];
+    }
+
+    private function dependencyMet(string|array $dependsOn, array $values): bool
+    {
+        if (is_string($dependsOn)) {
+            return !empty($values[$dependsOn]);
+        }
+
+        foreach ($dependsOn as $otherField => $expected) {
+            if (($values[$otherField] ?? null) !== $expected) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private function storeSubmission(array $def, array $values): void

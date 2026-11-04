@@ -6,6 +6,7 @@ import 'aos/dist/aos.css'
 import '@styles/app.css'
 import './navigation.js'
 import './heroSlideshow.js'
+import './toggleFieldset.js'
 
 // Karten-Code (MapLibre GL, ~290 KB JS + CSS) nur auf Seiten laden, die eine
 // Karte enthalten. Dynamisches import() lagert MapLibre in einen eigenen
