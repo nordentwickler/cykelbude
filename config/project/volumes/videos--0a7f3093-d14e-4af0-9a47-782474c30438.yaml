@@ -41,6 +41,7 @@ fieldLayouts:
 fs: media
 handle: videos
 name: Videos
+propagationMethod: custom
 sortOrder: 4
 subpath: videos
 titleTranslationKeyFormat: null

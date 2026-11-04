@@ -41,6 +41,7 @@ fieldLayouts:
 fs: media
 handle: logos
 name: Logos
+propagationMethod: custom
 sortOrder: 2
 subpath: logos
 titleTranslationKeyFormat: null

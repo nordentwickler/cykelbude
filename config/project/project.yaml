@@ -1,4 +1,4 @@
-dateModified: 1785489682
+dateModified: 1793792010
 elementSources:
   craft\elements\Entry:
     -
@@ -183,7 +183,7 @@ plugins:
   mcp:
     edition: standard
     enabled: true
-    schemaVersion: 1.0.0
+    schemaVersion: 1.6.0
   seo:
     edition: standard
     enabled: true
@@ -196,5 +196,5 @@ system:
   edition: pro
   live: true
   name: cykelbude
-  schemaVersion: 5.10.0.0
+  schemaVersion: 5.12.0.1
   timeZone: America/Los_Angeles

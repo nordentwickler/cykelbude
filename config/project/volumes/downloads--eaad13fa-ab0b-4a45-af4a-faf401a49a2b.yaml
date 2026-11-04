@@ -41,6 +41,7 @@ fieldLayouts:
 fs: media
 handle: downloads
 name: Downloads
+propagationMethod: custom
 sortOrder: 3
 subpath: downloads
 titleTranslationKeyFormat: null

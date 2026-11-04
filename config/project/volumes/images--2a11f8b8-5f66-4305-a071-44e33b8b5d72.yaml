@@ -67,6 +67,7 @@ fieldLayouts:
 fs: media
 handle: images
 name: Bilder
+propagationMethod: custom
 sortOrder: 1
 subpath: images
 titleTranslationKeyFormat: null
