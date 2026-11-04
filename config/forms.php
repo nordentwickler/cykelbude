@@ -24,7 +24,7 @@ return [
         'fields' => [
             'variant' => ['label' => 'Ernährungsform', 'required' => true],
             'portions' => ['label' => 'Portionen pro Tag', 'required' => true],
-            'startDate' => ['label' => 'Wunsch-Startdatum', 'required' => true],
+            'startDate' => ['label' => 'Wunsch-Startdatum', 'required' => true, 'type' => 'date'],
             'deliveryWindow' => [
                 'label' => 'Bevorzugter Lieferzeitraum',
                 'required' => true,
@@ -34,16 +34,20 @@ return [
                 'label' => 'Für wen',
                 'required' => true,
                 'requiredMessage' => 'Bitte wähle, für wen das Wochenbett-Wunder ist.',
-                'options' => ['Für mich', 'Für eine andere Person'],
+                // Submitted value => what mails and the CMS show.
+                'options' => [
+                    'Für mich' => 'Für mich, Lieferung an die Rechnungsanschrift',
+                    'Für eine andere Person' => 'Für eine andere Person, Lieferung siehe "Lieferung an"',
+                ],
             ],
             // Die bestellende Person. Ihre Anschrift ist die Rechnungsadresse und,
             // wenn sie für sich selbst bestellt, auch die Lieferadresse.
             'name' => ['label' => 'Name', 'required' => true],
             'email' => ['label' => 'E-Mail', 'required' => true, 'type' => 'email'],
             'phone' => ['label' => 'Telefon', 'required' => true],
-            'street' => ['label' => 'Anschrift (Straße & Hausnummer)', 'required' => true],
-            'zip' => ['label' => 'Anschrift (PLZ)', 'required' => true],
-            'city' => ['label' => 'Anschrift (Ort)', 'required' => true],
+            'street' => ['label' => 'Rechnungsanschrift (Straße & Hausnummer)', 'required' => true],
+            'zip' => ['label' => 'Rechnungsanschrift (PLZ)', 'required' => true],
+            'city' => ['label' => 'Rechnungsanschrift (Ort)', 'required' => true],
             // Nur erfasst und Pflicht, wenn für eine andere Person bestellt wird.
             'deliveryName' => ['label' => 'Lieferung an (Name)', 'required' => true, 'dependsOn' => ['recipient' => 'Für eine andere Person']],
             'deliveryPhone' => ['label' => 'Lieferung an (Telefon)', 'required' => false, 'dependsOn' => ['recipient' => 'Für eine andere Person']],

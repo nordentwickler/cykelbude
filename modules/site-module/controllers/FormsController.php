@@ -56,6 +56,8 @@ class FormsController extends Controller
             return null;
         }
 
+        $values = $this->formatForOutput($def, $values);
+
         if (!empty($def['store'])) {
             $this->storeSubmission($def, $values);
         }
@@ -93,8 +95,13 @@ class FormsController extends Controller
                 continue;
             }
 
-            if (!$isEmpty && isset($field['options']) && !in_array($value, $field['options'], true)) {
+            if (!$isEmpty && isset($field['options']) && !in_array($value, $this->optionValues($field['options']), true)) {
                 $errors[$name] = 'Bitte wähle eine der angebotenen Optionen.';
+                continue;
+            }
+
+            if (!$isEmpty && ($field['type'] ?? null) === 'date' && !$this->parseDate($value)) {
+                $errors[$name] = 'Bitte gib ein gültiges Datum an.';
                 continue;
             }
 
@@ -104,6 +111,49 @@ class FormsController extends Controller
         }
 
         return [$values, $errors];
+    }
+
+    /**
+     * Turns validated values into what mails and stored submissions show. Runs
+     * after validation only, so a re-rendered form keeps the raw values its
+     * inputs expect, e.g. a date input needs Y-m-d.
+     */
+    private function formatForOutput(array $def, array $values): array
+    {
+        foreach ($def['fields'] as $name => $field) {
+            if (($field['type'] ?? null) === 'date' && !empty($values[$name])) {
+                $values[$name] = $this->parseDate($values[$name])->format('d.m.Y');
+            }
+
+            // Options given as value => label show their label.
+            if (isset($field['options']) && !array_is_list($field['options']) && isset($field['options'][$values[$name] ?? ''])) {
+                $values[$name] = $field['options'][$values[$name]];
+            }
+        }
+
+        return $values;
+    }
+
+    /**
+     * `options` is either a list of allowed values or a map of value => label.
+     */
+    private function optionValues(array $options): array
+    {
+        return array_is_list($options) ? $options : array_map('strval', array_keys($options));
+    }
+
+    /**
+     * Parses the Y-m-d value a date input submits, rejecting anything else.
+     */
+    private function parseDate(mixed $value): ?\DateTimeImmutable
+    {
+        if (!is_string($value)) {
+            return null;
+        }
+
+        $date = \DateTimeImmutable::createFromFormat('!Y-m-d', $value);
+
+        return $date && $date->format('Y-m-d') === $value ? $date : null;
     }
 
     private function dependencyMet(string|array $dependsOn, array $values): bool
