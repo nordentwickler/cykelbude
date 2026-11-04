@@ -9,7 +9,10 @@
 
 {### Blocks #}
 {% block content %}
+    {# Element partials only see what is passed in, so hand over the FormsController's
+     # validation state, otherwise a failed submission shows no errors. #}
+    {% set formState = { formErrors: formErrors ?? null, formValues: formValues ?? null } %}
     {% for block in entry.contentMatrix.eagerly().all()  %}
-        {{ block.render() }}
+        {{ block.render(formState) }}
     {% endfor %}
 {% endblock %}

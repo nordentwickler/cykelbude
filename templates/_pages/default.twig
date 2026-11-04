@@ -22,8 +22,11 @@
             </h1>
         </section>
         <div class="space-y-12 md:space-y-16 lg:space-y-48">
+        {# Element partials only see what is passed in, so hand over the FormsController's
+         # validation state, otherwise a failed submission shows no errors. #}
+        {% set formState = { formErrors: formErrors ?? null, formValues: formValues ?? null } %}
         {% for block in entry.contentMatrix.eagerly().all()  %}
-            {{ block.render() }}
+            {{ block.render(formState) }}
         {% endfor %}
         </div>
     {% endif %}

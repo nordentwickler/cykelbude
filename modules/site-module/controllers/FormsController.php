@@ -45,10 +45,13 @@ class FormsController extends Controller
 
         if ($errors) {
             // Re-render the current page with the errors and the entered values.
+            // Craft only hands route params under `variables` to the template.
             Craft::$app->getUrlManager()->setRouteParams([
-                'formErrors' => $errors,
-                'formValues' => $values,
-                'formHandle' => $handle,
+                'variables' => [
+                    'formErrors' => $errors,
+                    'formValues' => $values,
+                    'formHandle' => $handle,
+                ],
             ]);
             return null;
         }
