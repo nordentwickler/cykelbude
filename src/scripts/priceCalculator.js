@@ -5,9 +5,12 @@
 //
 // Preismodell (Stopp-basiert):
 //   - Ein Auftrag besteht aus 1 Abholung + N Zielstopps.
-//   - Jeder Stopp kostet: basePrice + Gewichtsaufschlag der Sendung bei der
-//     gewählten Zustellzeit (weightClass.surcharges[nextDay|sameDay]).
-//     Die Abholung zählt als Standard-Sendung (kein Gewichtsaufschlag).
+//   - Der schwerste Stop bestimmt den Tarif (Gewichtsklasse) der ganzen Tour:
+//     ein Paket über 5 kg heißt Lastenrad, über 25 kg Anhänger - und das
+//     Fahrzeug fährt die gesamte Tour, inklusive Abholung.
+//   - Jeder Stopp (auch die Abholung) kostet: basePrice + Gewichtsaufschlag
+//     des Tour-Tarifs bei der gewählten Zustellzeit
+//     (weightClass.surcharges[nextDay|sameDay]).
 //   - Gebietsaufschlag: nur der höchste betroffene Tier, einmalig pro Auftrag.
 import {
     createBaseStyle,
@@ -75,9 +78,13 @@ export const initPriceCalculator = async () => {
         )
     }
 
+    // Tarif der Tour: Gewichtsklasse des schwersten Stops
+    const getTourClass = () =>
+        getWeightClass(Math.max(0, ...deliveries.map((d) => d.weight)))
+
     // Preis eines einzelnen Stopps: Grundpreis + Gewichtsaufschlag (je Zustellzeit)
-    const stopPrice = (weight) =>
-        pricing.basePrice + getWeightClass(weight).surcharges[deliveryTime]
+    const stopPrice = (weightClass) =>
+        pricing.basePrice + weightClass.surcharges[deliveryTime]
 
     // GeoJSON nach Gebiet gruppieren
     const loadGeoJSON = async () => {
@@ -366,10 +373,10 @@ export const initPriceCalculator = async () => {
             .classList.toggle('hidden', !ready)
         if (!ready) return
 
-        // Stopp-Preise: Abholung (Standard) + je Stop
-        const pickupFee = stopPrice(0)
-        const deliveryFees = deliveries.map((d) => stopPrice(d.weight))
-        const stopsFee = pickupFee + deliveryFees.reduce((a, b) => a + b, 0)
+        // Stopp-Preise: Abholung + jeder Stop zum Tarif der Tour
+        const tourClass = getTourClass()
+        const stopFee = stopPrice(tourClass)
+        const stopsFee = stopFee * (1 + deliveries.length)
 
         // Gebietsaufschlag: höchster betroffener Tier, einmalig
         const areaKeys = [pickup.areaKey, ...deliveries.map((d) => d.areaKey)]
@@ -408,24 +415,23 @@ export const initPriceCalculator = async () => {
 
         const areaTag = (label) =>
             `Gebiet: <span class="font-semibold text-navy">${label}</span>`
-        const sizeTag = (weight, wc) =>
-            `Größe: <span class="font-semibold text-navy">${weight} kg (${wc})</span>`
+        const sizeTag = (weight) =>
+            `Gewicht: <span class="font-semibold text-navy">${weight} kg</span>`
 
         item({
             badge: 'A',
             badgeBg: 'bg-pink',
             title: 'Abholung',
             sub: areaTag(pricing.areas[pickup.areaKey].label),
-            value: pickupFee,
+            value: stopFee,
         })
         deliveries.forEach((d, i) => {
-            const wc = getWeightClass(d.weight)
             item({
                 badge: String(i + 1),
                 badgeBg: 'bg-navy',
                 title: `Stop ${i + 1}`,
-                sub: `${areaTag(pricing.areas[d.areaKey].label)} · ${sizeTag(d.weight, wc.label)}`,
-                value: deliveryFees[i],
+                sub: `${areaTag(pricing.areas[d.areaKey].label)} · ${sizeTag(d.weight)}`,
+                value: stopFee,
                 delivery: d,
             })
         })
@@ -439,10 +445,18 @@ export const initPriceCalculator = async () => {
         }
 
         sumRow(
-            `Zwischensumme - ${1 + deliveries.length} Stopps`,
+            `Zwischensumme - ${1 + deliveries.length} Stopps, Tarif ${tourClass.label}`,
             stopsFee,
             'border-t border-navy/10 pt-3 mt-3 font-bold text-navy'
         )
+        // Erklären, warum auch leichte Stops den höheren Tarif kosten
+        if (tourClass !== pricing.weightClasses[0]) {
+            const note = document.createElement('p')
+            note.className = 'text-sm text-navy/60'
+            note.textContent =
+                'Der schwerste Stop bestimmt den Tarif der ganzen Tour.'
+            breakdown.appendChild(note)
+        }
         if (areaFee > 0) {
             sumRow(
                 `Gebietsaufschlag - ${pricing.areas[topAreaKey].label}`,
@@ -655,7 +669,7 @@ export const initPriceCalculator = async () => {
                     badgeBg: 'bg-navy',
                     title: `Stop ${i + 1}`,
                     detail: () =>
-                        `Gebiet: ${pricing.areas[d.areaKey].label} · ${d.weight} kg (${getWeightClass(d.weight).label})`,
+                        `Gebiet: ${pricing.areas[d.areaKey].label} · ${d.weight} kg`,
                     address: d.address,
                     onOpen: () => showOnMap(d.lngLat, d.marker),
                     onAddress: (value) => {
@@ -687,7 +701,12 @@ export const initPriceCalculator = async () => {
     const serializeOrder = () => {
         // Mehrzeilig, gut zum Copy-paste: Kopfzeile + Adresse darunter,
         // Blöcke durch Leerzeile getrennt.
-        const blocks = []
+        // Erste Zeile: Tarif der Tour + Preis je Stopp, damit die E-Mail den
+        // Gesamtpreis nachvollziehbar macht.
+        const tourClass = getTourClass()
+        const blocks = [
+            `Tarif der Tour: ${tourClass.label} - ${formatPrice(stopPrice(tourClass))} netto je Stopp (inkl. Abholung)`,
+        ]
         if (pickup) {
             blocks.push(`Abholung\n${pickup.address || '(keine Adresse)'}`)
         }
@@ -707,6 +726,7 @@ export const initPriceCalculator = async () => {
             deliveryTimeKey: deliveryTime,
             deliveryTimeLabel: label,
             estimatedTotal: total,
+            tourClassKey: tourClass.key,
             pickup: pickup
                 ? {
                       areaKey: pickup.areaKey,
