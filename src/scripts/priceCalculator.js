@@ -264,7 +264,9 @@ export const initPriceCalculator = async () => {
             </div>
             <button type="button" data-remove class="text-sm font-bold text-pink hover:underline">Stop entfernen</button>
         `
-        wrap.querySelector('input').addEventListener('input', (event) => {
+        // Referenz, damit das Gewichtsfeld im Formular das Popover mitzieht
+        delivery.weightInput = wrap.querySelector('input')
+        delivery.weightInput.addEventListener('input', (event) => {
             delivery.weight = parseFloat(event.target.value) || 0
             refresh()
         })
@@ -581,8 +583,11 @@ export const initPriceCalculator = async () => {
         map.easeTo({ center: lngLat, duration: 300 })
     }
 
-    // Eine Formularzeile: klickbarer Kopf (Badge + Titel + Info + Stift) + Adressfeld
-    const buildOrderRow = ({ badge, badgeBg, title, detail, address, onOpen, onAddress }) => {
+    // Eine Formularzeile: klickbarer Kopf (Badge + Titel + Info + Stift) +
+    // Adressfeld, bei Stops zusätzlich ein Gewichtsfeld (onWeight gesetzt).
+    // `detail` ist eine Funktion, damit die Info nach einer Gewichtsänderung
+    // ohne Neu-Rendern der Zeile aktualisiert werden kann (Fokus bleibt).
+    const buildOrderRow = ({ badge, badgeBg, title, detail, address, onOpen, onAddress, weight, onWeight }) => {
         const div = document.createElement('div')
         div.className = 'py-3 border-t border-navy/10 first:border-t-0 first:pt-0'
         div.innerHTML = `
@@ -590,16 +595,33 @@ export const initPriceCalculator = async () => {
                 <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${badgeBg} text-white text-sm font-bold">${badge}</span>
                 <span class="flex-1 min-w-0 text-base md:text-lg leading-snug">
                     <span class="font-bold text-navy">${title}</span>
-                    <span class="text-navy/60"> · ${detail}</span>
+                    <span class="text-navy/60"> · <span data-detail>${detail()}</span></span>
                 </span>
                 <svg class="w-5 h-5 shrink-0 text-navy/40 group-hover:text-pink transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>
             </button>
-            <input type="text" data-address required aria-label="Adresse (Pflichtfeld)" placeholder="Adresse: Straße Nr., PLZ Ort"
-                class="w-full rounded-lg border-2 border-navy/20 bg-white text-navy text-base px-3 py-2 focus:border-pink focus:outline-none">
+            <div class="flex items-center gap-2">
+                <input type="text" data-address required aria-label="Adresse (Pflichtfeld)" placeholder="Adresse: Straße Nr., PLZ Ort"
+                    class="min-w-0 flex-1 rounded-lg border-2 border-navy/20 bg-white text-navy text-base px-3 py-2 focus:border-pink focus:outline-none">
+                ${
+                    onWeight
+                        ? `<input type="number" data-weight min="0" max="100" step="0.1" aria-label="Gewicht in kg"
+                    class="w-20 shrink-0 rounded-lg border-2 border-navy/20 bg-white text-navy text-base px-3 py-2 focus:border-pink focus:outline-none">
+                <span class="text-base text-navy/70">kg</span>`
+                        : ''
+                }
+            </div>
         `
         const input = div.querySelector('[data-address]')
         input.value = address ?? ''
         input.addEventListener('input', (e) => onAddress(e.target.value))
+        if (onWeight) {
+            const weightInput = div.querySelector('[data-weight]')
+            weightInput.value = weight
+            weightInput.addEventListener('input', (e) => {
+                onWeight(e.target.value)
+                div.querySelector('[data-detail]').textContent = detail()
+            })
+        }
         div.querySelector('[data-open]').addEventListener('click', onOpen)
         return div
     }
@@ -616,7 +638,7 @@ export const initPriceCalculator = async () => {
                     badge: 'A',
                     badgeBg: 'bg-pink',
                     title: 'Abholung',
-                    detail: `Gebiet: ${pricing.areas[pickup.areaKey].label}`,
+                    detail: () => `Gebiet: ${pricing.areas[pickup.areaKey].label}`,
                     address: pickup.address,
                     onOpen: () => showOnMap(pickup.lngLat, null),
                     onAddress: (value) => {
@@ -627,17 +649,25 @@ export const initPriceCalculator = async () => {
         }
 
         deliveries.forEach((d, i) => {
-            const wc = getWeightClass(d.weight)
             el.appendChild(
                 buildOrderRow({
                     badge: String(i + 1),
                     badgeBg: 'bg-navy',
                     title: `Stop ${i + 1}`,
-                    detail: `Gebiet: ${pricing.areas[d.areaKey].label} · ${d.weight} kg (${wc.label})`,
+                    detail: () =>
+                        `Gebiet: ${pricing.areas[d.areaKey].label} · ${d.weight} kg (${getWeightClass(d.weight).label})`,
                     address: d.address,
                     onOpen: () => showOnMap(d.lngLat, d.marker),
                     onAddress: (value) => {
                         d.address = value
+                    },
+                    weight: d.weight,
+                    // Nur den Preis neu rechnen, nicht refresh(): das würde
+                    // diese Zeile neu rendern und den Fokus aus dem Feld werfen.
+                    onWeight: (value) => {
+                        d.weight = parseFloat(value) || 0
+                        d.weightInput.value = value
+                        calculatePrice()
                     },
                 })
             )
